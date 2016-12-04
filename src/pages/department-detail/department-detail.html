@@ -1,0 +1,29 @@
+<!--
+  Generated template for the DepartmentDetail page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Department Details</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item *ngFor = "let data of detailObject" text-wrap>
+
+    <h2 *ngIf ="data.type == 'title'"><u>{{data.detail}}</u></h2>
+    <h3 *ngIf ="data.type == 'subtitle'">{{data.detail}}</h3>
+    <h3 *ngIf ="data.type == 'heading'"><strong>{{data.detail}}</strong></h3>
+    <p *ngIf ="data.type == 'para'" >{{data.detail}}</p>
+    <p *ngIf ="data.type == 'list'" >-{{data.detail}}</p>
+
+    </ion-item>
+
+</ion-list>
+</ion-content>
