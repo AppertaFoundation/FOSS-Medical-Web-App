@@ -13,7 +13,9 @@ export class Page1 {
 
   constructor(public navCtrl: NavController, public fbServ: FirebaseService) {
      fbServ.getClinicalList()
-     .then(data => this.clinicalListData = data);
+     .then(data =>{
+        this.clinicalListData = data;
+      });
     // fbServ.getClinicalList()
     // .then((data)=>console.log(data));
   }
@@ -21,6 +23,13 @@ export class Page1 {
   showDetail(info){
     // console.log('item ', info);
     this.navCtrl.push(ClinicalDetailPage,{info:info});
+  }
+
+  moveClinUp(info){
+    this.fbServ.moveClinUp(info);
+  }
+  moveClinDown(info){
+    this.fbServ.moveClinDown(info);
   }
 
 }

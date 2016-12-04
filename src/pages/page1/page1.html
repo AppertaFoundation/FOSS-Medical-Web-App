@@ -11,7 +11,11 @@
   <h3>Clinical Information</h3>
   <button ion-button secondary menuToggle>Toggle Menu</button>
   <ion-list>
-    <ion-item *ngFor = "let info of clinicalListData" (click) = "showDetail(info)">{{info.title}}</ion-item>
+    <ion-item *ngFor = "let info of clinicalListData" >
+      <button ion-button (click)="moveClinUp(info)"><ion-icon name="arrow-dropup"></ion-icon></button>
+      <span (click) = "showDetail(info)">{{info.title}}</span>
+      <button ion-button item-right (click)="moveClinDown(info)"><ion-icon name="arrow-dropdown"></ion-icon></button>
+      </ion-item>
   </ion-list>
 
 </ion-content>

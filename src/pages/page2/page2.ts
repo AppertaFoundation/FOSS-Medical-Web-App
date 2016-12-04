@@ -14,12 +14,22 @@ export class Page2 {
   constructor(public navCtrl: NavController, public fbServ: FirebaseService) {
     // this.departmentListData = fbServ.getDepartmentList();
     fbServ.getDepartmentList()
-    .then((data)=>this.departmentListData = data);
+    .then((data)=>{this.departmentListData = data;
+    });
   }
 
   showDetail(info){
     // console.log('item ', info);
     this.navCtrl.push(DepartmentDetailPage,{info:info});
+  }
+
+  moveUp(info){
+    this.fbServ.moveDeptItemUp(info);
+
+  }
+
+  moveDown(info){
+    this.fbServ.moveDeptItemDown(info);
   }
 
 }
