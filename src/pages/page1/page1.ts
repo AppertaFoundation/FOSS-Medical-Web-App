@@ -12,7 +12,10 @@ export class Page1 {
   public clinicalListData;
 
   constructor(public navCtrl: NavController, public fbServ: FirebaseService) {
-    this.clinicalListData = fbServ.getClinicalList();
+     fbServ.getClinicalList()
+     .then(data => this.clinicalListData = data);
+    // fbServ.getClinicalList()
+    // .then((data)=>console.log(data));
   }
 
   showDetail(info){

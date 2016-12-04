@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
-import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'angularfire2';
+import 'rxjs/add/operator/toPromise';
 
 /*
   Generated class for the FirebaseService provider.
@@ -12,25 +12,29 @@ import { AngularFire, FirebaseListObservable, FirebaseObjectObservable } from 'a
 @Injectable()
 export class FirebaseService {
 
-  clinicalList: FirebaseListObservable<any>;
-  departmentList: FirebaseListObservable<any>;
-  clinicalDetail: FirebaseObjectObservable<any>;
-  hospital:string = "James_Cook";
-  specialty: string = "ENT";
 
-  constructor(public http: Http, public af: AngularFire) {
+  private specialty: string = "ENT";
+  private hospital:string = "James_Cook";
+  private baseUrl: string = 'https://blinding-heat-4325.firebaseio.com/';
+
+
+  constructor(public http: Http) {
     // console.log('Hello FirebaseService Provider');
-    this.clinicalList = this.af.database.list(`${this.hospital}/${this.specialty}/published/clinical`);
-    this.departmentList = this.af.database.list(`${this.hospital}/${this.specialty}/published/department`);
 
   }
 
   getClinicalList(){
-    return this.clinicalList;
+    return this.http.get(`https://blinding-heat-4325.firebaseio.com/James_Cook/ENT/published/clinical.json`)
+  .toPromise()
+  .then(res => res.json());
+
   }
 
   getDepartmentList(){
-    return this.departmentList;
+    return this.http.get(`https://blinding-heat-4325.firebaseio.com/James_Cook/ENT/published/department.json`)
+    .toPromise()
+    .then(res => res.json());
+;
   }
 
 }

@@ -12,7 +12,9 @@ export class Page2 {
   public departmentListData;
 
   constructor(public navCtrl: NavController, public fbServ: FirebaseService) {
-    this.departmentListData = fbServ.getDepartmentList();
+    // this.departmentListData = fbServ.getDepartmentList();
+    fbServ.getDepartmentList()
+    .then((data)=>this.departmentListData = data);
   }
 
   showDetail(info){
