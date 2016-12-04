@@ -32,4 +32,8 @@ export class Page2 {
     this.fbServ.moveDeptItemDown(info);
   }
 
+  saveDeptData(){
+    this.fbServ.saveDepartmentData();
+  }
+
 }

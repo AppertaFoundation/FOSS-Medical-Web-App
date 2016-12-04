@@ -32,4 +32,8 @@ export class Page1 {
     this.fbServ.moveClinDown(info);
   }
 
+  saveData(){
+    this.fbServ.saveClinicalData();
+  }
+
 }

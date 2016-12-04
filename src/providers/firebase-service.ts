@@ -43,6 +43,11 @@ export class FirebaseService {
     }
   }
 
+  saveClinicalData(){
+    return this.http.put('https://blinding-heat-4325.firebaseio.com/James_Cook/ENT/published/clinical.json', this.clinicalData)
+    .toPromise();
+  }
+
   getDepartmentList() {
     if (!this.gotDeptData) {
       return this.http.get(`https://blinding-heat-4325.firebaseio.com/James_Cook/ENT/published/department.json`)
@@ -57,7 +62,11 @@ export class FirebaseService {
     else {
       return Promise.resolve(this.departmentData);
     }
+  }
 
+  saveDepartmentData(){
+    return this.http.put(`https://blinding-heat-4325.firebaseio.com/James_Cook/ENT/published/department.json`, this.departmentData)
+      .toPromise()
   }
 
   reloadDeptData() {
