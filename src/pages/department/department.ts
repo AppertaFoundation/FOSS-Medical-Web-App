@@ -20,7 +20,9 @@ export class Department {
 
   showDetail(info){
     // console.log('item ', info);
-    this.navCtrl.push(DepartmentDetailPage,{info:info});
+    let index = this.departmentListData.indexOf(info);
+    console.log("index is ",index);
+    this.navCtrl.push(DepartmentDetailPage,{info:info, index:index});
   }
 
   moveUp(info){

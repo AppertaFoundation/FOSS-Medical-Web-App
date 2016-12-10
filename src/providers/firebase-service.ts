@@ -21,8 +21,11 @@ export class FirebaseService {
   private clinicalDataFetched: boolean = false;
   private departmentDataFetched: boolean = false;
   private clinicalData: Array<Object>;
-  public clinicalDataLocal: boolean = false;
-  public departmentDataLocal: boolean = false;
+  private clinicalDataLocal: boolean = false;
+  private departmentDataLocal: boolean = false;
+  private departmentDetailData: Array<Object>;
+  private clinicalDetailData: Array<Object>;
+
 
 
   constructor(public http: Http, public storage: Storage) {
@@ -48,9 +51,19 @@ export class FirebaseService {
     }
   }
 
+  manageDetail(type:string, detailObject:Object){
+    this[type + "DetailData"] = detailObject;
+  }
+
 
   publishData(type: string) {
+
     return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`, this[type + "Data"])
+      .toPromise();
+  }
+  publishDetail(type: string, index:Number, data: Object) {
+    //type can include index and 'data' to publish department data
+    return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}/${index}/data.json`, this[type + "Data"])
       .toPromise();
   }
 

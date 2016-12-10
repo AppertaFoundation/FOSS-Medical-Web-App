@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { FirebaseService } from '../../providers/firebase-service';
+
 
 /*
   Generated class for the ClinicalDetail page.
@@ -14,9 +16,10 @@ import { NavController, NavParams } from 'ionic-angular';
 export class ClinicalDetailPage {
   detailObject: Object;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fbServ: FirebaseService) {
 
     this.detailObject =this.navParams.get('info');
+    this.fbServ.manageDetail("clinical", this.detailObject);
     // console.log(this.detailObject);
   }
 
