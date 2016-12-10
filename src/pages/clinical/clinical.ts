@@ -12,7 +12,7 @@ export class Clinical {
   public clinicalListData;
 
   constructor(public navCtrl: NavController, public fbServ: FirebaseService, public alertCtrl: AlertController) {
-     fbServ.getClinicalList()
+     fbServ.getList("clinical")
      .then(data =>{
         this.clinicalListData = data;
       });
@@ -26,14 +26,14 @@ export class Clinical {
   }
 
   moveClinUp(info){
-    this.fbServ.moveClinUp(info);
+    this.fbServ.moveItem("clinical",-1,info);
   }
   moveClinDown(info){
-    this.fbServ.moveClinDown(info);
+    this.fbServ.moveItem("clinical",1,info);
   }
 
-  saveData(){
-    this.fbServ.saveClinicalData();
+  publishData(){
+    this.fbServ.publishData("clinical");
   }
 
   localSave(){

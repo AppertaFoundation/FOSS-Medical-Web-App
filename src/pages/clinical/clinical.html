@@ -4,12 +4,12 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Clinical</ion-title>
-    <div>
-      <button ion-button item-right (click)="saveData()">Publish</button>
-      <button ion-button item-right (click)="localSave()">Save Local Data</button>
-      <button ion-button item-right color="danger" (click)="localLoad()">Load Local Data</button>
-    </div>
   </ion-navbar>
+  <div>
+    <button ion-button item-right (click)="publishData()">Publish</button>
+    <button ion-button item-right (click)="localSave()">Save Local Data</button>
+    <button ion-button item-right color="danger" (click)="localLoad()">Load Local Data</button>
+  </div>
 </ion-header>
 
 <ion-content padding>

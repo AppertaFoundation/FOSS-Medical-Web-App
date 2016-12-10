@@ -13,7 +13,7 @@ export class Department {
 
   constructor(public navCtrl: NavController, public fbServ: FirebaseService, public alertCtrl:AlertController) {
     // this.departmentListData = fbServ.getDepartmentList();
-    fbServ.getDepartmentList()
+    fbServ.getList("department")
     .then((data)=>{this.departmentListData = data;
     });
   }
@@ -24,16 +24,15 @@ export class Department {
   }
 
   moveUp(info){
-    this.fbServ.moveDeptItemUp(info);
-
+    this.fbServ.moveItem("department",-1,info);
   }
 
   moveDown(info){
-    this.fbServ.moveDeptItemDown(info);
+    this.fbServ.moveItem("department",1,info);
   }
 
-  saveDeptData(){
-    this.fbServ.saveDepartmentData();
+  publishDeptData(){
+    this.fbServ.publishData("department");
   }
 
   localSave(){
