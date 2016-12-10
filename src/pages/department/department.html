@@ -1,5 +1,8 @@
 <ion-header>
   <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
     <ion-title>Department</ion-title>
     <div>
       <button ion-button item-right (click)="saveDeptData()">Save</button>
@@ -11,7 +14,6 @@
 
 <ion-content padding>
   <h3>Department Information</h3>
-  <button ion-button secondary menuToggle>Toggle Menu</button>
   <ion-list>
     <ion-item *ngFor="let info of departmentListData">
       <button ion-button (click)="moveUp(info)">
