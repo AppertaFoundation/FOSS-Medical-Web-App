@@ -1,12 +1,11 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <ion-title>Department</ion-title>
-    <button ion-button item-right (click)="saveDeptData()">Save</button>
-    <button ion-button item-right (click)="localSave()">Save Local Data</button>
-    <button ion-button item-right color="danger"(click)="localLoad()">Load Local Data</button>
+    <div>
+      <button ion-button item-right (click)="saveDeptData()">Save</button>
+      <button ion-button item-right (click)="localSave()">Save Local Data</button>
+      <button ion-button item-right color="danger" (click)="localLoad()">Load Local Data</button>
+    </div>
   </ion-navbar>
 </ion-header>
 
@@ -14,10 +13,14 @@
   <h3>Department Information</h3>
   <button ion-button secondary menuToggle>Toggle Menu</button>
   <ion-list>
-    <ion-item *ngFor = "let info of departmentListData" >
-      <button ion-button (click)="moveUp(info)"><ion-icon name="arrow-dropup"></ion-icon></button>
-      <span (click) = "showDetail(info)">{{info.group}}</span>
-      <button (click)="moveDown(info)" ion-button item-right><ion-icon name="arrow-dropdown"></ion-icon></button>
+    <ion-item *ngFor="let info of departmentListData">
+      <button ion-button (click)="moveUp(info)">
+        <ion-icon name="arrow-dropup"></ion-icon>
+      </button>
+      <span (click)="showDetail(info)">{{info.group}}</span>
+      <button (click)="moveDown(info)" ion-button item-right>
+        <ion-icon name="arrow-dropdown"></ion-icon>
+      </button>
     </ion-item>
   </ion-list>
 

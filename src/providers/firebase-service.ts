@@ -26,9 +26,11 @@ export class FirebaseService {
 
 
   constructor(public http: Http, public storage: Storage) {
+
     // console.log('Hello FirebaseService Provider');
 
   }
+
 
   getClinicalList() {
     if (!this.gotClinData) {
@@ -122,6 +124,7 @@ export class FirebaseService {
   localSave(type) {//eg clinical or department
     let savingType = type + "Data";
     this[savingType + "Local"] = true;
+    this.storage.set(savingType+"Local", "true");
     let toSaveData = JSON.stringify(this[savingType]);
     this.storage.set(savingType, toSaveData);
 
@@ -132,10 +135,15 @@ export class FirebaseService {
   localLoad(type) {
     let savingType = type + "Data";
     return this.storage.get(savingType)
-      .then((response) => {
-        let convertedData = JSON.parse(response);
-        this[savingType] = convertedData;
-        return convertedData
-      });
+          .then((response) => {
+            let convertedData = JSON.parse(response);
+            this[savingType] = convertedData;
+            return convertedData
+          });
+  }
+
+  getLocalFlag(type){
+    let savingType = type + "Data";
+    return this.storage.get(savingType+"Local");
   }
 }

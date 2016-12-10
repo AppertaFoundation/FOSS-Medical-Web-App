@@ -41,16 +41,22 @@ export class Clinical {
   }
 
   localLoad(){
-    if(!this.fbServ.clinicalDataLocal){
-      this.showAlert("Error","No Clinical data saved yet");
-      return
-    }
-     this.fbServ.localLoad("clinical")
+    this.fbServ.getLocalFlag("clinical")
     .then((data)=>{
-      this.clinicalListData = data;
-    })
-    .catch((err)=>{
-      console.warn(err);
+      if (!data){
+        this.showAlert("Error", "No Clincal data saved locally");
+        return
+      }
+
+      else{
+        this.fbServ.localLoad("clinical")
+       .then((data)=>{
+         this.clinicalListData = data;
+       })
+       .catch((err)=>{
+         console.warn(err);
+       })
+      }
     })
   }
 

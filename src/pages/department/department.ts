@@ -41,17 +41,25 @@ export class Department {
   }
 
   localLoad(){
-    if(!this.fbServ.departmentDataLocal){
-      this.showAlert("Error", "No Department data saved locally");
-      return
-    }
-     this.fbServ.localLoad("department")
+    this.fbServ.getLocalFlag("department")
     .then((data)=>{
-      this.departmentListData = data;
+      if (!data){
+        this.showAlert("Error", "No Department data saved locally");
+        return
+      }
+
+      else{
+        this.fbServ.localLoad("department")
+       .then((data)=>{
+         this.departmentListData = data;
+       })
+       .catch((err)=>{
+         console.warn(err);
+       })
+      }
     })
-    .catch((err)=>{
-      console.warn(err);
-    })
+
+
   }
 
   showAlert(title:string, message:string) {
