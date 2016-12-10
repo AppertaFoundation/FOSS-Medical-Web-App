@@ -1,8 +1,9 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { Storage } from '@ionic/storage';
 import { MyApp } from './app.component';
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
+import { Clinical } from '../pages/clinical/clinical';
+import { Department } from '../pages/department/department';
 import { ClinicalDetailPage } from '../pages/clinical-detail/clinical-detail';
 import { DepartmentDetailPage } from '../pages/department-detail/department-detail';
 import { FirebaseService } from '../providers/firebase-service';
@@ -12,8 +13,8 @@ import { FirebaseService } from '../providers/firebase-service';
 @NgModule({
   declarations: [
     MyApp,
-    Page1,
-    Page2,
+    Clinical,
+    Department,
     ClinicalDetailPage,
     DepartmentDetailPage
   ],
@@ -23,14 +24,15 @@ import { FirebaseService } from '../providers/firebase-service';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Page1,
-    Page2,
+    Clinical,
+    Department,
     ClinicalDetailPage,
     DepartmentDetailPage
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    FirebaseService
+    FirebaseService,
+    Storage
   ]
 })
 export class AppModule {}

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
+import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 
@@ -20,9 +21,11 @@ export class FirebaseService {
   private gotDeptData: boolean = false;
   private gotClinData: boolean = false;
   private clinicalData: Array<Object>;
+  public clinicalDataLocal: boolean = false;
+  public departmentDataLocal: boolean = false;
 
 
-  constructor(public http: Http) {
+  constructor(public http: Http, public storage: Storage) {
     // console.log('Hello FirebaseService Provider');
 
   }
@@ -43,9 +46,9 @@ export class FirebaseService {
     }
   }
 
-  saveClinicalData(){
+  saveClinicalData() {
     return this.http.put('https://blinding-heat-4325.firebaseio.com/James_Cook/ENT/published/clinical.json', this.clinicalData)
-    .toPromise();
+      .toPromise();
   }
 
   getDepartmentList() {
@@ -64,7 +67,7 @@ export class FirebaseService {
     }
   }
 
-  saveDepartmentData(){
+  saveDepartmentData() {
     return this.http.put(`https://blinding-heat-4325.firebaseio.com/James_Cook/ENT/published/department.json`, this.departmentData)
       .toPromise()
   }
@@ -94,12 +97,12 @@ export class FirebaseService {
     if (selectedIndex == this.departmentData.length) { return }
     else {
       let removedItem = this.departmentData.splice(selectedIndex, 1);
-      this.departmentData.splice(selectedIndex+1  , 0, removedItem[0]);
+      this.departmentData.splice(selectedIndex + 1, 0, removedItem[0]);
     }
 
   }
 
-  moveClinUp(info){
+  moveClinUp(info) {
     let selectedIndex = this.clinicalData.indexOf(info);
     if (selectedIndex == 0) { return }
     else {
@@ -107,13 +110,32 @@ export class FirebaseService {
       this.clinicalData.splice(selectedIndex - 1, 0, removedItem[0]);
     }
   };
-  moveClinDown(info){
+  moveClinDown(info) {
     let selectedIndex = this.clinicalData.indexOf(info);
     if (selectedIndex == this.clinicalData.length) { return }
     else {
       let removedItem = this.clinicalData.splice(selectedIndex, 1);
-      this.clinicalData.splice(selectedIndex+1  , 0, removedItem[0]);
+      this.clinicalData.splice(selectedIndex + 1, 0, removedItem[0]);
     }
   };
 
+  localSave(type) {//eg clinical or department
+    let savingType = type + "Data";
+    this[savingType + "Local"] = true;
+    let toSaveData = JSON.stringify(this[savingType]);
+    this.storage.set(savingType, toSaveData);
+
+  }
+
+
+
+  localLoad(type) {
+    let savingType = type + "Data";
+    return this.storage.get(savingType)
+      .then((response) => {
+        let convertedData = JSON.parse(response);
+        this[savingType] = convertedData;
+        return convertedData
+      });
+  }
 }

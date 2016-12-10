@@ -4,7 +4,9 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title>Clinical</ion-title>
-    <button ion-button item-right (click)="saveData()">Save</button>
+    <button ion-button item-right (click)="saveData()">Publish</button>
+    <button ion-button item-right (click)="localSave()">Save Local Data</button>
+    <button ion-button item-right color="danger"(click)="localLoad()">Load Local Data</button>
   </ion-navbar>
 </ion-header>
 
