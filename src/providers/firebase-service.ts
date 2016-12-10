@@ -63,7 +63,7 @@ export class FirebaseService {
   }
   publishDetail(type: string, index:Number, data: Object) {
     //type can include index and 'data' to publish department data
-    return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}/${index}/data.json`, this[type + "Data"])
+    return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}/${index}/data.json`, data)
       .toPromise();
   }
 
