@@ -3,6 +3,8 @@ import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import firebase  from 'firebase';
+
 
 /*
   Generated class for the FirebaseService provider.
@@ -25,10 +27,15 @@ export class FirebaseService {
   private departmentDataLocal: boolean = false;
   private departmentDetailData: Array<Object>;
   private clinicalDetailData: Array<Object>;
+  private fbStorage: any;
+  private fbStorageRef: any;
 
 
 
   constructor(public http: Http, public storage: Storage) {
+    this.fbStorage = firebase.storage();
+    this.fbStorageRef = this.fbStorage.ref();
+
 
     // console.log('Hello FirebaseService Provider');
 

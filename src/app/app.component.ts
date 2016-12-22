@@ -4,6 +4,9 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
+import firebase  from 'firebase';
+
+import ImgCache from 'imgcache.js';
 
 
 @Component({
@@ -14,15 +17,23 @@ export class MyApp {
 
   rootPage: any = Department;
 
-  pages: Array<{title: string, component: any}>;
+  pages: Array<{ title: string, component: any }>;
 
   constructor(public platform: Platform) {
+    firebase.initializeApp({
+      apiKey: "AIzaSyB8Tw10IW7kRd-icjiOCDnt7IorF0XWKr8",
+      authDomain: "blinding-heat-4325.firebaseapp.com",
+      databaseURL: "https://blinding-heat-4325.firebaseio.com",
+      storageBucket: "blinding-heat-4325.appspot.com",
+      messagingSenderId: "875113725983"
+    });
+
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Clinical', component: Clinical },
-      { title: 'Department', component: Department}
+      { title: 'Department', component: Department }
     ];
 
   }
@@ -33,6 +44,14 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
+
+      //ImgCache setup- activate debug mode
+      ImgCache.options.debug = true;
+
+      //Wait fro ImgCache to startup
+      ImgCache.init(()=> {return},
+                    () => {console.log('ImgCache Error- check log')
+                  })
     });
   }
 
