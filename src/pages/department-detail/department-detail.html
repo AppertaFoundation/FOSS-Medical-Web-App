@@ -26,6 +26,9 @@
       <h3 *ngIf="data.type == 'heading'">
         <strong>{{data.detail}}</strong>
       </h3>
+      <h3 *ngIf="data.type == 'strong'">
+        <strong><u>{{data.detail}}</u></strong>
+      </h3>
       <p *ngIf="data.type == 'para'">{{data.detail}}</p>
       <p *ngIf="data.type == 'list'">-{{data.detail}}</p>
 
