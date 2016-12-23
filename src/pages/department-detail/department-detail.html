@@ -29,6 +29,10 @@
       <p *ngIf="data.type == 'para'">{{data.detail}}</p>
       <p *ngIf="data.type == 'list'">-{{data.detail}}</p>
 
+      <button (click)="edit(data)" ion-button item-right color="secondary">
+        <ion-icon  name="create"></ion-icon>
+      </button>
+
       <button (click)="moveDown(data)" ion-button item-right>
         <ion-icon name="arrow-dropdown"></ion-icon>
       </button>

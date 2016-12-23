@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { FirebaseService } from '../../providers/firebase-service';
+import { EditModalComponent } from '../../components/edit-modal/edit-modal';
 
 /*
   Generated class for the ClinicalDetail page.
@@ -17,7 +18,7 @@ export class DepartmentDetailPage {
   pageTitle:String;
   index: Number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fbServ: FirebaseService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fbServ: FirebaseService, private modalCtrl: ModalController) {
 
     this.detailObject =this.navParams.get('info').data;
     this.pageTitle = this.navParams.get('info');
@@ -42,6 +43,12 @@ export class DepartmentDetailPage {
 
   ionViewDidLoad() {
     // console.log('Hello DepartmentDetailPage Page');
+  }
+
+  edit(data){
+    let editModal = this.modalCtrl.create(EditModalComponent,{data:data});
+    editModal.present();
+        console.log('editting ',data);
   }
 
 }
