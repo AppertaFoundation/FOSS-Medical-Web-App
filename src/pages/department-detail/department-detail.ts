@@ -47,8 +47,21 @@ export class DepartmentDetailPage {
 
   edit(data){
     let editModal = this.modalCtrl.create(EditModalComponent,{data:data});
+
+    editModal.onDidDismiss((item) => {
+
+      if(item){
+        data.detail = item.detail;
+        data.type = item.type;
+        console.log(item)
+      }
+
+});
     editModal.present();
         console.log('editting ',data);
+
   }
+
+
 
 }
