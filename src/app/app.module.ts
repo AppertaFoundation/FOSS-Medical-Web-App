@@ -7,6 +7,7 @@ import { Department } from '../pages/department/department';
 import { ClinicalDetailPage } from '../pages/clinical-detail/clinical-detail';
 import { DepartmentDetailPage } from '../pages/department-detail/department-detail';
 import { FirebaseService } from '../providers/firebase-service';
+import { LazyImgComponent } from '../providers/lazy-img';
 
 
 
@@ -16,7 +17,8 @@ import { FirebaseService } from '../providers/firebase-service';
     Clinical,
     Department,
     ClinicalDetailPage,
-    DepartmentDetailPage
+    DepartmentDetailPage,
+    LazyImgComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -27,12 +29,14 @@ import { FirebaseService } from '../providers/firebase-service';
     Clinical,
     Department,
     ClinicalDetailPage,
-    DepartmentDetailPage
+    DepartmentDetailPage,
+    LazyImgComponent
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseService,
     Storage
+
   ]
 })
 export class AppModule {}
