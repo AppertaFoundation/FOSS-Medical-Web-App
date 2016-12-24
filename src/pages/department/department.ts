@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, ModalController } from 'ionic-angular';
 import { FirebaseService } from '../../providers/firebase-service';
 import { DepartmentDetailPage } from '../department-detail/department-detail';
 
@@ -11,7 +11,7 @@ export class Department {
 
   public departmentListData;
 
-  constructor(public navCtrl: NavController, public fbServ: FirebaseService, public alertCtrl:AlertController) {
+  constructor(public navCtrl: NavController, public fbServ: FirebaseService, public alertCtrl:AlertController, public modalCtrl: ModalController) {
     // this.departmentListData = fbServ.getDepartmentList();
     fbServ.getList("department")
     .then((data)=>{this.departmentListData = data;
@@ -70,6 +70,22 @@ export class Department {
      buttons: ['OK']
    });
    alert.present();
+ }
+
+ createNew(info){
+
+   let newItem ={"group":"BLANK",
+                  "data":[{"type":"","detail":""}]
+       };
+
+      //TODO- suggest this opens a Modal to take the title then opens that in the editting option to start filling it in
+
+   let index = this.departmentListData.indexOf(info);
+   this.departmentListData.splice(1,0,newItem)
+ }
+
+ delete(info){
+   //TODO
  }
 
 }

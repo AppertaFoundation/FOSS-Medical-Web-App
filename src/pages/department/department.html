@@ -19,10 +19,18 @@
       <button ion-button (click)="moveUp(info)">
         <ion-icon name="arrow-dropup"></ion-icon>
       </button>
-      <span (click)="showDetail(info)">{{info.group}}</span>
-      <button (click)="moveDown(info)" ion-button item-right>
+      <button (click)="moveDown(info)" ion-button item-left>
         <ion-icon name="arrow-dropdown"></ion-icon>
       </button>
+      <span (click)="showDetail(info)">{{info.group}}</span>
+      <button (click)="createNew()" ion-button item-right color="secondary">
+        <ion-icon name="create"></ion-icon>
+      </button>
+
+      <button (click)="delete(info)" ion-button item-right color="danger">
+        <ion-icon name="trash"></ion-icon>
+      </button>
+
     </ion-item>
   </ion-list>
 
