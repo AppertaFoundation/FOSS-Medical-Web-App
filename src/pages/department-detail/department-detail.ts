@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { FirebaseService } from '../../providers/firebase-service';
 import { EditModalComponent } from '../../components/edit-modal/edit-modal';
 
@@ -14,13 +14,14 @@ import { EditModalComponent } from '../../components/edit-modal/edit-modal';
   templateUrl: 'department-detail.html'
 })
 export class DepartmentDetailPage {
-  detailObject: Object;
-  pageTitle:String;
+  detailObject: Array<any>;
+  pageTitle: String;
   index: Number;
+  confirm: Boolean;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fbServ: FirebaseService, private modalCtrl: ModalController) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public fbServ: FirebaseService, private modalCtrl: ModalController, private alertCtrl: AlertController) {
 
-    this.detailObject =this.navParams.get('info').data;
+    this.detailObject = this.navParams.get('info').data;
     this.pageTitle = this.navParams.get('info');
     this.index = this.navParams.get('index');
     // console.log("PageTitle:", this.pageTitle);
@@ -29,14 +30,14 @@ export class DepartmentDetailPage {
     // console.log("object is ",this.detailObject);
   }
 
-  moveUp(data){
+  moveUp(data) {
     this.fbServ.moveItem("departmentDetail", -1, data);
   }
-  moveDown(data){
+  moveDown(data) {
     this.fbServ.moveItem("departmentDetail", 1, data);
   }
 
-  publishDetails(detailObject){
+  publishDetails(detailObject) {
     // TODO need to know item index and the group name
     this.fbServ.publishDetail("department", this.index, detailObject);
   }
@@ -45,22 +46,66 @@ export class DepartmentDetailPage {
     // console.log('Hello DepartmentDetailPage Page');
   }
 
-  edit(data){
-    let editModal = this.modalCtrl.create(EditModalComponent,{data:data});
+  edit(data) {
+    let editModal = this.modalCtrl.create(EditModalComponent, { data: data });
 
     editModal.onDidDismiss((item) => {
 
-      if(item){
+      if (item) {
         data.detail = item.detail;
         data.type = item.type;
         console.log(item)
       }
 
-});
+    });
     editModal.present();
-        console.log('editting ',data);
+  }
+
+  newItem(data) {
+    let newItem = {"type":"",
+                    "detail":"" };
+
+    let tempIndex = this.detailObject.indexOf(data);
+    this.detailObject.splice(tempIndex,0,newItem);
+    let newItemRef = this.detailObject[tempIndex];
+    this.edit(newItemRef);
 
   }
+
+  delete(data){
+    let tempIndex = this.detailObject.indexOf(data);
+    this.showConfirm(this.detailObject, tempIndex);
+    console.log('Confirming:',this.confirm);
+    // this.detailObject.splice(tempIndex,1);
+
+  }
+
+  showConfirm(DeleteObj, DeleteIndex) {
+   let confirm = this.alertCtrl.create({
+     title: 'Delete this item?',
+     message: 'Do you want to permanently delete this?',
+     buttons: [
+       {
+         text: 'No-Cancel',
+         handler: () => {
+           console.log('Disagree clicked');
+           return true;
+                   }
+
+       },
+       {
+         text: 'Yes-Delete',
+         handler: () => {
+           console.log('Agree clicked');
+            DeleteObj.splice(DeleteIndex,1);
+            return true;
+
+             }
+       }
+     ]
+   });
+   confirm.present();
+ }
 
 
 

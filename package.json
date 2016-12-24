@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "ENT_UK_WebApp",
+  "author": "ShanesApps",
+  "homepage": "www.lesterweb.co.uk/shanesapps.html",
   "private": true,
   "scripts": {
     "ionic:build": "ionic-app-scripts build",

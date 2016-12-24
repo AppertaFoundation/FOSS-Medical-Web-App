@@ -19,6 +19,11 @@
       <button ion-button item-left (click)="moveUp(data)">
         <ion-icon name="arrow-dropup"></ion-icon>
       </button>
+
+      <button (click)="moveDown(data)" ion-button item-left>
+        <ion-icon name="arrow-dropdown"></ion-icon>
+      </button>
+
       <h2 *ngIf="data.type == 'title'">
         <u>{{data.detail}}</u>
       </h2>
@@ -36,9 +41,15 @@
         <ion-icon  name="create"></ion-icon>
       </button>
 
-      <button (click)="moveDown(data)" ion-button item-right>
-        <ion-icon name="arrow-dropdown"></ion-icon>
+      <button (click)="newItem(data)" ion-button item-right color="light">
+        <ion-icon  name="add-circle"></ion-icon>
       </button>
+
+      <button (click)="delete(data)" ion-button item-right color="danger">
+        <ion-icon  name="trash"></ion-icon>
+      </button>
+
+
 
     </ion-item>
 
