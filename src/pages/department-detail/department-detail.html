@@ -31,22 +31,22 @@
       <h3 *ngIf="data.type == 'heading'">
         <strong>{{data.detail}}</strong>
       </h3>
-      <h3 *ngIf="data.type == 'strong'">
+      <h3 *ngIf="data.type == 'important'">
         <strong><u>{{data.detail}}</u></strong>
       </h3>
-      <p *ngIf="data.type == 'para'">{{data.detail}}</p>
+      <p *ngIf="data.type == 'text'">{{data.detail}}</p>
       <p *ngIf="data.type == 'list'">-{{data.detail}}</p>
 
-      <button (click)="edit(data)" ion-button item-right color="secondary">
-        <ion-icon  name="create"></ion-icon>
+      <button (click)="edit(data)" ion-button item-right color="secondary" floating>
+        <ion-icon  name="create"> Edit</ion-icon>
       </button>
 
       <button (click)="newItem(data)" ion-button item-right color="light">
-        <ion-icon  name="add-circle"></ion-icon>
+        <ion-icon  name="add-circle"> New</ion-icon>
       </button>
 
       <button (click)="delete(data)" ion-button item-right color="danger">
-        <ion-icon  name="trash"></ion-icon>
+        <ion-icon  name="trash"> Delete</ion-icon>
       </button>
 
 
