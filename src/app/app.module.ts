@@ -9,6 +9,7 @@ import { DepartmentDetailPage } from '../pages/department-detail/department-deta
 import { FirebaseService } from '../providers/firebase-service';
 import { LazyImgComponent } from '../providers/lazy-img';
 import { EditModalComponent } from '../components/edit-modal/edit-modal';
+import { NewItemComponent } from '../components/new-item/new-item';
 
 
 
@@ -20,7 +21,8 @@ import { EditModalComponent } from '../components/edit-modal/edit-modal';
     ClinicalDetailPage,
     DepartmentDetailPage,
     LazyImgComponent,
-    EditModalComponent
+    EditModalComponent,
+    NewItemComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -33,7 +35,8 @@ import { EditModalComponent } from '../components/edit-modal/edit-modal';
     ClinicalDetailPage,
     DepartmentDetailPage,
     LazyImgComponent,
-    EditModalComponent
+    EditModalComponent,
+    NewItemComponent
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

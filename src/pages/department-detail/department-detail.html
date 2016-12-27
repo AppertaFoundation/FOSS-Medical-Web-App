@@ -13,8 +13,8 @@
 <button ion-button item-right (click)="publishDetails(detailObject)">Publish</button>
 </ion-header>
 
-<ion-content padding>
-  <ion-list>
+<ion-content padding *ngIf = "!detailObject.image" >
+  <ion-list >
     <ion-item *ngFor="let data of detailObject" text-wrap>
       <button ion-button item-left (click)="moveUp(data)">
         <ion-icon name="arrow-dropup"></ion-icon>
@@ -54,4 +54,10 @@
     </ion-item>
 
   </ion-list>
+</ion-content>
+<ion-content *ngIf="this.detailObject.image">
+  <h1>An Image file</h1>
+  <div>
+    <img [src]="this.detailObject.image" />
+  </div>
 </ion-content>

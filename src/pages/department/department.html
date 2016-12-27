@@ -14,7 +14,7 @@
 
 <ion-content padding>
   <h3>Department Information</h3>
-  <ion-list>
+  <ion-list *ngIf = "departmentListData && !departmentListData.image">
     <ion-item *ngFor="let info of departmentListData">
       <button ion-button (click)="moveUp(info)">
         <ion-icon name="arrow-dropup"></ion-icon>
@@ -23,7 +23,7 @@
         <ion-icon name="arrow-dropdown"></ion-icon>
       </button>
       <span (click)="showDetail(info)">{{info.group}}</span>
-      <button (click)="createNew()" ion-button item-right color="secondary">
+      <button (click)="createNew(info)" ion-button item-right color="secondary">
         <ion-icon name="create"> New</ion-icon>
       </button>
 
@@ -33,5 +33,8 @@
 
     </ion-item>
   </ion-list>
+  <ion-content *ngIf = "departmentListData && departmentListData.image">
+    An Image File
+  </ion-content>
 
 </ion-content>

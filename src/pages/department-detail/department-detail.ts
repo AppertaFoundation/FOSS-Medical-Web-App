@@ -19,15 +19,24 @@ export class DepartmentDetailPage {
   index: Number;
   confirm: Boolean;
 
+
   constructor(public navCtrl: NavController, public navParams: NavParams, public fbServ: FirebaseService, private modalCtrl: ModalController, private alertCtrl: AlertController) {
 
-    this.detailObject = this.navParams.get('info').data;
+    let allDetails = this.navParams.get('info');
+    if (allDetails.data){
+      this.detailObject = allDetails.data;
+    }
+    else{
+      this.detailObject = allDetails;
+    }
     this.pageTitle = this.navParams.get('info');
     this.index = this.navParams.get('index');
     // console.log("PageTitle:", this.pageTitle);
     // console.log("detailObject:", this.detailObject);
     this.fbServ.manageDetail("department", this.detailObject);
     // console.log("object is ",this.detailObject);
+
+
   }
 
   moveUp(data) {
@@ -61,7 +70,7 @@ export class DepartmentDetailPage {
     editModal.present();
   }
 
-  newItem(data) {
+  newItem(data?) {
     let newItem = {"type":"",
                     "detail":"" };
 

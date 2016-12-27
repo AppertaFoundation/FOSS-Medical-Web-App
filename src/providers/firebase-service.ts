@@ -117,4 +117,9 @@ export class FirebaseService {
     let savingType = type + "Data";
     return this.storage.get(savingType + "Local");
   }
+
+  uploadFile(file:any, type:string, name:string){
+    let ref = firebase.storage().ref();
+    return  ref.child(`/${this.hospital}/${this.specialty}/${type}/${name}`).put(file);
+  }
 }
