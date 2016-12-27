@@ -1,0 +1,38 @@
+<!--
+  Generated template for the NewItem component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Create new group
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-title>Enter title for this section</ion-title>
+    <ion-item >
+      <ion-input type="text" [(ngModel)]=this.content placeholder="Enter a name"></ion-input>
+
+    </ion-item>
+    <button ion-button (click)="submitName()" [disabled]="acceptFile || !this.content">Create data list</button>
+    <button ion-button (click)="acceptFile =!acceptFile" [disabled]="acceptFile || !this.content">Create Image file</button>
+    <ion-item *ngIf = "acceptFile" >
+      <form>
+        <input type="file" accept="image/*" (change)="fileChangeEvent($event)" id ="fileDetail"/>
+        <button ion-button (click)="submitNameImage()" [disabled]="!hasFile">Upload</button>
+      </form>
+
+
+    </ion-item>
+
+  </ion-card>
+</ion-content>

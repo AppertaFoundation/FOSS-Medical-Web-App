@@ -1,0 +1,28 @@
+<!--
+  Generated template for the MoreImages component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Add more images
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+      <form>
+        <input type="file" accept="image/*" (change)="fileChangeEvent($event)" id ="fileDetail"/>
+        <button ion-button (click)="submitNameImage()" [disabled]="!hasFile">Upload</button>
+      </form>
+
+  </ion-card>
+</ion-content>

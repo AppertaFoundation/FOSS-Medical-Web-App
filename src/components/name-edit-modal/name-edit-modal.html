@@ -1,0 +1,22 @@
+<!--
+  Generated template for the NameEditModal component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Edit section name
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-item >
+      <ion-input type="text" [(ngModel)]="name" placeholder="Enter a name"></ion-input>
+    </ion-item>
+    <button ion-button (click)="save()" >Save</button>
+  </ion-card>
+</ion-content>

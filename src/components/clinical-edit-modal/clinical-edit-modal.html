@@ -1,0 +1,35 @@
+<!--
+  Generated template for the ClinicalEditModal component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Edit item- {{type}}
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+  <ion-card>
+
+      <ion-item >
+        <input *ngFor = "let item of info" let i=index trackBy:index [(ngModel)]="info[i]" />
+      </ion-item>
+
+
+  </ion-card>
+    <button ion-button (click)="save()" color="danger">
+      Save
+    </button>
+
+
+</ion-content>
