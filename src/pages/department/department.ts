@@ -130,7 +130,8 @@ export class Department {
   }
 
   edit(info) {
-    let newModal = this.modalCtrl.create(NameEditModalComponent, { name: info.group });
+    //edit name
+    let newModal = this.modalCtrl.create(NameEditModalComponent, { name: info.group, image: info.image });
     newModal.onDidDismiss((name) => {
       if(name){info.group = name;}
     });

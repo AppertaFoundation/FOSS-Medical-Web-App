@@ -20,7 +20,7 @@
 <ion-content>
   <ion-card>
     <ion-item>Choose more images to upload:</ion-item>
-    <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." />
+    <input type="file" accept="image/*" (change)="fileChangeEvent($event)" placeholder="Upload file..." />
     </ion-card>
-  <button ion-button [disabled]="!file" (click)="upload()" color="danger">Save</button>
+  <button ion-button [disabled]="!file" (click)="upload()" color="danger">Upload image</button>
 </ion-content>

@@ -51,7 +51,7 @@ export class DepartmentDetailPage {
 
   publishDetails(detailObject) {
     // TODO need to know item index and the group name
-    this.fbServ.publishDetail("department", this.index, detailObject);
+    this.fbServ.publishData("department");
   }
 
   ionViewDidLoad() {

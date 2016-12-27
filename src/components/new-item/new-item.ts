@@ -39,8 +39,13 @@ export class NewItemComponent {
   }
 
   fileChangeEvent(event){
+    //file API returns an array with element 0 is the file
     this.file = event.srcElement.files[0];
     console.log(this.file);
+  }
+
+  makeData(){
+    this.viewCtrl.dismiss({"name":this.name, "image":"false"});
   }
 
 

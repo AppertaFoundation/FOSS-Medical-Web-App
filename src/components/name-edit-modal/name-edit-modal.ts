@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavParams, ViewController } from 'ionic-angular';
+import { NavParams, ViewController, AlertController } from 'ionic-angular';
 /*
   Generated class for the NameEditModal component.
 
@@ -13,17 +13,32 @@ import { NavParams, ViewController } from 'ionic-angular';
 export class NameEditModalComponent {
 
   name: string;
+  image: any;
 
-  constructor(private navParams:NavParams, private viewCtrl:ViewController) {
-   this.name = this.navParams.get('name');
-   console.log(this.name);
+  constructor(private navParams: NavParams, private viewCtrl: ViewController, private alertCtrl: AlertController) {
+    this.name = this.navParams.get('name');
+    this.image = this.navParams.get('image');
+    console.log(this.name);
   }
 
-  save(){
+  ionViewDidEnter() {
+    if (this.image) {
+      let alert = this.alertCtrl.create({
+        title: "Error",
+        subTitle: "This is an image file. Changing the name will break the link. Please delete and create a new section instead.",
+        buttons: ['OK']
+      });
+      alert.present();
+      this.dismiss();
+    }
+  }
+
+
+  save() {
     this.viewCtrl.dismiss(this.name);
   }
 
-  dismiss(){
+  dismiss() {
     this.viewCtrl.dismiss();
   }
 
