@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ModalController } from 'ionic-angular';
 import { FirebaseService } from '../../providers/firebase-service';
+import { ClinicalEditModalComponent } from '../../components/clinical-edit-modal/clinical-edit-modal';
 
 
 /*
@@ -16,7 +17,8 @@ import { FirebaseService } from '../../providers/firebase-service';
 export class ClinicalDetailPage {
   detailObject: Object;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fbServ: FirebaseService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+     public fbServ: FirebaseService, private modalCtrl: ModalController) {
 
     this.detailObject =this.navParams.get('info');
     this.fbServ.manageDetail("clinical", this.detailObject);
@@ -25,6 +27,19 @@ export class ClinicalDetailPage {
 
   ionViewDidLoad() {
     // console.log('Hello ClinicalDetailPage Page');
+  }
+
+  editItem(type:string){
+    // console.log("detail array is: ", this.detailObject[type]);
+    let newModal = this.modalCtrl.create(ClinicalEditModalComponent,{"dataArray":this.detailObject[type], "type":type});
+    newModal.onDidDismiss((item)=>{
+      if(item)
+      {
+        console.log(item);
+      }
+    })
+    newModal.present();
+
   }
 
 }

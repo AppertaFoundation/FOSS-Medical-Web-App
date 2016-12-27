@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController } from 'ionic-angular';
+import { NavController, AlertController, ModalController } from 'ionic-angular';
 import { FirebaseService } from '../../providers/firebase-service';
 import { ClinicalDetailPage } from '../clinical-detail/clinical-detail';
+import { NewItemComponent } from '../../components/new-item/new-item';
+import { NameEditModalComponent } from '../../components/name-edit-modal/name-edit-modal';
+
 
 @Component({
   selector: 'page-clinical',
@@ -11,7 +14,10 @@ export class Clinical {
 
   public clinicalListData;
 
-  constructor(public navCtrl: NavController, public fbServ: FirebaseService, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,
+    public fbServ: FirebaseService, private alertCtrl: AlertController,
+    private modalCtrl:ModalController
+  ) {
      fbServ.getList("clinical")
      .then(data =>{
         this.clinicalListData = data;
@@ -23,6 +29,36 @@ export class Clinical {
   showDetail(info){
     // console.log('item ', info);
     this.navCtrl.push(ClinicalDetailPage,{info:info});
+  }
+
+  edit(info){
+    let newModal = this.modalCtrl.create(NameEditModalComponent, { name: info.title });
+    newModal.onDidDismiss((name) => {
+      info.title = name || info.title;
+    });
+    newModal.present();
+  }
+
+  createNew(info){
+    let index= this.clinicalListData.indexOf(info);
+    let newItem = {
+      "picture":[],
+      "title":[],
+      "summary":[],
+      "shortname":[],
+      "symptoms":[],
+      "signs":[],
+      "required":[],
+      "admit":[],
+      "flags":[]
+    };
+    this.clinicalListData.splice(1,0,newItem);
+    this.edit(this.clinicalListData[index+1]);
+    //TODO
+  }
+
+  delete(info){
+    //TODO
   }
 
   moveClinUp(info){
