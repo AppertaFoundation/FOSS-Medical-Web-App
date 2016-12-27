@@ -118,8 +118,13 @@ export class FirebaseService {
     return this.storage.get(savingType + "Local");
   }
 
-  uploadFile(file:any, type:string, name:string){
+  uploadFile(file:any, type:string, name:string, fileNumber:number=0){
     let ref = firebase.storage().ref();
-    return  ref.child(`/${this.hospital}/${this.specialty}/${type}/${name}`).put(file);
+    return  ref.child(`/${this.hospital}/${this.specialty}/${type}/${name}/${fileNumber}`).put(file);
+  }
+
+  deleteFile(type:string, name:string, fileNumber:number=0){
+    let ref = firebase.storage().ref().child(`/${this.hospital}/${this.specialty}/${type}/${name}/${fileNumber}`);
+    return  ref.delete();
   }
 }

@@ -3,6 +3,7 @@ import { NavController, AlertController, ModalController, LoadingController } fr
 import { FirebaseService } from '../../providers/firebase-service';
 import { DepartmentDetailPage } from '../department-detail/department-detail';
 import { NewItemComponent } from '../../components/new-item/new-item';
+import { NameEditModalComponent } from '../../components/name-edit-modal/name-edit-modal';
 
 @Component({
   selector: 'page-department',
@@ -105,17 +106,17 @@ export class Department {
           });
           loading.present();
 
-          let uploadTask =()=> this.fbServ.uploadFile(name.file[0], "department", name.content);
+          let uploadTask = () => this.fbServ.uploadFile(name.file[0], "department", name.content);
           uploadTask().then((uploadItem) => {
-              // console.log(uploadItem.downloadURL);
-              loading.dismiss();
-              let index = this.departmentListData.indexOf(info);
-              let newItem = { "group": name.content, "image":uploadItem.downloadURL };
-              this.departmentListData.splice(1, 0, newItem);
-              this.showDetail(newItem);
-            })
-            .catch(()=>{
-              this.showAlert("Error","File upload error");
+            // console.log(uploadItem.downloadURL);
+            loading.dismiss();
+            let index = this.departmentListData.indexOf(info);
+            let newItem = { "group": name.content, "image": [uploadItem.downloadURL] };
+            this.departmentListData.splice(1, 0, newItem);
+            this.showDetail(newItem);
+          })
+            .catch(() => {
+              this.showAlert("Error", "File upload error");
             })
         }
       }
@@ -125,15 +126,23 @@ export class Department {
     newModal.present();
   }
 
+  edit(info) {
+    let newModal = this.modalCtrl.create(NameEditModalComponent, { name: info.group });
+    newModal.onDidDismiss((name) => {
+      info.group = name;
+    });
+    newModal.present();
+  }
+
   delete(info) {
     let confirm = this.alertCtrl.create({
       title: 'Delete this item?',
-      message: 'Do you want to permanently delete this?',
+      message: 'This will permanently remove data and images. Carry on ?',
       buttons: [
         {
           text: 'No-Cancel',
           handler: () => {
-            console.log('Disagree clicked');
+            // console.log('Disagree clicked');
             return true;
           }
 
@@ -141,7 +150,18 @@ export class Department {
         {
           text: 'Yes-Delete',
           handler: () => {
-            console.log('Agree clicked');
+            // console.log('Agree clicked');
+            //TODO need to delete any firebase storage images
+            if (info.image) {
+              console.log('Deleting images');
+              info.image.forEach((imageURL, index) => {
+                this.fbServ.deleteFile('department', info.group, index)
+                .catch(()=>console.log("error"))
+              });
+              let index = this.departmentListData.indexOf(info);
+              this.departmentListData.splice(index, 1);
+              return true;
+            }
             let index = this.departmentListData.indexOf(info);
             this.departmentListData.splice(index, 1);
             return true;

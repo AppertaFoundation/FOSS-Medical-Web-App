@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, ModalController, AlertController, LoadingController } from 'ionic-angular';
 import { FirebaseService } from '../../providers/firebase-service';
 import { EditModalComponent } from '../../components/edit-modal/edit-modal';
+import { MoreImagesComponent } from '../../components/more-images/more-images';
 
 /*
   Generated class for the ClinicalDetail page.
@@ -20,7 +21,9 @@ export class DepartmentDetailPage {
   confirm: Boolean;
 
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fbServ: FirebaseService, private modalCtrl: ModalController, private alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController,
+    public navParams: NavParams, public fbServ: FirebaseService,
+    private modalCtrl: ModalController, private alertCtrl: AlertController, private loadingCtrl:LoadingController) {
 
     let allDetails = this.navParams.get('info');
     if (allDetails.data){
@@ -63,7 +66,7 @@ export class DepartmentDetailPage {
       if (item) {
         data.detail = item.detail;
         data.type = item.type;
-        console.log(item)
+        // console.log(item);
       }
 
     });
@@ -84,9 +87,35 @@ export class DepartmentDetailPage {
   delete(data){
     let tempIndex = this.detailObject.indexOf(data);
     this.showConfirm(this.detailObject, tempIndex);
-    console.log('Confirming:',this.confirm);
+    // console.log('Confirming:',this.confirm);
     // this.detailObject.splice(tempIndex,1);
 
+  }
+
+  upLoadMoreImages(imagesObject){
+    let imagesModal = this.modalCtrl.create(MoreImagesComponent);
+    // console.log(imagesObject);
+    let imageNumber = imagesObject.image.length;
+
+    imagesModal.onDidDismiss((item) => {
+      if (item) {//will be a file
+          // console.log(item);
+          let loading = this.loadingCtrl.create({
+            content: 'Please wait...'
+          });
+          loading.present();
+          //item needs uploading to firebase then we need the upload URL
+          this.fbServ.uploadFile(item.file,'department',imagesObject.group,imageNumber)
+          .then((uploadItem)=>{
+            loading.dismiss();
+            imagesObject.image.push(uploadItem.downloadURL);
+          })
+          .catch(()=>{console.log('file error')})
+
+      }
+    });
+    imagesModal.present();
+    //TODO
   }
 
   showConfirm(DeleteObj, DeleteIndex) {
@@ -97,7 +126,7 @@ export class DepartmentDetailPage {
        {
          text: 'No-Cancel',
          handler: () => {
-           console.log('Disagree clicked');
+          //  console.log('Disagree clicked');
            return true;
                    }
 
@@ -105,7 +134,7 @@ export class DepartmentDetailPage {
        {
          text: 'Yes-Delete',
          handler: () => {
-           console.log('Agree clicked');
+          //  console.log('Agree clicked');
             DeleteObj.splice(DeleteIndex,1);
             return true;
 

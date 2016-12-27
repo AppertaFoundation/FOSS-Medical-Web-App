@@ -23,8 +23,12 @@
         <ion-icon name="arrow-dropdown"></ion-icon>
       </button>
       <span (click)="showDetail(info)">{{info.group}}</span>
+
+      <button (click)="edit(info)" ion-button item-right color="secondary">
+        <ion-icon name="create"> Edit Name</ion-icon>
+      </button>
       <button (click)="createNew(info)" ion-button item-right color="secondary">
-        <ion-icon name="create"> New</ion-icon>
+        <ion-icon name="add-circle"> New</ion-icon>
       </button>
 
       <button (click)="delete(info)" ion-button item-right color="danger">

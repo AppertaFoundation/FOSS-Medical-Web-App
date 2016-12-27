@@ -56,8 +56,8 @@
   </ion-list>
 </ion-content>
 <ion-content *ngIf="this.detailObject.image">
-  <h1>An Image file</h1>
-  <div>
-    <img [src]="this.detailObject.image" />
+  <button ion-button (click)="upLoadMoreImages(this.detailObject)">More Images?</button>
+  <div *ngFor ="let picture of this.detailObject.image">
+    <img [src]="picture" />      
   </div>
 </ion-content>
