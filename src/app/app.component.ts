@@ -15,7 +15,7 @@ import ImgCache from 'imgcache.js';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Clinical;
+  rootPage: any = Department;
 
   pages: Array<{ title: string, component: any }>;
 

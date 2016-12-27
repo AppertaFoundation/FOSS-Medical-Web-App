@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { ViewController, LoadingController } from 'ionic-angular';
+
 
 /*
   Generated class for the MoreImages component.
@@ -11,12 +13,26 @@ import { Component } from '@angular/core';
   templateUrl: 'more-images.html'
 })
 export class MoreImagesComponent {
+  file:any;
 
-  text: string;
+  constructor(private viewCtrl:ViewController,   private loadingCtrl: LoadingController ){
+    }
 
-  constructor() {
-    console.log('Hello MoreImages Component');
-    this.text = 'Hello World';
+  upload(){
+    this.viewCtrl.dismiss(this.file);
+  }
+
+  fileChangeEvent(event){
+    this.file = event.srcElement.files[0];
+    // console.log(this.file);
+  }
+
+  ionViewDidEnter(){
+    this.file="";
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss();
   }
 
 }

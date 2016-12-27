@@ -81,16 +81,19 @@ export class Department {
     let newModal = this.modalCtrl.create(NewItemComponent);
     //TODO consider checking against the list of existing names- pass in an array
 
-    newModal.onDidDismiss((name) => {
+    newModal.onDidDismiss((item) => {
       // console.log('Dismissed');
       //if returns data from Modal
-      if (!name || name.length == 0) {
+      if (!item || item.length == 0) {
         this.showAlert("Error", "No name provided");
-      }
+      }//
+
+      //returns an item with a property image if an image file and without one if not
       else {
-        if (name.image && name.image == "false") {
+        //not an image file so set up a blank set of data
+        if (item.image && item.image == "false") {
           let index = this.departmentListData.indexOf(info);
-          let newItem = { "group": name.content, "data": [{ "type": "text", "detail": "Your data here" }] };
+          let newItem = { "group": item.name, "data": [{ "type": "text", "detail": "Your data here" }] };
           this.departmentListData.splice(1, 0, newItem);
           this.showDetail(newItem);
           return;
@@ -106,12 +109,12 @@ export class Department {
           });
           loading.present();
 
-          let uploadTask = () => this.fbServ.uploadFile(name.file[0], "department", name.content);
+          let uploadTask = () => this.fbServ.uploadFile(item.file, "department", item.name);
           uploadTask().then((uploadItem) => {
             // console.log(uploadItem.downloadURL);
             loading.dismiss();
             let index = this.departmentListData.indexOf(info);
-            let newItem = { "group": name.content, "image": [uploadItem.downloadURL] };
+            let newItem = { "group": item.name, "image": [uploadItem.downloadURL] };
             this.departmentListData.splice(1, 0, newItem);
             this.showDetail(newItem);
           })
@@ -129,7 +132,7 @@ export class Department {
   edit(info) {
     let newModal = this.modalCtrl.create(NameEditModalComponent, { name: info.group });
     newModal.onDidDismiss((name) => {
-      info.group = name;
+      if(name){info.group = name;}
     });
     newModal.present();
   }

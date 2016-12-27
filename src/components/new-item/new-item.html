@@ -4,5 +4,30 @@
   See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
   for more info on Angular 2 Components.
 -->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Create New Item
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-label>Name of new section:</ion-label>
+    <ion-input [(ngModel)]="name" placeholder = "Name"></ion-input>
 
-{{text}}
+    </ion-card>
+  <ion-card *ngIf="name">
+    <button ion-button start [disabled]="makeImage" (click)="makeData()">Create Data Page</button>
+    <button ion-button end (click)="makeImage=true" [disabled]="makeImage" >Create Image Page</button>
+  </ion-card>
+  <ion-card *ngIf="makeImage">
+    <input type="file" (change)="fileChangeEvent($event)" placeholder="Upload file..." />
+    </ion-card>
+  <button ion-button [disabled]="!file" (click)="upload()" color="danger">Save</button>
+</ion-content>

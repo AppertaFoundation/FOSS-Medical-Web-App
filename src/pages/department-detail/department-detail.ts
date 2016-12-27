@@ -105,7 +105,7 @@ export class DepartmentDetailPage {
           });
           loading.present();
           //item needs uploading to firebase then we need the upload URL
-          this.fbServ.uploadFile(item.file,'department',imagesObject.group,imageNumber)
+          this.fbServ.uploadFile(item,'department',imagesObject.group,imageNumber)
           .then((uploadItem)=>{
             loading.dismiss();
             imagesObject.image.push(uploadItem.downloadURL);

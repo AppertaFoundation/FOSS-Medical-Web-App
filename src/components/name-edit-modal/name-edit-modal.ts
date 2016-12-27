@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-
+import { NavParams, ViewController } from 'ionic-angular';
 /*
   Generated class for the NameEditModal component.
 
@@ -12,11 +12,20 @@ import { Component } from '@angular/core';
 })
 export class NameEditModalComponent {
 
-  text: string;
+  name: string;
 
-  constructor() {
-    console.log('Hello NameEditModal Component');
-    this.text = 'Hello World';
+  constructor(private navParams:NavParams, private viewCtrl:ViewController) {
+   this.name = this.navParams.get('name');
+   console.log(this.name);
   }
+
+  save(){
+    this.viewCtrl.dismiss(this.name);
+  }
+
+  dismiss(){
+    this.viewCtrl.dismiss();
+  }
+
 
 }
