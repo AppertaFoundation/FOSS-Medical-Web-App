@@ -1,0 +1,43 @@
+<!--
+  Generated template for the EditModal component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Edit item
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card>
+    <ion-item>
+      <ion-label>Click to change data type:</ion-label>
+      {{data.type}}
+      <ion-select [(ngModel)]="data.type">
+        <ion-option value="text" selected="true">Text</ion-option>
+        <ion-option value="title">Title</ion-option>
+        <ion-option value="subtitle">Subtitle</ion-option>
+        <ion-option value="heading">Heading</ion-option>
+        <ion-option value="list">List</ion-option>
+        <ion-option value="important">Important</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Enter/ Edit your information:</ion-label>
+      <ion-input [(ngModel)]="data.detail">
+      </ion-input >
+    </ion-item>
+    <button ion-button (click)="save()" color="danger">
+      Save
+    </button>
+
+  </ion-card>
+</ion-content>
