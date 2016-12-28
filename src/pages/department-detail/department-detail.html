@@ -10,9 +10,9 @@
     <ion-title>Department Details - {{pageTitle.group}}</ion-title>
 
   </ion-navbar>
-<button ion-button item-right (click)="publishDetails(detailObject)" >Publish</button>
+<button ion-button item-right (click)="localSave()">Local Save</button>
 <button *ngIf="this.detailObject.image" ion-button end
-(click)="upLoadMoreImages(this.detailObject)" 
+(click)="upLoadMoreImages(this.detailObject)"
 color="secondary">More Images?</button>
 </ion-header>
 

@@ -19,17 +19,18 @@ export class DepartmentDetailPage {
   pageTitle: String;
   index: Number;
   confirm: Boolean;
+  isImage: Boolean;
 
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams, public fbServ: FirebaseService,
-    private modalCtrl: ModalController, private alertCtrl: AlertController, private loadingCtrl:LoadingController) {
+    private modalCtrl: ModalController, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
 
     let allDetails = this.navParams.get('info');
-    if (allDetails.data){
+    if (allDetails.data) {
       this.detailObject = allDetails.data;
     }
-    else{
+    else {
       this.detailObject = allDetails;
     }
     this.pageTitle = this.navParams.get('info');
@@ -40,6 +41,10 @@ export class DepartmentDetailPage {
     // console.log("object is ",this.detailObject);
 
 
+  }
+
+  ionViewDidEnter() {
+    this.isImage = false;
   }
 
   moveUp(data) {
@@ -74,17 +79,19 @@ export class DepartmentDetailPage {
   }
 
   newItem(data?) {
-    let newItem = {"type":"",
-                    "detail":"" };
+    let newItem = {
+      "type": "",
+      "detail": ""
+    };
 
     let tempIndex = this.detailObject.indexOf(data);
-    this.detailObject.splice(tempIndex,0,newItem);
+    this.detailObject.splice(tempIndex, 0, newItem);
     let newItemRef = this.detailObject[tempIndex];
     this.edit(newItemRef);
 
   }
 
-  delete(data){
+  delete(data) {
     let tempIndex = this.detailObject.indexOf(data);
     this.showConfirm(this.detailObject, tempIndex);
     // console.log('Confirming:',this.confirm);
@@ -92,25 +99,29 @@ export class DepartmentDetailPage {
 
   }
 
-  upLoadMoreImages(imagesObject){
+  upLoadMoreImages(imagesObject) {
     let imagesModal = this.modalCtrl.create(MoreImagesComponent);
     // console.log(imagesObject);
     let imageNumber = imagesObject.image.length;
 
     imagesModal.onDidDismiss((item) => {
       if (item) {//will be a file
-          // console.log(item);
-          let loading = this.loadingCtrl.create({
-            content: 'Please wait...'
-          });
-          loading.present();
-          //item needs uploading to firebase then we need the upload URL
-          this.fbServ.uploadFile(item,'department',imagesObject.group,imageNumber)
-          .then((uploadItem)=>{
+        // console.log(item);
+        this.isImage = true;
+        let loading = this.loadingCtrl.create({
+          content: 'Uploading image and saving to web database. Please wait...'
+        });
+        loading.present();
+        //item needs uploading to firebase then we need the upload URL
+        this.fbServ.uploadFile(item, 'department', imagesObject.group, imageNumber)
+          .then((uploadItem) => {
             loading.dismiss();
             imagesObject.image.push(uploadItem.downloadURL);
+            this.fbServ.publishData("department");
           })
-          .catch(()=>{console.log('file error')})
+          .catch(() => { console.log('file error') ;
+          loading.dismiss();
+        })
 
       }
     });
@@ -118,32 +129,39 @@ export class DepartmentDetailPage {
     //TODO
   }
 
-  showConfirm(DeleteObj, DeleteIndex) {
-   let confirm = this.alertCtrl.create({
-     title: 'Delete this item?',
-     message: 'Do you want to permanently delete this?',
-     buttons: [
-       {
-         text: 'No-Cancel',
-         handler: () => {
-          //  console.log('Disagree clicked');
-           return true;
-                   }
+  localSave() {
+    this.fbServ.localSave("department");
+  }
 
-       },
-       {
-         text: 'Yes-Delete',
-         handler: () => {
-          //  console.log('Agree clicked');
-            DeleteObj.splice(DeleteIndex,1);
+  showConfirm(DeleteObj, DeleteIndex) {
+    let confirm = this.alertCtrl.create({
+      title: 'Delete this item?',
+      message: 'Do you want to permanently delete this?',
+      buttons: [
+        {
+          text: 'No-Cancel',
+          handler: () => {
+            //  console.log('Disagree clicked');
+            return true;
+          }
+
+        },
+        {
+          text: 'Yes-Delete',
+          handler: () => {
+            //  console.log('Agree clicked');
+            DeleteObj.splice(DeleteIndex, 1);
             return true;
 
-             }
-       }
-     ]
-   });
-   confirm.present();
- }
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+
+
 
 
 

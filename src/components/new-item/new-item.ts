@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, LoadingController } from 'ionic-angular';
+import { ViewController, LoadingController, NavParams } from 'ionic-angular';
 
 /*
   Generated class for the NewItem component.
@@ -16,9 +16,12 @@ export class NewItemComponent {
   name: string;
   makeImage:Boolean = false;
   file:any;
+  unique:Boolean;
+  titleList:Array<string>;
 
   constructor(private viewCtrl:ViewController,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController,
+    private navParams:NavParams
 
   ) {
     this.name = "";
@@ -27,7 +30,8 @@ export class NewItemComponent {
   ionViewDidEnter(){
     this.makeImage = false;
     this.file ="";
-  }
+    this.titleList = this.navParams.get('list');
+    }
 
   upload(){
     this.viewCtrl.dismiss({"file":this.file, "name":this.name, "image":true});
@@ -46,6 +50,11 @@ export class NewItemComponent {
 
   makeData(){
     this.viewCtrl.dismiss({"name":this.name, "image":"false"});
+  }
+
+  checkUnique(){
+    this.unique = (this.titleList.indexOf(this.name)== -1);
+    console.log(this.unique);
   }
 
 

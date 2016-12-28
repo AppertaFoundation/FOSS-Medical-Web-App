@@ -78,7 +78,10 @@ export class Department {
   }
 
   createNew(info) {
-    let newModal = this.modalCtrl.create(NewItemComponent);
+    let titleList = this.departmentListData.map((item)=>item.group);
+    // console.log(titleList);
+
+    let newModal = this.modalCtrl.create(NewItemComponent,{"list":titleList});
     //TODO consider checking against the list of existing names- pass in an array
 
     newModal.onDidDismiss((item) => {
@@ -105,7 +108,7 @@ export class Department {
           //TODO will need to keep a list of the images to ensure no overlap - if checked for duplicates
           //above won't need to do this!
           let loading = this.loadingCtrl.create({
-            content: 'Please wait...'
+            content: 'Uploading file then saving to web database. Please wait...'
           });
           loading.present();
 
@@ -116,10 +119,12 @@ export class Department {
             let index = this.departmentListData.indexOf(info);
             let newItem = { "group": item.name, "image": [uploadItem.downloadURL] };
             this.departmentListData.splice(1, 0, newItem);
+            this.publishDeptData();
             this.showDetail(newItem);
           })
             .catch(() => {
               this.showAlert("Error", "File upload error");
+              loading.dismiss();
             })
         }
       }
