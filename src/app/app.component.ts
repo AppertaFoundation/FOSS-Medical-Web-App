@@ -14,7 +14,7 @@ import firebase  from 'firebase';
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
-  rootPage: any = Department;
+  rootPage: any = Clinical;
 
   pages: Array<{ title: string, component: any }>;
 

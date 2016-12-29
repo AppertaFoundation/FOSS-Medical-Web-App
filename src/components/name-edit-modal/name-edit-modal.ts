@@ -12,7 +12,7 @@ import { NavParams, ViewController, AlertController } from 'ionic-angular';
 })
 export class NameEditModalComponent {
 
-  name: string;
+  name: string="";
   image: any;
 
   constructor(private navParams: NavParams, private viewCtrl: ViewController, private alertCtrl: AlertController) {
@@ -22,6 +22,7 @@ export class NameEditModalComponent {
   }
 
   ionViewDidEnter() {
+    console.log(this.name);
     if (this.image) {
       let alert = this.alertCtrl.create({
         title: "Error",

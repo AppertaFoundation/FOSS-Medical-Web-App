@@ -5,4 +5,38 @@
   for more info on Angular 2 Components.
 -->
 
-{{text}}
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Edit item -
+      {{type}}
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()" color="secondary">
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-card *ngIf = "dataArray && dataArray.length>0">
+    <div *ngFor="let item of dataArray; let i=index; trackBy:customTrackBy">
+      <ion-input [(ngModel)]="dataArray[i]" placeholder = "Type data here"></ion-input>
+      <button ion-button (click)="deleteItem(dataArray[i])" start color="danger">
+        <ion-icon name="trash" ></ion-icon>
+      </button>
+      <button ion-button (click)="addNew(i)" end color="secondary">
+        <ion-icon name="create" ></ion-icon>
+      </button>
+    </div>
+
+  </ion-card>
+  <ion-card *ngIf = "dataArray && dataArray.length ==0">
+  <button ion-button (click)="addNew(i)" end color="secondary">
+    <ion-icon name="create" >Add Item</ion-icon>
+  </button>
+  </ion-card>
+  <button ion-button (click)="save()" color="danger">
+    Save
+  </button>
+</ion-content>

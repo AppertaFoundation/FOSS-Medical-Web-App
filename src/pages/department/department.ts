@@ -173,9 +173,9 @@ export class Department {
               this.departmentListData.splice(index, 1);
               return true;
             }
-            let index = this.departmentListData.indexOf(info);
+            else{let index = this.departmentListData.indexOf(info);
             this.departmentListData.splice(index, 1);
-            return true;
+            return true;}
 
           }
         }

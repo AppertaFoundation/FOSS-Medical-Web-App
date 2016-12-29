@@ -21,10 +21,10 @@
   <ion-card>
     <ion-item>
       <ion-label floating>Enter/ Edit your information:</ion-label>
-      <ion-input [(ngModel)]="name">
+      <ion-input [(ngModel)]="name" placeholder= "Enter name">
       </ion-input >
     </ion-item>
-    <button ion-button (click)="save()" color="danger">
+    <button ion-button [disabled]="name.length ==0" (click)="save()" color="danger">
       Save
     </button>
 

@@ -13,17 +13,23 @@
 </ion-header>
 <ion-content padding>
   <h2>{{detailObject.title}}</h2>
+  <h3>Picture</h3>
+  <button icon-right  ion-button small (click)="editPicture()">
+    Edit
+      <ion-icon item-right name="create"></ion-icon>
+
+    </button>
+
   <h4>Summary
-    <button ion-button small (click)="editItem('summary')">
-        <ion-icon right name="create"></ion-icon>
-        Edit
+    <button icon-right  ion-button small (click)="editItem('summary')">
+      Edit
+        <ion-icon item-right name="create"></ion-icon>
       </button>
     </h4>
-  <p>
-    {{detailObject.summary}}</p>
-  <h4>Symptoms <button ion-button small (click)="editItem('symptoms')">
-      <ion-icon right name="create"></ion-icon>
-      Edit
+  <p>{{detailObject.summary}}</p>
+  <h4>Symptoms <button icon-right  ion-button small (click)="editItem('symptoms')">
+    Edit
+      <ion-icon item-right name="create"></ion-icon>
     </button>
   </h4>
 
@@ -34,31 +40,31 @@
 
   </div>
   <h4>Signs
-    <button ion-button small (click)="editItem('signs')">
-        <ion-icon right name="create"></ion-icon>
-        Edit
+    <button icon-right  ion-button small (click)="editItem('signs')">
+      Edit
+        <ion-icon item-right name="create"></ion-icon>
       </button>
 
   </h4>
   <p *ngFor="let data of detailObject.signs">{{data}}</p>
   <h4>Action
-    <button ion-button small (click)="editItem('action')">
-        <ion-icon right name="create"></ion-icon>
-        Edit
+    <button icon-right  ion-button small (click)="editItem('required')">
+      Edit
+        <ion-icon item-right name="create"></ion-icon>
       </button>
   </h4>
   <p *ngFor="let data of detailObject.required">{{data}}</p>
   <h4>Admit
-    <button ion-button small (click)="editItem('admit')">
-        <ion-icon right name="create"></ion-icon>
-        Edit
+    <button icon-right  ion-button small (click)="editItem('admit')">
+      Edit
+        <ion-icon item-right name="create"></ion-icon>
       </button>
   </h4>
   <p *ngFor="let data of detailObject.admit">{{data}}</p>
   <h4>Red Flags
-    <button ion-button small (click)="editItem('admit')">
-        <ion-icon right name="create"></ion-icon>
-        Edit
+    <button icon-right  ion-button small (click)="editItem('admit')">
+      Edit
+        <ion-icon item-right name="create"></ion-icon>
       </button>
   </h4>
   <p *ngFor="let data of detailObject.flags">{{data}}</p>

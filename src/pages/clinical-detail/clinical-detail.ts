@@ -29,13 +29,17 @@ export class ClinicalDetailPage {
     // console.log('Hello ClinicalDetailPage Page');
   }
 
+  editPicture(){
+    console.log("TODO edit picture clinical");
+  }
+
   editItem(type:string){
     // console.log("detail array is: ", this.detailObject[type]);
     let newModal = this.modalCtrl.create(ClinicalEditModalComponent,{"dataArray":this.detailObject[type], "type":type});
     newModal.onDidDismiss((item)=>{
       if(item)
       {
-        console.log(item);
+        this.detailObject[type] = item;
       }
     })
     newModal.present();
