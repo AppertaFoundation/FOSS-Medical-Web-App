@@ -17,14 +17,15 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <ion-card>
+  <ion-card *ngIf="unique!=true">
     <ion-label>Name of new section:</ion-label>
     <ion-input [(ngModel)]="name" placeholder="Name"></ion-input>
     <button ion-button left (click)="checkUnique()">Check name</button>
   </ion-card>
-  <ion-item *ngIf="unique == false">Name already in use. Please choose another</ion-item>
+  <ion-item *ngIf="unique == false">Name already in use. Please choose another  </ion-item>
   <ion-card *ngIf="unique">
     <ion-item>Name OK!</ion-item>
+    <ion-item>{{name}}</ion-item>
     <button ion-button start [disabled]="makeImage" (click)="makeData()">Create Data Page</button>
     <button ion-button end (click)="makeImage=true" [disabled]="makeImage">Create Image Page</button>
   </ion-card>
