@@ -116,17 +116,16 @@ export class DepartmentDetailPage {
         this.fbServ.uploadFile(item, 'department', imagesObject.group, imageNumber)
           .then((uploadItem) => {
             loading.dismiss();
-            imagesObject.image.push(uploadItem.downloadURL);
+            imagesObject.image.push(uploadItem);
             this.fbServ.publishData("department");
           })
-          .catch(() => { console.log('file error') ;
+          .catch((error) => { console.log('file error') ;
           loading.dismiss();
         })
 
       }
     });
     imagesModal.present();
-    //TODO
   }
 
   localSave() {

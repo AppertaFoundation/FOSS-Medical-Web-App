@@ -112,20 +112,22 @@ export class Department {
           });
           loading.present();
 
-          let uploadTask = () => this.fbServ.uploadFile(item.file, "department", item.name);
-          uploadTask().then((uploadItem) => {
-            // console.log(uploadItem.downloadURL);
+          this.fbServ.uploadFile(item.file, "department", item.name)
+          .then((uploadItem) => {
+            console.log(uploadItem.downloadURL);
             loading.dismiss();
             let index = this.departmentListData.indexOf(info);
             let newItem = { "group": item.name, "image": [uploadItem.downloadURL] };
             this.departmentListData.splice(1, 0, newItem);
             this.publishDeptData();
             this.showDetail(newItem);
-          })
-            .catch(() => {
-              this.showAlert("Error", "File upload error");
-              loading.dismiss();
+          },
+          ((error) => {
+            loading.dismiss();
+              this.showAlert("Error", `File upload error,${error}`);
             })
+          );
+
         }
       }
 

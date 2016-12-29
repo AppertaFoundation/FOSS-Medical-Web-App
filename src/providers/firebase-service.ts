@@ -3,6 +3,7 @@ import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
+import {Observable} from 'rxjs/Observable';
 import firebase  from 'firebase';
 
 
@@ -58,7 +59,7 @@ export class FirebaseService {
     }
   }
 
-  manageDetail(type:string, detailObject:Object){
+  manageDetail(type: string, detailObject: Object) {
     this[type + "DetailData"] = detailObject;
   }
 
@@ -68,14 +69,14 @@ export class FirebaseService {
     return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`, this[type + "Data"])
       .toPromise();
   }
-  publishDetail(type: string, index:Number, data: Object) {
+  publishDetail(type: string, index: Number, data: Object) {
     //type can include index and 'data' to publish department data
     return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}/${index}/data.json`, data)
       .toPromise();
   }
 
 
-  reloadData(type:string) {
+  reloadData(type: string) {
     this[type + "DataFetched"] = false;
     this.getList(type);
   }
@@ -95,7 +96,7 @@ export class FirebaseService {
     }
   }
 
-  localSave(type:string) {//eg clinical or department
+  localSave(type: string) {//eg clinical or department
     let savingType = type + "Data";
     this[savingType + "Local"] = true;
     this.storage.set(savingType + "Local", "true");
@@ -103,7 +104,7 @@ export class FirebaseService {
     this.storage.set(savingType, toSaveData);
   }
 
-  localLoad(type:string) {
+  localLoad(type: string) {
     let savingType = type + "Data";
     return this.storage.get(savingType)
       .then((response) => {
@@ -113,18 +114,21 @@ export class FirebaseService {
       });
   }
 
-  getLocalFlag(type:string) {
+  getLocalFlag(type: string) {
     let savingType = type + "Data";
     return this.storage.get(savingType + "Local");
   }
 
-  uploadFile(file:any, type:string, name:string, fileNumber:number=0){
-    let ref = firebase.storage().ref();
-    return  ref.child(`/${this.hospital}/${this.specialty}/${type}/${name}/${fileNumber}`).put(file);
-  }
+  uploadFile(file: any, type: string, name: string, fileNumber: number = 0) {
+    // let ref = firebase.storage().ref();
+    // return  ref.child(`/${this.hospital}/${this.specialty}/${type}/${name}/${fileNumber}`).put(file);
+    return firebase.storage().ref().child(`/${this.hospital}/${this.specialty}/${type}/${name}/${fileNumber}`).put(file);
 
-  deleteFile(type:string, name:string, fileNumber:number=0){
+}
+
+
+  deleteFile(type: string, name: string, fileNumber: number = 0) {
     let ref = firebase.storage().ref().child(`/${this.hospital}/${this.specialty}/${type}/${name}/${fileNumber}`);
-    return  ref.delete();
+    return ref.delete();
   }
 }
