@@ -44,8 +44,14 @@ export class NewItemComponent {
 
   fileChangeEvent(event){
     //file API returns an array with element 0 is the file
-    this.file = event.srcElement.files[0];
-    // console.log(this.file);
+    console.log(event);
+    if(event.target)
+    {this.file = event.target.files[0];}
+    else{
+      console.log("Error no file");
+    }
+
+
   }
 
   makeData(){

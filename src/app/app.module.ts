@@ -7,7 +7,6 @@ import { Department } from '../pages/department/department';
 import { ClinicalDetailPage } from '../pages/clinical-detail/clinical-detail';
 import { DepartmentDetailPage } from '../pages/department-detail/department-detail';
 import { FirebaseService } from '../providers/firebase-service';
-import { LazyImgComponent } from '../providers/lazy-img';
 import { EditModalComponent } from '../components/edit-modal/edit-modal';
 import { NewItemComponent } from '../components/new-item/new-item';
 import { MoreImagesComponent } from '../components/more-images/more-images';
@@ -23,7 +22,6 @@ import { ClinicalEditModalComponent } from '../components/clinical-edit-modal/cl
     Department,
     ClinicalDetailPage,
     DepartmentDetailPage,
-    LazyImgComponent,
     EditModalComponent,
     NewItemComponent,
     MoreImagesComponent,
@@ -40,7 +38,6 @@ import { ClinicalEditModalComponent } from '../components/clinical-edit-modal/cl
     Department,
     ClinicalDetailPage,
     DepartmentDetailPage,
-    LazyImgComponent,
     EditModalComponent,
     NewItemComponent,
     MoreImagesComponent,

@@ -6,7 +6,6 @@ import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
 import firebase  from 'firebase';
 
-import ImgCache from 'imgcache.js';
 
 
 @Component({
@@ -45,13 +44,6 @@ export class MyApp {
       StatusBar.styleDefault();
       Splashscreen.hide();
 
-      //ImgCache setup- activate debug mode
-      ImgCache.options.debug = true;
-
-      //Wait fro ImgCache to startup
-      ImgCache.init(()=> {return},
-                    () => {console.log('ImgCache Error- check log')
-                  })
     });
   }
 
