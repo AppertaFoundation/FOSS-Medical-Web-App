@@ -8,11 +8,12 @@
 
   <ion-navbar>
     <ion-title>More Information</ion-title>
+    <h2>{{detailObject.title}}</h2>
   </ion-navbar>
 
 </ion-header>
-<ion-content padding>
-  <h2>{{detailObject.title}}</h2>
+
+<ion-content padding *ngIf="!detailObject.image">
   <h3>Picture</h3>
   <button icon-right  ion-button small (click)="editPicture()">
     Edit
@@ -69,4 +70,9 @@
   </h4>
   <p *ngFor="let data of detailObject.flags">{{data}}</p>
 
+</ion-content>
+<ion-content padding *ngIf="detailObject.image">
+  <div *ngFor ="let picture of this.detailObject.image">
+    <img [src]="picture" />
+  </div>
 </ion-content>

@@ -82,7 +82,6 @@ export class Department {
     // console.log(titleList);
 
     let newModal = this.modalCtrl.create(NewItemComponent,{"list":titleList});
-    //TODO consider checking against the list of existing names- pass in an array
 
     newModal.onDidDismiss((item) => {
       // console.log('Dismissed');
@@ -126,7 +125,13 @@ export class Department {
             loading.dismiss();
               this.showAlert("Error", `File upload error,${error}`);
             })
-          );
+          )
+          .catch((error)=>{
+            loading.dismiss();
+              this.showAlert("Error", `File upload error,${error}`);
+          });
+
+          ;
 
         }
       }
@@ -164,10 +169,19 @@ export class Department {
             // console.log('Agree clicked');
             //TODO need to delete any firebase storage images
             if (info.image) {
+              let loading = this.loadingCtrl.create({content:"Deleting data..."});
+
               console.log('Deleting images');
               info.image.forEach((imageURL, index) => {
+                loading.present();
                 this.fbServ.deleteFile('department', info.group, index)
-                .catch(()=>console.log("error"))
+                .then(()=>{
+                  loading.dismiss();
+                  this.publishDeptData();
+                })
+                .catch(()=>{
+                  loading.dismiss();
+                  console.log("error")})
               });
               let index = this.departmentListData.indexOf(info);
               this.departmentListData.splice(index, 1);

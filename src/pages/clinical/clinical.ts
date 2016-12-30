@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, AlertController, ModalController } from 'ionic-angular';
+import { NavController, AlertController, ModalController, LoadingController } from 'ionic-angular';
 import { FirebaseService } from '../../providers/firebase-service';
 import { ClinicalDetailPage } from '../clinical-detail/clinical-detail';
 import { NewItemComponent } from '../../components/new-item/new-item';
@@ -16,7 +16,8 @@ export class Clinical {
 
   constructor(public navCtrl: NavController,
     public fbServ: FirebaseService, private alertCtrl: AlertController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private loadingCtrl: LoadingController
   ) {
     fbServ.getList("clinical")
       .then(data => {
@@ -40,24 +41,75 @@ export class Clinical {
   }
 
   createNew(info) {
-    let index = this.clinicalListData.indexOf(info);
-    console.log("index ",index);
-    let newItem = {
-      "picture": [],
-      "title": [],
-      "summary": [],
-      "shortname": [],
-      "symptoms": [],
-      "signs": [],
-      "required": [],
-      "admit": [],
-      "flags": []
-    };
-    this.clinicalListData.splice(index, 0, newItem);
-    // console.log(this.clinicalListData[index]);
-    this.edit(this.clinicalListData[index]);
-    this.showDetail(this.clinicalListData[index]);
+    let titleList = this.clinicalListData.map((item)=>item.title);
+
+    let newModal = this.modalCtrl.create(NewItemComponent,{"list":titleList});
+    newModal.onDidDismiss((item) => {
+      // console.log('Dismissed');
+      //if returns data from Modal
+      if (!item || item.length == 0) {
+        this.showAlert("Error", "No name provided");
+      }//
+
+      //returns an item with a property image if an image file and without one if not
+      else {
+        //not an image file so set up a blank set of data
+        if (item.image && item.image == "false") {
+          let index = this.clinicalListData.indexOf(info);
+          let newItem = {
+            "picture": [],
+            "title": [],
+            "summary": [],
+            "shortname": [],
+            "symptoms": [],
+            "signs": [],
+            "required": [],
+            "admit": [],
+            "flags": []
+          };
+          this.clinicalListData.splice(1, 0, newItem);
+          this.edit(this.clinicalListData[index]);
+          this.showDetail(this.clinicalListData[index]);
+          return;
+        }
+        else {
+
+          let loading = this.loadingCtrl.create({
+            content: 'Uploading file then saving to web database. Please wait...'
+          });
+          loading.present();
+
+          this.fbServ.uploadFile(item.file, "clinical", item.name)
+          .then((uploadItem) => {
+            console.log(uploadItem.downloadURL);
+            loading.dismiss();
+            let index = this.clinicalListData.indexOf(info);
+            let newItem = { "title": item.name, "image": [uploadItem.downloadURL] };
+            this.clinicalListData.splice(1, 0, newItem);
+            this.publishData();
+            this.showDetail(newItem);
+          },
+          ((error) => {
+            loading.dismiss();
+              this.showAlert("Error", `File upload error,${error}`);
+            })
+          )
+          .catch((error)=>{
+            loading.dismiss();
+              this.showAlert("Error", `File upload error,${error}`);
+          });
+
+        }
+      }
+
+    });
+
+    newModal.present();
     }
+
+  // showDetailImage(newItem){
+  //     //TODO
+  //   }
 
   delete(info) {
     let confirm = this.alertCtrl.create({
@@ -80,8 +132,20 @@ export class Clinical {
             if (info.image) {
               console.log('Deleting images');
               info.image.forEach((imageURL, index) => {
-                this.fbServ.deleteFile('department', info.group, index)
-                  .catch(() => console.log("error"))
+                let loading = this.loadingCtrl.create({
+                  content: 'Deleting files...'
+                });
+                loading.present();
+                this.fbServ.deleteFile('clinical', info.title, index)
+                .then(()=>{
+                  loading.dismiss()
+                  this.publishData();
+                  }
+                )
+                  .catch(()=>{
+                    loading.dismiss();
+                     console.log("error")
+                   })
               });
               let index = this.clinicalListData.indexOf(info);
               this.clinicalListData.splice(index, 1);
