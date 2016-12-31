@@ -1,0 +1,29 @@
+<!--
+  Generated template for the GetImage component.
+
+  See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  for more info on Angular 2 Components.
+-->
+
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Get new image
+    </ion-title>
+    <ion-buttons start>
+      <button ion-button (click)="dismiss()">
+        Cancel
+      </button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+
+    <ion-card>
+      <input type="file" accept="image/*" (change)="fileChangeEvent($event)" placeholder="Upload file..."/>
+    </ion-card>
+    <button ion-button (click)="upload()" color="danger">
+      Save
+    </button>
+
+</ion-content>
