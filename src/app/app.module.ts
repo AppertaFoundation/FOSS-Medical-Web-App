@@ -12,6 +12,8 @@ import { NewItemComponent } from '../components/new-item/new-item';
 import { MoreImagesComponent } from '../components/more-images/more-images';
 import { NameEditModalComponent } from '../components/name-edit-modal/name-edit-modal';
 import { ClinicalEditModalComponent } from '../components/clinical-edit-modal/clinical-edit-modal';
+import { GetImageComponent } from '../components/get-image/get-image';
+
 
 
 
@@ -26,7 +28,8 @@ import { ClinicalEditModalComponent } from '../components/clinical-edit-modal/cl
     NewItemComponent,
     MoreImagesComponent,
     NameEditModalComponent,
-    ClinicalEditModalComponent
+    ClinicalEditModalComponent,
+    GetImageComponent
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -42,7 +45,8 @@ import { ClinicalEditModalComponent } from '../components/clinical-edit-modal/cl
     NewItemComponent,
     MoreImagesComponent,
     NameEditModalComponent,
-    ClinicalEditModalComponent
+    ClinicalEditModalComponent,
+    GetImageComponent
   ],
   providers: [
     {provide: ErrorHandler, useClass: IonicErrorHandler},

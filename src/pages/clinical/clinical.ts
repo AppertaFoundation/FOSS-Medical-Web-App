@@ -67,7 +67,7 @@ export class Clinical {
             "admit": [],
             "flags": []
           };
-          this.clinicalListData.splice(1, 0, newItem);
+          this.clinicalListData.splice(index+1, 0, newItem);
           this.edit(this.clinicalListData[index]);
           this.showDetail(this.clinicalListData[index]);
           return;
@@ -85,7 +85,7 @@ export class Clinical {
             loading.dismiss();
             let index = this.clinicalListData.indexOf(info);
             let newItem = { "title": item.name, "image": [uploadItem.downloadURL] };
-            this.clinicalListData.splice(1, 0, newItem);
+            this.clinicalListData.splice(index+1, 0, newItem);
             this.publishData();
             this.showDetail(newItem);
           },

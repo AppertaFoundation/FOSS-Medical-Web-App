@@ -113,7 +113,7 @@ export class Department {
 
           this.fbServ.uploadFile(item.file, "department", item.name)
           .then((uploadItem) => {
-            console.log(uploadItem.downloadURL);
+            // console.log(uploadItem.downloadURL);
             loading.dismiss();
             let index = this.departmentListData.indexOf(info);
             let newItem = { "group": item.name, "image": [uploadItem.downloadURL] };
@@ -171,7 +171,7 @@ export class Department {
             if (info.image) {
               let loading = this.loadingCtrl.create({content:"Deleting data..."});
 
-              console.log('Deleting images');
+              // console.log('Deleting images');
               info.image.forEach((imageURL, index) => {
                 loading.present();
                 this.fbServ.deleteFile('department', info.group, index)
