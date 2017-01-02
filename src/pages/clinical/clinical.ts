@@ -4,6 +4,7 @@ import { FirebaseService } from '../../providers/firebase-service';
 import { ClinicalDetailPage } from '../clinical-detail/clinical-detail';
 import { NewItemComponent } from '../../components/new-item/new-item';
 import { NameEditModalComponent } from '../../components/name-edit-modal/name-edit-modal';
+import { AuthServ } from '../../providers/auth-serv';
 
 
 @Component({
@@ -13,23 +14,30 @@ import { NameEditModalComponent } from '../../components/name-edit-modal/name-ed
 export class Clinical {
 
   public clinicalListData;
+  private auth:any;
 
   constructor(public navCtrl: NavController,
     public fbServ: FirebaseService, private alertCtrl: AlertController,
-    private modalCtrl: ModalController,
+    private modalCtrl: ModalController, private authServ: AuthServ,
     private loadingCtrl: LoadingController
   ) {
     fbServ.getList("clinical")
       .then(data => {
         this.clinicalListData = data;
       });
-    // fbServ.getClinicalList()
-    // .then((data)=>console.log(data));
+    let getAuth = authServ.getUser()
+    console.log("getAuth:",getAuth);
+    if (getAuth.isAnonymous){
+      this.auth = null;
+    }
+    if(getAuth.email){
+      this.auth = true;
+    }
   }
 
   showDetail(info) {
     // console.log('item ', info);
-    this.navCtrl.push(ClinicalDetailPage, { info: info });
+    this.navCtrl.push(ClinicalDetailPage, { info: info, auth:this.auth  });
   }
 
   edit(info) {

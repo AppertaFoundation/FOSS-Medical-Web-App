@@ -10,20 +10,22 @@
     <ion-title>Department Details - {{pageTitle.group}}</ion-title>
 
   </ion-navbar>
-<button *ngIf ="!this.detailObject.image" ion-button item-right (click)="localSave()">Local Save</button>
-<button *ngIf="this.detailObject.image" ion-button end
+  <div >
+  <button *ngIf ="!this.detailObject.image && this.auth" ion-button item-right (click)="localSave()" >Local Save</button>
+<button *ngIf="this.detailObject.image && this.auth" ion-button end
 (click)="upLoadMoreImages(this.detailObject)"
-color="secondary">More Images?</button>
+color="secondary" >More Images?</button>
+  </div>
 </ion-header>
 
 <ion-content padding *ngIf = "!detailObject.image" >
   <ion-list >
     <ion-item *ngFor="let data of detailObject" text-wrap>
-      <button ion-button item-left (click)="moveUp(data)">
+      <button ion-button item-left (click)="moveUp(data)" *ngIf ="this.auth" >
         <ion-icon name="arrow-dropup"></ion-icon>
       </button>
 
-      <button (click)="moveDown(data)" ion-button item-left>
+      <button (click)="moveDown(data)" ion-button item-left *ngIf ="this.auth">
         <ion-icon name="arrow-dropdown"></ion-icon>
       </button>
 
@@ -40,15 +42,15 @@ color="secondary">More Images?</button>
       <p *ngIf="data.type == 'text'">{{data.detail}}</p>
       <p *ngIf="data.type == 'list'">-{{data.detail}}</p>
 
-      <button (click)="edit(data)" ion-button item-right color="secondary" floating>
+      <button (click)="edit(data)" ion-button item-right color="secondary" floating *ngIf ="this.auth">
         <ion-icon  name="create"> Edit</ion-icon>
       </button>
 
-      <button (click)="newItem(data)" ion-button item-right color="light">
+      <button (click)="newItem(data)" ion-button item-right color="light" *ngIf ="this.auth">
         <ion-icon  name="add-circle"> New</ion-icon>
       </button>
 
-      <button (click)="delete(data)" ion-button item-right color="danger">
+      <button (click)="delete(data)" ion-button item-right color="danger" *ngIf ="this.auth">
         <ion-icon  name="trash"> Delete</ion-icon>
       </button>
 

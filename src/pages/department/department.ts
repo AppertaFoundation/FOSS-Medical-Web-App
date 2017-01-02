@@ -4,6 +4,7 @@ import { FirebaseService } from '../../providers/firebase-service';
 import { DepartmentDetailPage } from '../department-detail/department-detail';
 import { NewItemComponent } from '../../components/new-item/new-item';
 import { NameEditModalComponent } from '../../components/name-edit-modal/name-edit-modal';
+import { AuthServ } from '../../providers/auth-serv';
 
 @Component({
   selector: 'page-department',
@@ -12,22 +13,31 @@ import { NameEditModalComponent } from '../../components/name-edit-modal/name-ed
 export class Department {
 
   public departmentListData;
+  private auth:any;
 
   constructor(private navCtrl: NavController, public fbServ: FirebaseService,
     private alertCtrl: AlertController, private modalCtrl: ModalController,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController, private authServ: AuthServ,) {
     // this.departmentListData = fbServ.getDepartmentList();
     fbServ.getList("department")
       .then((data) => {
         this.departmentListData = data;
       });
+      let getAuth = authServ.getUser()
+      console.log("getAuth:",getAuth);
+      if (getAuth.isAnonymous){
+        this.auth = null;
+      }
+      if(getAuth.email){
+        this.auth = true;
+      }
   }
 
   showDetail(info) {
     // console.log('item ', info);
     let index = this.departmentListData.indexOf(info);
     // console.log("index is ", index);
-    this.navCtrl.push(DepartmentDetailPage, { info: info, index: index });
+    this.navCtrl.push(DepartmentDetailPage, { info: info, index: index, auth:this.auth });
   }
 
   moveUp(info) {

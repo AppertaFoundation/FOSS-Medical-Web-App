@@ -5,7 +5,7 @@
     </button>
     <ion-title>Department</ion-title>
   </ion-navbar>
-  <div>
+  <div *ngIf ="this.auth">
     <button ion-button item-right (click)="publishDeptData()">Publish</button>
     <button ion-button item-right color="danger" (click)="localSave()">Save Local Data</button>
     <button ion-button item-right color="secondary" (click)="localLoad()">Load Local Data</button>
@@ -14,31 +14,27 @@
 
 <ion-content padding>
   <h3>Department Information</h3>
-  <ion-list *ngIf = "departmentListData && !departmentListData.image">
+  <ion-list>
     <ion-item *ngFor="let info of departmentListData">
-      <button ion-button (click)="moveUp(info)">
+      <button ion-button (click)="moveUp(info)" *ngIf ="this.auth">
         <ion-icon name="arrow-dropup"></ion-icon>
       </button>
-      <button (click)="moveDown(info)" ion-button item-left>
+      <button (click)="moveDown(info)" ion-button item-left *ngIf ="this.auth">
         <ion-icon name="arrow-dropdown"></ion-icon>
       </button>
       <span (click)="showDetail(info)">{{info.group}}</span>
 
-      <button (click)="edit(info)" ion-button item-right color="secondary">
+      <button (click)="edit(info)" ion-button item-right color="secondary" *ngIf ="this.auth">
         <ion-icon name="create"> Edit Name</ion-icon>
       </button>
-      <button (click)="createNew(info)" ion-button item-right color="secondary">
+      <button (click)="createNew(info)" ion-button item-right color="secondary" *ngIf ="this.auth">
         <ion-icon name="add-circle"> New</ion-icon>
       </button>
 
-      <button (click)="delete(info)" ion-button item-right color="danger">
+      <button (click)="delete(info)" ion-button item-right color="danger" *ngIf ="this.auth">
           <ion-icon name="trash"> Delete</ion-icon>
       </button>
 
     </ion-item>
   </ion-list>
-  <ion-content *ngIf = "departmentListData && departmentListData.image">
-    An Image File
-  </ion-content>
-
 </ion-content>

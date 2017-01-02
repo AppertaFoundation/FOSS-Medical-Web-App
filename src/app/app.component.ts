@@ -25,7 +25,7 @@ export class MyApp {
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Clinical', component: Clinical },
-      { title: 'Department', component: Department },
+      { title: 'Department', component: Department},
       { title: 'Login', component: LoginPage }
     ];
 
@@ -47,8 +47,11 @@ export class MyApp {
     this.af.auth.subscribe(user=>{
       if(user){
         console.log(user);
-        page.component = page.component || Clinical;
-      }
+        console.log(page);
+        }
+      else if (user && user.anonymous){
+        console.log('anonymous login');
+          }
       else{
         console.log('no user in app.component');
         page.component = LoginPage;

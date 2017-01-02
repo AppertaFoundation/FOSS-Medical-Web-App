@@ -17,6 +17,7 @@ import { MoreImagesComponent } from '../../components/more-images/more-images';
 })
 export class ClinicalDetailPage {
   detailObject: Object;
+  auth:Boolean
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public fbServ: FirebaseService, private modalCtrl: ModalController,
@@ -25,6 +26,8 @@ export class ClinicalDetailPage {
   ) {
 
     this.detailObject = this.navParams.get('info');
+    this.auth = this.navParams.get('auth');
+
     this.fbServ.manageDetail("clinical", this.detailObject);
     // console.log(this.detailObject);
   }

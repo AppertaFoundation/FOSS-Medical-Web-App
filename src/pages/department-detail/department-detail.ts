@@ -20,6 +20,7 @@ export class DepartmentDetailPage {
   index: Number;
   confirm: Boolean;
   isImage: Boolean;
+  auth: Boolean;
 
 
   constructor(public navCtrl: NavController,
@@ -27,6 +28,7 @@ export class DepartmentDetailPage {
     private modalCtrl: ModalController, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
 
     let allDetails = this.navParams.get('info');
+    this.auth = this.navParams.get('auth');
     if (allDetails.data) {
       this.detailObject = allDetails.data;
     }
