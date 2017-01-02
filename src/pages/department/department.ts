@@ -94,7 +94,7 @@ export class Department {
       else {
         //not an image file so set up a blank set of data
         if (item.image && item.image == "false") {
-          let index = this.departmentListData.indexOf(info);
+          // let index = this.departmentListData.indexOf(info);
           let newItem = { "group": item.name, "data": [{ "type": "text", "detail": "Your data here" }] };
           this.departmentListData.splice(1, 0, newItem);
           this.showDetail(newItem);
@@ -115,7 +115,7 @@ export class Department {
           .then((uploadItem) => {
             // console.log(uploadItem.downloadURL);
             loading.dismiss();
-            let index = this.departmentListData.indexOf(info);
+            // let index = this.departmentListData.indexOf(info);
             let newItem = { "group": item.name, "image": [uploadItem.downloadURL] };
             this.departmentListData.splice(1, 0, newItem);
             this.publishDeptData();

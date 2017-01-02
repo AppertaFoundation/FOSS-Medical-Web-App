@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="com.ionicframework.entukapp862150" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
-  <name>ENTUKapp</name>
+<widget id="com.ionicframework.entukwebappionic2rc4935007" version="0.0.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+  <name>ENTUKwebappIonic2RC4</name>
   <description>An awesome Ionic/Cordova app.</description>
   <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
   <content src="index.html"/>
@@ -28,4 +28,10 @@
   <feature name="StatusBar">
     <param name="ios-package" onload="true" value="CDVStatusBar"/>
   </feature>
+  <plugin name="ionic-plugin-keyboard" spec="~2.2.1"/>
+  <plugin name="cordova-plugin-whitelist" spec="1.3.1"/>
+  <plugin name="cordova-plugin-console" spec="1.0.5"/>
+  <plugin name="cordova-plugin-statusbar" spec="2.2.1"/>
+  <plugin name="cordova-plugin-device" spec="1.1.4"/>
+  <plugin name="cordova-plugin-splashscreen" spec="~4.0.1"/>
 </widget>

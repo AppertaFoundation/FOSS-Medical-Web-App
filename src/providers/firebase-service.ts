@@ -3,8 +3,8 @@ import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import {Observable} from 'rxjs/Observable';
-import firebase  from 'firebase';
+import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+
 
 
 /*
@@ -20,26 +20,22 @@ export class FirebaseService {
   private specialty: string = "ENT";
   private hospital: string = "James_Cook";
   private baseUrl: string = 'https://blinding-heat-4325.firebaseio.com';
-  private departmentData: Array<Object>;
-  private clinicalDataFetched: boolean = false;
-  private departmentDataFetched: boolean = false;
-  private clinicalData: Array<Object>;
-  private clinicalDataLocal: boolean = false;
-  private departmentDataLocal: boolean = false;
-  private departmentDetailData: Array<Object>;
-  private clinicalDetailData: Array<Object>;
+  // private departmentData: Array<Object>;
+  // private clinicalDataFetched: boolean = false;
+  // private departmentDataFetched: boolean = false;
+  // private clinicalData: Array<Object>;
+  // private clinicalDataLocal: boolean = false;
+  // private departmentDataLocal: boolean = false;
+  // private departmentDetailData: Array<Object>;
+  // private clinicalDetailData: Array<Object>;
   private fbStorage: any;
   private fbStorageRef: any;
 
+  constructor(public http: Http, public storage: Storage, public af:AngularFire) {
 
-
-  constructor(public http: Http, public storage: Storage) {
     this.fbStorage = firebase.storage();
     this.fbStorageRef = this.fbStorage.ref();
-
-
     // console.log('Hello FirebaseService Provider');
-
   }
 
   getList(type: string) {

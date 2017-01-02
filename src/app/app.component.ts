@@ -4,8 +4,7 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 
 import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
-import firebase  from 'firebase';
-
+import { AngularFire } from 'angularfire2';
 
 
 @Component({
@@ -16,17 +15,9 @@ export class MyApp {
 
   rootPage: any = Clinical;
 
-  pages: Array<{ title: string, component: any }>;
+  pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform) {
-    firebase.initializeApp({
-      apiKey: "AIzaSyB8Tw10IW7kRd-icjiOCDnt7IorF0XWKr8",
-      authDomain: "blinding-heat-4325.firebaseapp.com",
-      databaseURL: "https://blinding-heat-4325.firebaseio.com",
-      storageBucket: "blinding-heat-4325.appspot.com",
-      messagingSenderId: "875113725983"
-    });
-
+  constructor(public platform: Platform, public af:AngularFire) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
@@ -43,7 +34,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
       Splashscreen.hide();
-
     });
   }
 
