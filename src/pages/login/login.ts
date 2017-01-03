@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
 
 
 import { AuthServ } from '../../providers/auth-serv';
@@ -18,32 +18,39 @@ import { Clinical } from '../clinical/clinical';
 })
 export class LoginPage {
   email:string = "shane_lester@hotmail.com";
-  password:string = "Mylogin02100";
+  password:string;
   user:string ="";
+  auth:Boolean;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private authServ:AuthServ, private viewCtrl: ViewController) {
+    private authServ:AuthServ, private viewCtrl: ViewController,
+    private loadingCtrl: LoadingController
+  ) {
        }
 
   ionViewDidEnter() {
-    console.log('ionViewDidEnter LoginPage');
     let userDetails = this.authServ.getUser();
     if (userDetails){
       console.log("userDetails:", userDetails);
       if(userDetails.isAnonymous){
         this.user = "Anonymous";
+        this.auth = true;
       }
       else{
         this.user = userDetails.email;
+        this.auth = true;
       }
     }
     else{
       this.user = "Not logged in";
+      this.auth = false;
     }
     console.log(this.user);
   }
 
   loginUser(){
+    // console.log(this.password);
+
     this.authServ.loginUser(this.email, this.password)
     .then(user =>{
       if(user){
@@ -56,6 +63,10 @@ export class LoginPage {
   }
 
   logoutUser(){
+    let load = this.loadingCtrl.create({
+      dismissOnPageChange: true
+    });
+    load.present();
     this.authServ.logoutUser()
     .then(
       (result)=>{

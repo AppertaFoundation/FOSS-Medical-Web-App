@@ -13,7 +13,7 @@ export class AuthServ {
   constructor(private af: AngularFire) {
     this.af.auth.subscribe(user => {
       if (user) {
-        console.log(user);
+        // console.log(user);
         this.fireAuth = user.auth;
         }
     })

@@ -24,7 +24,7 @@ export class Department {
         this.departmentListData = data;
       });
       let getAuth = authServ.getUser()
-      console.log("getAuth:",getAuth);
+      // console.log("getAuth:",getAuth);
       if (getAuth.isAnonymous){
         this.auth = null;
       }
