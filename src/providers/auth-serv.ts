@@ -10,6 +10,7 @@ export class AuthServ {
 
   fireAuth: any;
 
+
   constructor(private af: AngularFire) {
     this.af.auth.subscribe(user => {
       if (user) {
@@ -43,5 +44,16 @@ export class AuthServ {
 
   getUser(){
     return this.fireAuth;
+  }
+
+  createUser(email, password){
+    return this.af.auth.createUser({
+      email:email,
+      password:password
+    })
+  }
+
+  updateUserList(email, password){
+
   }
 }

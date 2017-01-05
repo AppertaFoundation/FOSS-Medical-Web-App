@@ -3,6 +3,7 @@ import { NavController, NavParams, ViewController, LoadingController } from 'ion
 
 
 import { AuthServ } from '../../providers/auth-serv';
+// import { UserComponent } from '../../components/user/user';
 
 import { Clinical } from '../clinical/clinical';
 
@@ -25,8 +26,10 @@ export class LoginPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private authServ:AuthServ, private viewCtrl: ViewController,
     private loadingCtrl: LoadingController
+    // , private userServ: UserComponent
   ) {
-       }
+
+   }
 
   ionViewDidEnter() {
     let userDetails = this.authServ.getUser();
@@ -34,11 +37,15 @@ export class LoginPage {
       console.log("userDetails:", userDetails);
       if(userDetails.isAnonymous){
         this.user = "Anonymous";
-        this.auth = true;
+        this.auth = false;
       }
       else{
         this.user = userDetails.email;
         this.auth = true;
+        if(this.user == "shanesapps@hotmail.com"){
+          this.auth = false;
+          this.user = "Guest";
+        }
       }
     }
     else{
@@ -54,6 +61,8 @@ export class LoginPage {
     this.authServ.loginUser(this.email, this.password)
     .then(user =>{
       if(user){
+        // let thisUser = this.userServ.getUserDetails(this.email);
+        // console.log (thisUser);
         this.navCtrl.setRoot(Clinical);
       }
     })
@@ -61,6 +70,8 @@ export class LoginPage {
       console.log("Login Error");
     });
   }
+
+
 
   logoutUser(){
     let load = this.loadingCtrl.create({
@@ -75,15 +86,16 @@ export class LoginPage {
   }
 
   anonymousLogin(){
-    this.authServ.anonymousLogin()
-    .then(user=>{
+    this.user = "Guest";
+    this.auth = false;
+    this.authServ.loginUser("shanesapps@hotmail.com", "guest1000")
+    .then(user =>{
       if(user){
         this.navCtrl.setRoot(Clinical);
       }
     })
-    .catch(()=>{
-      return
+    .catch(error =>{
+      console.log("Login Error");
     });
-  }
-
+    }
 }

@@ -7,7 +7,6 @@ import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
 import { ClinicalDetailPage } from '../pages/clinical-detail/clinical-detail';
 import { DepartmentDetailPage } from '../pages/department-detail/department-detail';
-import { LandingPage } from '../pages/landing/landing';
 import { LoginPage } from '../pages/login/login';
 
 import { FirebaseService } from '../providers/firebase-service';
@@ -19,6 +18,7 @@ import { MoreImagesComponent } from '../components/more-images/more-images';
 import { NameEditModalComponent } from '../components/name-edit-modal/name-edit-modal';
 import { ClinicalEditModalComponent } from '../components/clinical-edit-modal/clinical-edit-modal';
 import { GetImageComponent } from '../components/get-image/get-image';
+import { UserComponent } from '../components/user/user';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -50,8 +50,9 @@ const myFirebaseAuthConfig = {
     NameEditModalComponent,
     ClinicalEditModalComponent,
     GetImageComponent,
-    LandingPage,
+    UserComponent,
     LoginPage
+
   ],
   imports: [
     IonicModule.forRoot(MyApp),
@@ -71,8 +72,9 @@ const myFirebaseAuthConfig = {
   NameEditModalComponent,
   ClinicalEditModalComponent,
   GetImageComponent,
-  LandingPage,
+  UserComponent,
   LoginPage
+
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseService,

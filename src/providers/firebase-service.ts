@@ -3,7 +3,8 @@ import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AuthServ } from './auth-serv';
 
 
 
@@ -20,18 +21,11 @@ export class FirebaseService {
   private specialty: string = "ENT";
   private hospital: string = "James_Cook";
   private baseUrl: string = 'https://blinding-heat-4325.firebaseio.com';
-  // private departmentData: Array<Object>;
-  // private clinicalDataFetched: boolean = false;
-  // private departmentDataFetched: boolean = false;
-  // private clinicalData: Array<Object>;
-  // private clinicalDataLocal: boolean = false;
-  // private departmentDataLocal: boolean = false;
-  // private departmentDetailData: Array<Object>;
-  // private clinicalDetailData: Array<Object>;
   private fbStorage: any;
   private fbStorageRef: any;
+  private userList: FirebaseListObservable<any>;
 
-  constructor(public http: Http, public storage: Storage, public af:AngularFire) {
+  constructor(public http: Http, public storage: Storage, public af:AngularFire, private authServ: AuthServ) {
 
     this.fbStorage = firebase.storage();
     this.fbStorageRef = this.fbStorage.ref();
@@ -53,6 +47,32 @@ export class FirebaseService {
     else {
       return Promise.resolve(this[dataType]);
     }
+  }
+
+  getUserList(){
+    let isUser = this.authServ.getUser();
+    if(!isUser){
+      return null;
+    }
+    if (isUser.isAnonymous){
+      //there is a logged in user
+      console.log ('Anonmymous is logged in ');
+      return null;
+    }
+    else{
+      console.log("User logged in, fetching user list");
+      this.userList = this.af.database.list(`${this.baseUrl}/${this.hospital}/${this.specialty}/userList`);
+      return this.userList;
+    }
+  }
+
+  addUser(email:string, specialty:string, admin:boolean =false,){
+    this.getUserList();
+    this.userList.push({
+      email:email,
+      admin:admin,
+      specialty:[specialty]
+    })
   }
 
   manageDetail(type: string, detailObject: Object) {

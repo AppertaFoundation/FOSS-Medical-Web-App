@@ -32,7 +32,14 @@ export class Clinical {
     }
     if(getAuth.email){
       this.auth = true;
+      if(getAuth.email == "shanesapps@hotmail.com"){
+        this.auth = false;
+      }
     }
+  }
+
+  ionViewDidEnter(){
+    console.log("Entered Clinical");
   }
 
   showDetail(info) {

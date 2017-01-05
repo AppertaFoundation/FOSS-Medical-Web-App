@@ -15,30 +15,38 @@
 
 </ion-header>
 
-
 <ion-content padding>
-<h3>Login area</h3>
-<ion-card *ngIf = "!this.auth">
-  <ion-input type ="password" placeholder = "Please enter your password" [(ngModel)]="password"></ion-input>
-<ion-item>
-  <button ion-button (click)="loginUser()">Login</button>
-  <p>
-    You are able to edit, locally save and publish the data.
-  </p>
-</ion-item>
+  <h3>Login area</h3>
+  <ion-card *ngIf="!this.auth">
+    <ion-item>
+      <ion-input type="email" placeholder="Please enter your email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input type="password" placeholder="Please enter your password" [(ngModel)]="password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <button ion-button (click)="loginUser()">Login</button>
+      <p>
+        You are able to edit, locally save and publish the data.
+      </p>
+    </ion-item>
 
-<ion-item>
-  <button ion-button (click)="anonymousLogin()">Guest Login</button>
-  <p>
-    You can browse the data but not edit.
-  </p>
-</ion-item>
-</ion-card>
-<ion-card *ngIf = "this.auth">
-  <ion-item>
-    <button ion-button (click)="logoutUser()">Logout</button>
-  </ion-item>
+    <ion-item>
+      <button ion-button (click)="anonymousLogin()">Guest Login</button>
+      <p>
+        You can browse the data but not edit.
+      </p>
+    </ion-item>
+  </ion-card>
+  <ion-card *ngIf="this.auth">
+    <ion-item>
+      <button ion-button (click)="logoutUser()">Logout</button>
+    </ion-item>
 
-</ion-card>
-<h4>  User:{{user}}</h4>
+  </ion-card>
+  <h4>
+    User:{{user}}</h4>
+  <ion-card>
+    <user></user>
+  </ion-card>
 </ion-content>
