@@ -5,6 +5,8 @@ import { StatusBar, Splashscreen } from 'ionic-native';
 import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
 import { LoginPage } from '../pages/login/login';
+import { AccountPage } from '../pages/account/account';
+
 
 import { AngularFire } from 'angularfire2';
 
@@ -26,7 +28,8 @@ export class MyApp {
     this.pages = [
       { title: 'Clinical', component: Clinical },
       { title: 'Department', component: Department},
-      { title: 'Login', component: LoginPage }
+      { title: 'Login', component: LoginPage },
+      { title : 'Accounts', component: AccountPage }
     ];
 
   }
@@ -45,12 +48,11 @@ export class MyApp {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.af.auth.subscribe(user=>{
-      if(user){
-        console.log(user);
-        console.log(page);
+      if(user && user.anonymous){
+        console.log('anonymous login')
         }
-      else if (user && user.anonymous){
-        console.log('anonymous login');
+      else if (user ){
+        console.log('User log in');
           }
       else{
         console.log('no user in app.component');
