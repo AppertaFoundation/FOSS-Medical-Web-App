@@ -8,9 +8,11 @@ import { Department } from '../pages/department/department';
 import { ClinicalDetailPage } from '../pages/clinical-detail/clinical-detail';
 import { DepartmentDetailPage } from '../pages/department-detail/department-detail';
 import { LoginPage } from '../pages/login/login';
+import { AccountPage} from '../pages/account/account';
 
 import { FirebaseService } from '../providers/firebase-service';
 import { AuthServ } from '../providers/auth-serv';
+import { UserService } from '../providers/user-service';
 
 import { EditModalComponent } from '../components/edit-modal/edit-modal';
 import { NewItemComponent } from '../components/new-item/new-item';
@@ -18,7 +20,6 @@ import { MoreImagesComponent } from '../components/more-images/more-images';
 import { NameEditModalComponent } from '../components/name-edit-modal/name-edit-modal';
 import { ClinicalEditModalComponent } from '../components/clinical-edit-modal/clinical-edit-modal';
 import { GetImageComponent } from '../components/get-image/get-image';
-import { UserComponent } from '../components/user/user';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -50,7 +51,7 @@ const myFirebaseAuthConfig = {
     NameEditModalComponent,
     ClinicalEditModalComponent,
     GetImageComponent,
-    UserComponent,
+    AccountPage,
     LoginPage
 
   ],
@@ -72,14 +73,15 @@ const myFirebaseAuthConfig = {
   NameEditModalComponent,
   ClinicalEditModalComponent,
   GetImageComponent,
-  UserComponent,
+  AccountPage,
   LoginPage
 
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseService,
     Storage,
-    AuthServ
+    AuthServ,
+    UserService
 
   ]
 })

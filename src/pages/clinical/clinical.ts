@@ -39,7 +39,7 @@ export class Clinical {
   }
 
   ionViewDidEnter(){
-    console.log("Entered Clinical");
+    // console.log("Entered Clinical");
   }
 
   showDetail(info) {

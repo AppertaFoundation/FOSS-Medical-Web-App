@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component} from '@angular/core';
 import { ViewController, NavParams } from 'ionic-angular';
 
 /*
@@ -20,7 +20,7 @@ export class EditModalComponent {
     this.data = this.navParams.get('data');
   }
 
-  ngOnInit(){
+  ionOnViewWillEnter(){
     this.backUp = Object.assign({},this.data);
   }
 
