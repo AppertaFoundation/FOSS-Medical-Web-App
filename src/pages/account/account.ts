@@ -25,8 +25,11 @@ export class AccountPage {
   submitAttempt: boolean = false;
   userList: any;
   isAuth: Boolean;
-  loading: any;
   isGuest: Boolean;
+  specialties;
+  newSpecName: String = "";
+  checking:Boolean= false;
+  baseSpeciality: String ="ENT";
 
 
 
@@ -42,35 +45,27 @@ export class AccountPage {
     this.af.auth.subscribe(auth => {
       if (auth) {
         // console.log(auth);
-      this.isAuth = true;
+        this.isAuth = true;
         if (auth.auth.email == "shanesapps@hotmail.com") {
           this.isGuest = true;
         }
-        else{this.isGuest = false;}
+        else { this.isGuest = false; }
+        this.specialties = this.userServ.getSpecialties();
+        // this.specialties.subscribe((item)=>{console.log(item)});
       }
       else {
         this.isGuest = true;
-      this.isAuth = false;
+        this.isAuth = false;
       }
     })
-
-    this.loading = this.loadingCtrl.create({
-      content: 'Checking Authentication'
-    })
-
 
 
   }
 
   ionViewDidEnter() {
-    // console.log("Guest?", this.isGuest);
-    // console.log("Auth?", this.isAuth);
+    this.newSpecName = "";
   }
 
-  goToResetPassword() {
-    //  this.navCtrl.push(ResetPasswordPage);
-  }
-  /** * Receives an input field and sets the corresponding fieldChanged * property to 'true' to help with the styles. */
   elementChanged(input) {
     let field = input.inputControl.name;
     this[field + "Changed"] = true;
@@ -85,7 +80,7 @@ export class AccountPage {
       this.authServ.createUser(this.signupForm.value.email, this.signupForm.value.password)
         .then((user) => {
           console.log("New user is:", user);
-          this.userServ.addUser(this.signupForm.value.email, "ENT", false, );
+          this.userServ.addUser(this.signupForm.value.email, this.baseSpeciality, false, );
 
           let alert = this.alertCtrl.create({
             message: "User created!",
@@ -113,6 +108,44 @@ export class AccountPage {
         });
 
     }
+  }
+
+  selectSpecialty(chosen) {
+    this.baseSpeciality = chosen;
+  }
+
+  addSpecialty(){
+    this.checking = true;
+    if(this.checkChosenName){
+      this.specialties.push(this.newSpecName);
+      this.newSpecName = "";
+    }
+    this.checking= false;
+  }
+
+  checkChosenName() {
+    let newName = true;
+    let checkedName = this.newSpecName;
+
+    let query = this.userServ.getSpecRef().orderByKey();
+    query.once("value")
+      .then(function(snapshot) {
+        snapshot.forEach(function(childSnapshot) {
+
+          var childData = childSnapshot.val();
+          // console.log(childData);
+          // console.log(childData == checkedName);
+          if(childData == checkedName){
+            newName = false;
+          }
+        });
+        console.log("NewName:",newName);
+        return newName;
+      })
+      .catch((error)=>{
+        console.log("Error ",error);
+        })
+
   }
 
 }

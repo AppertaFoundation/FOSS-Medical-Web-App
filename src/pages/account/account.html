@@ -19,8 +19,23 @@
   <h3 *ngIf="this.isGuest">This area is for Data Editors only</h3>
 </ion-content>
 
-
 <ion-content padding *ngIf = "this.isAuth && !this.isGuest">
+
+<ion-card padding>
+  <ion-list>
+    <h3>Specialties</h3>
+  <button ion-item *ngFor="let specialty of specialties|async" (click)="selectSpecialty(specialty.$value)">
+    {{specialty.$value}}
+  </button >
+  </ion-list>
+  <div>
+    <ion-input  [(ngModel)]="newSpecName" placeholder = "New specialty name"></ion-input>
+    <button ion-button (click)="addSpecialty()" [disabled]="checking" color = "secondary">Add Specialty</button>
+  </div>
+
+</ion-card>
+
+
   <h2> Sign up new user </h2>
   <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
     <ion-item>
@@ -37,20 +52,14 @@
     <ion-item class="error-message" *ngIf="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)">
       <p>Your password needs more than 6 characters.</p>
     </ion-item>
+    <ion-item>
+      <h3>Current Specialty:</h3>
+      <h2>{{baseSpeciality}}</h2>
+        </ion-item>
     <button ion-button medium type="submit">
       Create an Account
     </button>
   </form>
-    <!-- <ion-list>
-    <ion-item *ngFor="let user of userList|async">
-      <h2>Email:
-        {{user.email}}</h2>
-      <h2>Specialty:
-        {{user.specialty}}</h2>
-      <h2>Admin:
-        {{user.admin}}</h2>
 
-    </ion-item>
-  </ion-list> -->
 
 </ion-content>

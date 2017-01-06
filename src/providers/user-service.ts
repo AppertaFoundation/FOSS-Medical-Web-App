@@ -13,46 +13,57 @@ import { AngularFire } from 'angularfire2';
 export class UserService {
 
 
-  userList:any;
-  userListObs:any;
+  userList: any;
+  userListObs: any;
+  details:Object;
 
-  constructor( private fbServ:FirebaseService, private authServ:AuthServ, private af:AngularFire) {
+  constructor(private fbServ: FirebaseService, private authServ: AuthServ, private af: AngularFire) {
     this.getUserList();
   }
 
-  getUserList(){
-    let details:Object = this.fbServ.getDBDetails();
+  getUserList() {
+    this.details = this.fbServ.getDBDetails();
 
-    if (this.authServ.getUser()){
-      this.userList = this.af.database.list(`${details["baseUrl"]}/${details["hospital"]}/${details["specialty"]}/userList`)
+    if (this.authServ.getUser()) {
+      this.userList = this.af.database.list(`${this.details["baseUrl"]}/${this.details["hospital"]}/userList`)
     }
   }
 
-  getUsers(){
+  getUsers() {
     return this.userList;
   }
 
-  addUser(email:string, specialty:string, admin:boolean =false,){
-      this.userList.push({
-      email:email,
-      admin:admin,
-      specialty:specialty
+  addUser(email: string, specialty: String, admin: boolean = false, ) {
+    this.userList.push({
+      email: email,
+      admin: admin,
+      specialty: specialty
     })
   }
 
 
-    getUserDetails(email:string):Object{
-      let details = {email:null, admin:null, specialty:null};
-      this.userList.forEach(user=>{
-        if (user.email == email){
-          details = {
-            email:user.email,
-            admin: user.admin,
-            specialty: user.specialty
-          }
+  getUserDetails(email: string): Object {
+    let details = { email: null, admin: null, specialty: null };
+    this.userList.forEach(user => {
+      if (user.email == email) {
+        details = {
+          email: user.email,
+          admin: user.admin,
+          specialty: user.specialty
         }
-      })
-      return details;
       }
+    })
+    return details;
+  }
+
+  getSpecialties(){
+    if (this.authServ.getUser()){
+      return this.af.database.list(`${this.details["baseUrl"]}/${this.details["hospital"]}/specialties`)
+    }
+  }
+
+  getSpecRef(){
+    return firebase.database().ref(`${this.details["hospital"]}/specialties`);
+  }
 
 }
