@@ -30,8 +30,11 @@ export class Department {
       }
       if(getAuth.email){
         this.auth = true;
+        if(getAuth.email == "shanesapps@hotmail.com"){
+          this.auth = false;
+        }
       }
-  }
+    }
 
   showDetail(info) {
     // console.log('item ', info);
