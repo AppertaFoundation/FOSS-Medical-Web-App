@@ -17,6 +17,8 @@
 
 <ion-content padding>
   <h3>Login area</h3>
+
+  <h2>Current User: {{user}}</h2>
   <ion-card *ngIf="!this.auth">
     <ion-item>
       <ion-input type="email" placeholder="Please enter your email" [(ngModel)]="email"></ion-input>
@@ -38,15 +40,10 @@
       </p>
     </ion-item>
   </ion-card>
-  <ion-card *ngIf="this.auth">
+  <ion-card *ngIf="this.auth || this.user =='Guest'">
     <ion-item>
       <button ion-button (click)="logoutUser()">Logout</button>
     </ion-item>
 
-  </ion-card>
-  <h4>
-    User:{{user}}</h4>
-  <ion-card>
-    <user></user>
   </ion-card>
 </ion-content>

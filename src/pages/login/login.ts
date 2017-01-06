@@ -3,7 +3,6 @@ import { NavController, NavParams, ViewController, LoadingController } from 'ion
 
 
 import { AuthServ } from '../../providers/auth-serv';
-// import { UserComponent } from '../../components/user/user';
 
 import { Clinical } from '../clinical/clinical';
 
@@ -20,21 +19,21 @@ import { Clinical } from '../clinical/clinical';
 export class LoginPage {
   email:string = "shane_lester@hotmail.com";
   password:string;
-  user:string ="";
+  user:string ="Not Logged In";
   auth:Boolean;
+  IsloggedIn:any = "blank";
+
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private authServ:AuthServ, private viewCtrl: ViewController,
-    private loadingCtrl: LoadingController
-    // , private userServ: UserComponent
-  ) {
-
+    private loadingCtrl: LoadingController  )
+{
    }
 
   ionViewDidEnter() {
     let userDetails = this.authServ.getUser();
     if (userDetails){
-      console.log("userDetails:", userDetails);
       if(userDetails.isAnonymous){
         this.user = "Anonymous";
         this.auth = false;
@@ -52,8 +51,7 @@ export class LoginPage {
       this.user = "Not logged in";
       this.auth = false;
     }
-    console.log(this.user);
-  }
+    }
 
   loginUser(){
     // console.log(this.password);
@@ -61,8 +59,8 @@ export class LoginPage {
     this.authServ.loginUser(this.email, this.password)
     .then(user =>{
       if(user){
-        // let thisUser = this.userServ.getUserDetails(this.email);
-        // console.log (thisUser);
+        this.IsloggedIn = user;
+
         this.navCtrl.setRoot(Clinical);
       }
     })
@@ -91,6 +89,7 @@ export class LoginPage {
     this.authServ.loginUser("shanesapps@hotmail.com", "guest1000")
     .then(user =>{
       if(user){
+
         this.navCtrl.setRoot(Clinical);
       }
     })

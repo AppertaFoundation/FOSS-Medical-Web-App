@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { AngularFire, FirebaseListObservable } from 'angularfire2';
+import { AngularFire } from 'angularfire2';
 import { AuthServ } from './auth-serv';
 
 
@@ -23,7 +23,6 @@ export class FirebaseService {
   private baseUrl: string = 'https://blinding-heat-4325.firebaseio.com';
   private fbStorage: any;
   private fbStorageRef: any;
-  private userList: FirebaseListObservable<any>;
 
   constructor(public http: Http, public storage: Storage, public af:AngularFire, private authServ: AuthServ) {
 
@@ -49,31 +48,15 @@ export class FirebaseService {
     }
   }
 
-  getUserList(){
-    let isUser = this.authServ.getUser();
-    if(!isUser){
-      return null;
-    }
-    if (isUser.isAnonymous){
-      //there is a logged in user
-      console.log ('Anonmymous is logged in ');
-      return null;
-    }
-    else{
-      console.log("User logged in, fetching user list");
-      this.userList = this.af.database.list(`${this.baseUrl}/${this.hospital}/${this.specialty}/userList`);
-      return this.userList;
-    }
+  getDBDetails(){
+    let details:Object =  { specialty:this.specialty,
+      hospital: this.hospital,
+      baseUrl: this.baseUrl
+      }
+    return details;
   }
 
-  addUser(email:string, specialty:string, admin:boolean =false,){
-    this.getUserList();
-    this.userList.push({
-      email:email,
-      admin:admin,
-      specialty:[specialty]
-    })
-  }
+
 
   manageDetail(type: string, detailObject: Object) {
     this[type + "DetailData"] = detailObject;
