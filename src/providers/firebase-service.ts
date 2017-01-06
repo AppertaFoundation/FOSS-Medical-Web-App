@@ -14,6 +14,12 @@ import { AuthServ } from './auth-serv';
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
+interface Details {
+  hospital:string,
+  baseUrl:string,
+  specialty:string
+}
+
 @Injectable()
 export class FirebaseService {
 
@@ -23,6 +29,7 @@ export class FirebaseService {
   private baseUrl: string = 'https://blinding-heat-4325.firebaseio.com';
   private fbStorage: any;
   private fbStorageRef: any;
+  private details:Details;
 
   constructor(public http: Http, public storage: Storage, public af:AngularFire, private authServ: AuthServ) {
 
@@ -49,11 +56,11 @@ export class FirebaseService {
   }
 
   getDBDetails(){
-    let details:Object =  { specialty:this.specialty,
+    this.details =  { specialty:this.specialty,
       hospital: this.hospital,
       baseUrl: this.baseUrl
       }
-    return details;
+    return this.details;
   }
 
 

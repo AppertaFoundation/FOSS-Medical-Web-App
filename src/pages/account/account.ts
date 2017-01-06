@@ -6,6 +6,14 @@ import { EmailValidator } from '../../validators/email'
 import { UserService } from '../../providers/user-service';
 import { FirebaseService } from '../../providers/firebase-service';
 import { AngularFire } from 'angularfire2';
+import { Http } from '@angular/http';
+import 'rxjs/add/operator/toPromise';
+
+interface Details {
+  hospital: string,
+  baseUrl: string,
+  specialty: string
+}
 
 /*
   Generated class for the User component.
@@ -28,14 +36,14 @@ export class AccountPage {
   isGuest: Boolean;
   specialties;
   newSpecName: String = "";
-  checking:Boolean= false;
-  baseSpeciality: String ="ENT";
+  checking: Boolean = false;
+  baseSpeciality: String = "ENT";
 
 
 
   constructor(public navCtrl: NavController, public authServ: AuthServ, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, private userServ: UserService,
-    private fbServ: FirebaseService, private af: AngularFire
+    private fbServ: FirebaseService, private af: AngularFire, public http: Http
 
   ) {
     this.signupForm = formBuilder.group({
@@ -114,13 +122,30 @@ export class AccountPage {
     this.baseSpeciality = chosen;
   }
 
-  addSpecialty(){
+  addSpecialty() {
     this.checking = true;
-    if(this.checkChosenName){
+    if (this.checkChosenName) {
       this.specialties.push(this.newSpecName);
+      let details: Details = this.fbServ.getDBDetails();
+      let url = details.baseUrl;
+      let hospital = details.hospital;
+      let root = `${url}/${hospital}`;
+
+      // this.af.database.list(`${root}`).push(`${this.newSpecName}`);
+      root += `/${this.newSpecName}`;
+      // this.http.put(`${root}.json`, "{}")
+      // this.af.database.list(`${root}`).push("published");
+      root += `/published`;
+      // this.http.put(`${root}.json`, "{}")
+
+      this.af.database.list(`${root}/clinical/0`).push("[]");
+      this.af.database.list(`${root}/department/0/data`).push("[]");
+      this.af.database.list(`${root}/department/0/group`).push("[]");
+      // this.http.put(`${root}/clinical.json`, "{}")
+      // this.http.put(`${root}/department.json`, "{}")
       this.newSpecName = "";
     }
-    this.checking= false;
+    this.checking = false;
   }
 
   checkChosenName() {
@@ -135,16 +160,16 @@ export class AccountPage {
           var childData = childSnapshot.val();
           // console.log(childData);
           // console.log(childData == checkedName);
-          if(childData == checkedName){
+          if (childData == checkedName) {
             newName = false;
           }
         });
-        console.log("NewName:",newName);
+        console.log("NewName:", newName);
         return newName;
       })
-      .catch((error)=>{
-        console.log("Error ",error);
-        })
+      .catch((error) => {
+        console.log("Error ", error);
+      })
 
   }
 
