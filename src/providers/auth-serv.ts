@@ -54,4 +54,7 @@ export class AuthServ {
   updateUserList(email, password){
 
   }
+
+  resetPassword(email: string): any {
+     return firebase.auth().sendPasswordResetEmail(email); }
 }

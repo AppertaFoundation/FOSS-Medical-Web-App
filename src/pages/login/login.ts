@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController } from 'ionic-angular';
+import { NavController, NavParams, ViewController, LoadingController, ModalController, AlertController } from 'ionic-angular';
 import { AngularFire } from 'angularfire2';
 
 
 import { AuthServ } from '../../providers/auth-serv';
 
 import { Clinical } from '../clinical/clinical';
+import { ResetModalComponent } from '../../components/reset-modal/reset-modal';
 
 /*
   Generated class for the Login page.
@@ -28,7 +29,9 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private authServ: AuthServ, private viewCtrl: ViewController,
-    private loadingCtrl: LoadingController, private af: AngularFire) {
+    private loadingCtrl: LoadingController, private af: AngularFire,
+    private modalCtrl: ModalController, private alertCtrl:AlertController
+  ) {
     this.user = "Not logged in";
     this.auth = false;
     this.af.auth.subscribe(auth => {
@@ -51,13 +54,10 @@ export class LoginPage {
   }
 
   loginUser() {
-    // console.log(this.password);
-
     this.authServ.loginUser(this.email, this.password)
       .then(user => {
         if (user) {
           this.IsloggedIn = user;
-
           this.navCtrl.setRoot(Clinical);
         }
       })
@@ -86,7 +86,6 @@ export class LoginPage {
     this.authServ.loginUser("shanesapps@hotmail.com", "guest1000")
       .then(user => {
         if (user) {
-
           this.navCtrl.setRoot(Clinical);
         }
       })
@@ -94,4 +93,28 @@ export class LoginPage {
         console.log("Login Error");
       });
   }
+
+  resetPassword(){
+    let message = "No message"
+
+    let resetModal = this.modalCtrl.create(ResetModalComponent);
+    resetModal.onDidDismiss((response) => {
+      message = response;
+      this.showAlert("Completed", message)
+  });
+
+  resetModal.present();
+}
+
+showAlert(title: string, message: string) {
+  let alert = this.alertCtrl.create({
+    title: title,
+    subTitle: message,
+    buttons: ['OK']
+  });
+  alert.present();
+}
+
+
+
 }

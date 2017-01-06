@@ -20,6 +20,7 @@ import { MoreImagesComponent } from '../components/more-images/more-images';
 import { NameEditModalComponent } from '../components/name-edit-modal/name-edit-modal';
 import { ClinicalEditModalComponent } from '../components/clinical-edit-modal/clinical-edit-modal';
 import { GetImageComponent } from '../components/get-image/get-image';
+import { ResetModalComponent } from '../components/reset-modal/reset-modal';
 
 import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
@@ -52,7 +53,8 @@ const myFirebaseAuthConfig = {
     ClinicalEditModalComponent,
     GetImageComponent,
     AccountPage,
-    LoginPage
+    LoginPage,
+    ResetModalComponent
 
   ],
   imports: [
@@ -74,7 +76,8 @@ const myFirebaseAuthConfig = {
   ClinicalEditModalComponent,
   GetImageComponent,
   AccountPage,
-  LoginPage
+  LoginPage,
+  ResetModalComponent
 
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},

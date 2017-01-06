@@ -13,4 +13,15 @@ export class EmailValidator {
       return {"invalidEmail": true};
     }
 
+    static isValidEmail(text:string){
+
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(text);
+
+      if (re){
+        return {"invalidEmail": false};
+      }
+
+      return {"invalidEmail": true};
+    }
+
 }
