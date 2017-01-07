@@ -7,8 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>More Information</ion-title>
-    <h2>{{detailObject.title}}</h2>
+    <ion-title>{{detailObject.title}}</ion-title>
   </ion-navbar>
   <button *ngIf ="!this.detailObject.image && this.auth" ion-button item-right (click)="localSave()" >Local Save</button>
   <button *ngIf="this.detailObject.image && this.auth" ion-button end

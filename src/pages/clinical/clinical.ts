@@ -22,20 +22,19 @@ export class Clinical {
     private loadingCtrl: LoadingController
   ) {
     fbServ.getList("clinical")
-      .then(data => {
+      .then((data) => {
         this.clinicalListData = data;
       });
     let getAuth = authServ.getUser()
     // console.log("getAuth:",getAuth);
-    if (getAuth.isAnonymous){
-      this.auth = null;
-    }
-    if(getAuth.email){
+
+    if(getAuth && getAuth.email){
       this.auth = true;
-      if(getAuth.email == "shanesapps@hotmail.com"){
-        this.auth = false;
-      }
+      // if(getAuth.email == "shanesapps@hotmail.com"){
+      //   this.auth = false;
+      // }
     }
+    else{ this.auth = false;}
   }
 
   ionViewDidEnter(){

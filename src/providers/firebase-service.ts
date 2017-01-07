@@ -39,7 +39,7 @@ export class FirebaseService {
   }
 
   getList(type: string) {
-    let dataType = type + "Data";
+    let dataType = type +this.specialty + "Data";//now including specialty in the dataType
     if (!this[dataType + "Fetched"]) {
       return this.http.get(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`)
         .toPromise()
@@ -55,6 +55,16 @@ export class FirebaseService {
     }
   }
 
+
+
+  getNewSpecialty():string{
+    return this.specialty;
+  }
+
+  setNewSpecialty(newSpec:string){
+    this.specialty = newSpec;
+  }
+
   getDBDetails(){
     this.details =  { specialty:this.specialty,
       hospital: this.hospital,
@@ -66,13 +76,13 @@ export class FirebaseService {
 
 
   manageDetail(type: string, detailObject: Object) {
-    this[type + "DetailData"] = detailObject;
+    this[type +this.specialty+ "DetailData"] = detailObject;
   }
 
 
   publishData(type: string) {
 
-    return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`, this[type + "Data"])
+    return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`, this[type +this.specialty + "Data"])
       .toPromise();
   }
   publishDetail(type: string, index: Number, data: Object) {
@@ -83,7 +93,7 @@ export class FirebaseService {
 
 
   reloadData(type: string) {
-    this[type + "DataFetched"] = false;
+    this[type + this.specialty + "DataFetched"] = false;
     this.getList(type);
   }
 
@@ -92,7 +102,7 @@ export class FirebaseService {
     //number -1 = Up, +1 = Down
     // console.log("MoveUp",info);
     // console.log ("index is",this.departmentListData.indexOf(info));
-    let dataType = type + "Data";
+    let dataType = type + this.specialty + "Data";
     let selectedIndex = this[dataType].indexOf(info);
     if (direction == -1 && selectedIndex == 0) { return }
     if (direction == 1 && selectedIndex == this[dataType].length) { return }
@@ -103,7 +113,7 @@ export class FirebaseService {
   }
 
   localSave(type: string) {//eg clinical or department
-    let savingType = type + "Data";
+    let savingType = type + this.specialty + "Data";
     this[savingType + "Local"] = true;
     this.storage.set(savingType + "Local", "true");
     let toSaveData = JSON.stringify(this[savingType]);
@@ -111,7 +121,7 @@ export class FirebaseService {
   }
 
   localLoad(type: string) {
-    let savingType = type + "Data";
+    let savingType = type + this.specialty + "Data";
     return this.storage.get(savingType)
       .then((response) => {
         let convertedData = JSON.parse(response);
@@ -121,7 +131,7 @@ export class FirebaseService {
   }
 
   getLocalFlag(type: string) {
-    let savingType = type + "Data";
+    let savingType = type + this.specialty + "Data";
     return this.storage.get(savingType + "Local");
   }
 

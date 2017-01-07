@@ -4,6 +4,8 @@ import { AngularFire } from 'angularfire2';
 
 
 import { AuthServ } from '../../providers/auth-serv';
+import { UserService } from '../../providers/user-service';
+import { FirebaseService } from '../../providers/firebase-service';
 
 import { Clinical } from '../clinical/clinical';
 import { ResetModalComponent } from '../../components/reset-modal/reset-modal';
@@ -21,20 +23,25 @@ import { ResetModalComponent } from '../../components/reset-modal/reset-modal';
 export class LoginPage {
   email: string = "shane_lester@hotmail.com";
   password: string;
-  user: string = "Not Logged In";
+  user: string;
   auth: Boolean;
   IsloggedIn: any = "blank";
+  specialtyList: any;
+  specialty: string;
 
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private authServ: AuthServ, private viewCtrl: ViewController,
     private loadingCtrl: LoadingController, private af: AngularFire,
-    private modalCtrl: ModalController, private alertCtrl:AlertController
+    private modalCtrl: ModalController, private alertCtrl: AlertController,
+    private userServ: UserService, private fbServ:FirebaseService
   ) {
-    this.user = "Not logged in";
+    this.user = "Browse as Guest";
     this.auth = false;
+    this.specialty = this.fbServ.getNewSpecialty();
     this.af.auth.subscribe(auth => {
+      this.specialtyList = this.userServ.getSpecialties();
       if (auth) {
         this.auth = true;
         this.user = auth.auth.email;
@@ -53,6 +60,11 @@ export class LoginPage {
   ionViewDidEnter() {
   }
 
+  chooseSpecialty(specialty:string){
+    this.fbServ.setNewSpecialty(specialty);
+    this.specialty= specialty;
+  }
+
   loginUser() {
     this.authServ.loginUser(this.email, this.password)
       .then(user => {
@@ -65,8 +77,6 @@ export class LoginPage {
         console.log("Login Error");
       });
   }
-
-
 
   logoutUser() {
     let load = this.loadingCtrl.create({
@@ -83,37 +93,29 @@ export class LoginPage {
   anonymousLogin() {
     this.user = "Guest";
     this.auth = false;
-    this.authServ.loginUser("shanesapps@hotmail.com", "guest1000")
-      .then(user => {
-        if (user) {
-          this.navCtrl.setRoot(Clinical);
-        }
-      })
-      .catch(error => {
-        console.log("Login Error");
-      });
+    this.navCtrl.setRoot(Clinical);
   }
 
-  resetPassword(){
+  resetPassword() {
     let message = "No message"
 
     let resetModal = this.modalCtrl.create(ResetModalComponent);
     resetModal.onDidDismiss((response) => {
       message = response;
       this.showAlert("Completed", message)
-  });
+    });
 
-  resetModal.present();
-}
+    resetModal.present();
+  }
 
-showAlert(title: string, message: string) {
-  let alert = this.alertCtrl.create({
-    title: title,
-    subTitle: message,
-    buttons: ['OK']
-  });
-  alert.present();
-}
+  showAlert(title: string, message: string) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ['OK']
+    });
+    alert.present();
+  }
 
 
 

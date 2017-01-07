@@ -16,9 +16,10 @@
 </ion-header>
 
 <ion-content padding>
-  <h3>Login area</h3>
+  <h1>Login area</h1>
 
   <h2>Current User: {{user}}</h2>
+  <h2>Current Specialty: {{specialty}}</h2>
   <ion-card *ngIf="!this.auth">
     <ion-item>
       <ion-input type="email" placeholder="Please enter your email" [(ngModel)]="email"></ion-input>
@@ -50,4 +51,14 @@
   <ion-card>
     <button ion-button (click)="resetPassword()">Forgotten Password?</button>
   </ion-card>
+
+  <ion-card>
+    <h2>Choose your specialty</h2>
+    <ion-list>
+      <button ion-item *ngFor="let specialty of specialtyList|async" (click)="chooseSpecialty(specialty.$value)">
+        {{specialty.$value}}</button>
+    </ion-list>
+  </ion-card>
+
+
 </ion-content>

@@ -131,5 +131,9 @@ export class ClinicalDetailPage {
     imagesModal.present();
   }
 
+  localSave(){
+    this.fbServ.localSave("clinical");
+  }
+
 
 }

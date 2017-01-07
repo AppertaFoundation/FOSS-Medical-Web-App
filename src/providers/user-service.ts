@@ -58,15 +58,9 @@ export class UserService {
   }
 
   getSpecialties(){
-    if (this.authServ.getUser()){
       return this.af.database.list(`${this.details["baseUrl"]}/${this.details["hospital"]}/specialties`)
-    }
   }
 
-  getSpecialtyKey(spec){
-    return this.af.database.list(`${this.details["baseUrl"]}/${this.details["hospital"]}/specialties/${spec}`)
-
-  }
 
   getSpecRef(){
     return firebase.database().ref(`${this.details["hospital"]}/specialties`);

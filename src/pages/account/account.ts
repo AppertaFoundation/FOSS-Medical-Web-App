@@ -144,8 +144,8 @@ export class AccountPage {
 
       let blankDept ={
         "0": {
-          "data": { "0": {} },
-          "group": { "0": { "detail": "", "type": "" } }
+          "group": "",
+          "data": { "0": { "detail": "", "type": "" } }
         }
     };
       firebase.database().ref().child(`${hospital}/${this.newSpecName}/published/clinical`).update(blankClin);

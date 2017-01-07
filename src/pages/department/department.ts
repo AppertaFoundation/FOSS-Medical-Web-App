@@ -14,6 +14,7 @@ export class Department {
 
   public departmentListData;
   private auth:any;
+  private guest:Boolean;
 
   constructor(private navCtrl: NavController, public fbServ: FirebaseService,
     private alertCtrl: AlertController, private modalCtrl: ModalController,
@@ -23,17 +24,16 @@ export class Department {
       .then((data) => {
         this.departmentListData = data;
       });
-      let getAuth = authServ.getUser()
+      let getAuth = authServ.getUser();
       // console.log("getAuth:",getAuth);
-      if (getAuth.isAnonymous){
-        this.auth = null;
-      }
-      if(getAuth.email){
+
+      if(getAuth && getAuth.email){
         this.auth = true;
-        if(getAuth.email == "shanesapps@hotmail.com"){
-          this.auth = false;
-        }
+        // if(getAuth.email == "shanesapps@hotmail.com"){
+        //   this.auth = false;
+        // }
       }
+      else{ this.auth = false;}
     }
 
   showDetail(info) {
