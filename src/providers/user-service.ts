@@ -16,6 +16,7 @@ export class UserService {
   userList: any;
   userListObs: any;
   details:Object;
+  DB;
 
   constructor(private fbServ: FirebaseService, private authServ: AuthServ, private af: AngularFire) {
     this.getUserList();
@@ -60,6 +61,11 @@ export class UserService {
     if (this.authServ.getUser()){
       return this.af.database.list(`${this.details["baseUrl"]}/${this.details["hospital"]}/specialties`)
     }
+  }
+
+  getSpecialtyKey(spec){
+    return this.af.database.list(`${this.details["baseUrl"]}/${this.details["hospital"]}/specialties/${spec}`)
+
   }
 
   getSpecRef(){

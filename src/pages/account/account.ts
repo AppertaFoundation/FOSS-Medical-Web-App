@@ -125,28 +125,36 @@ export class AccountPage {
   addSpecialty() {
     this.checking = true;
     if (this.checkChosenName) {
-      this.specialties.push(this.newSpecName);
       let details: Details = this.fbServ.getDBDetails();
       let url = details.baseUrl;
       let hospital = details.hospital;
-      let root = `${url}/${hospital}`;
+      firebase.database().ref().child(`${hospital}/specialties`).update({name:this.newSpecName});
+      let blankClin ={
+        "0": {
+          "admin": "",
+          "flags": "",
+          "picture": "",
+          "required": "",
+          "signs": "",
+          "summary": "",
+          "symptoms": "",
+          "title": ""
+        }
+      };
 
-      // this.af.database.list(`${root}`).push(`${this.newSpecName}`);
-      root += `/${this.newSpecName}`;
-      // this.http.put(`${root}.json`, "{}")
-      // this.af.database.list(`${root}`).push("published");
-      root += `/published`;
-      // this.http.put(`${root}.json`, "{}")
-
-      this.af.database.list(`${root}/clinical/0`).push("[]");
-      this.af.database.list(`${root}/department/0/data`).push("[]");
-      this.af.database.list(`${root}/department/0/group`).push("[]");
-      // this.http.put(`${root}/clinical.json`, "{}")
-      // this.http.put(`${root}/department.json`, "{}")
+      let blankDept ={
+        "0": {
+          "data": { "0": {} },
+          "group": { "0": { "detail": "", "type": "" } }
+        }
+    };
+      firebase.database().ref().child(`${hospital}/${this.newSpecName}/published/clinical`).update(blankClin);
+      firebase.database().ref().child(`${hospital}/${this.newSpecName}/published/department`).update(blankDept);
       this.newSpecName = "";
     }
     this.checking = false;
   }
+
 
   checkChosenName() {
     let newName = true;
