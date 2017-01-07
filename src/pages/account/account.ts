@@ -54,10 +54,9 @@ export class AccountPage {
       if (auth) {
         // console.log(auth);
         this.isAuth = true;
-        if (auth.auth.email == "shanesapps@hotmail.com") {
-          this.isGuest = true;
-        }
-        else { this.isGuest = false; }
+        if (auth.auth.email == "shane_lester@hotmail.com") {// currently hardcoding
+                  }
+        // else { this.isGuest = false; }
         this.specialties = this.userServ.getSpecialties();
         // this.specialties.subscribe((item)=>{console.log(item)});
       }

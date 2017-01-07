@@ -53,15 +53,10 @@ color="secondary" >More Images?</button>
       <button (click)="delete(data)" ion-button item-right color="danger" *ngIf ="this.auth">
         <ion-icon  name="trash"> Delete</ion-icon>
       </button>
-
-
-
     </ion-item>
-
   </ion-list>
 </ion-content>
 <ion-content *ngIf="this.detailObject.image">
-  <!-- <button ion-button (click)="upLoadMoreImages(this.detailObject)">More Images?</button> -->
   <div *ngFor ="let picture of this.detailObject.image">
     <img [src]="picture" />
   </div>

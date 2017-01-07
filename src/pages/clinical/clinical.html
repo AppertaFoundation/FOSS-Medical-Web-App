@@ -3,7 +3,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Clinical</ion-title>
+    <ion-title>Clinical Information</ion-title>
   </ion-navbar>
   <div *ngIf ="this.auth">
     <button ion-button item-right (click)="publishData()">Publish</button>
@@ -16,7 +16,9 @@
   <!-- <ion-avatar item-left>
          <lazy-img src="https://scontent-mia1-1.xx.fbcdn.net/v/l/t1.0-9/14212147_1643498722627488_5155525986953317338_n.png?oh=5183e0cdea8c6bbef80e1a1a86b2d366&oe=586155AB"></lazy-img>
       </ion-avatar> -->
-  <h3>Clinical Information</h3>
+  <p>
+    Click the name of the item to view more details
+  </p>
   <ion-list>
     <ion-item *ngFor="let info of clinicalListData">
       <button ion-button (click)="moveClinUp(info)" *ngIf ="this.auth">

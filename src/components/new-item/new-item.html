@@ -20,7 +20,7 @@
   <ion-card *ngIf="unique!=true">
     <ion-label>Name of new section:</ion-label>
     <ion-input [(ngModel)]="name" placeholder="Name"></ion-input>
-    <button ion-button left (click)="checkUnique()">Check name</button>
+    <button ion-button left (click)="checkUnique()">Check name is unique:</button>
   </ion-card>
   <ion-item *ngIf="unique == false">Name already in use. Please choose another  </ion-item>
   <ion-card *ngIf="unique">
