@@ -63,7 +63,7 @@ export class FirebaseService {
 
   setNewSpecialty(newSpec:string){
     this.specialty = newSpec;
-    console.log("Stored specialty", this.specialty);
+    // console.log("Stored specialty", this.specialty);
   }
 
   getDBDetails(){

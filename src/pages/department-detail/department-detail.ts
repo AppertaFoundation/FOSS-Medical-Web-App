@@ -82,13 +82,13 @@ export class DepartmentDetailPage {
 
   newItem(data?) {
     let newItem = {
-      "type": "",
+      "type": "text",
       "detail": ""
     };
 
     let tempIndex = this.detailObject.indexOf(data);
-    this.detailObject.splice(tempIndex, 0, newItem);
-    let newItemRef = this.detailObject[tempIndex];
+    this.detailObject.splice(tempIndex+1, 0, newItem);
+    let newItemRef = this.detailObject[tempIndex+1];
     this.edit(newItemRef);
 
   }
