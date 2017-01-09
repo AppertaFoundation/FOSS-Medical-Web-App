@@ -124,9 +124,9 @@ export class AccountPage {
   addSpecialty() {
     this.checking = true;
     if (this.checkChosenName) {
-      let details: Details = this.fbServ.getDBDetails();
-      let url = details.baseUrl;
-      let hospital = details.hospital;
+      let hospital = this.fbServ.getDBDetails().hospital;
+      // let url = details.baseUrl;
+      // let hospital = details.hospital;
       firebase.database().ref().child(`${hospital}/specialties`).update({name:this.newSpecName});
       let blankClin ={
         "0": {

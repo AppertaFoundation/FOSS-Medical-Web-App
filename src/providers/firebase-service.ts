@@ -39,7 +39,7 @@ export class FirebaseService {
   }
 
   getList(type: string) {
-    let dataType = type +this.specialty + "Data";//now including specialty in the dataType
+    let dataType = this.specialty + type + "Data";//now including specialty in the dataType
     if (!this[dataType + "Fetched"]) {
       return this.http.get(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`)
         .toPromise()
@@ -77,13 +77,13 @@ export class FirebaseService {
 
 
   manageDetail(type: string, detailObject: Object) {
-    this[type +this.specialty+ "DetailData"] = detailObject;
+    this[this.specialty + type+ "DetailData"] = detailObject;
   }
 
 
   publishData(type: string) {
 
-    return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`, this[type +this.specialty + "Data"])
+    return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`, this[this.specialty + type + "Data"])
       .toPromise();
   }
   publishDetail(type: string, index: Number, data: Object) {
@@ -94,7 +94,7 @@ export class FirebaseService {
 
 
   reloadData(type: string) {
-    this[type + this.specialty + "DataFetched"] = false;
+    this[this.specialty + type + "DataFetched"] = false;
     this.getList(type);
   }
 
@@ -103,7 +103,7 @@ export class FirebaseService {
     //number -1 = Up, +1 = Down
     // console.log("MoveUp",info);
     // console.log ("index is",this.departmentListData.indexOf(info));
-    let dataType = type + this.specialty + "Data";
+    let dataType = this.specialty + type +  "Data";
     let selectedIndex = this[dataType].indexOf(info);
     if (direction == -1 && selectedIndex == 0) { return }
     if (direction == 1 && selectedIndex == this[dataType].length) { return }
@@ -114,7 +114,7 @@ export class FirebaseService {
   }
 
   localSave(type: string) {//eg clinical or department
-    let savingType = type + this.specialty + "Data";
+    let savingType = this.specialty + type +  "Data";
     this[savingType + "Local"] = true;
     this.storage.set(savingType + "Local", "true");
     let toSaveData = JSON.stringify(this[savingType]);
@@ -122,7 +122,7 @@ export class FirebaseService {
   }
 
   localLoad(type: string) {
-    let savingType = type + this.specialty + "Data";
+    let savingType =this.specialty + type +  "Data";
     return this.storage.get(savingType)
       .then((response) => {
         let convertedData = JSON.parse(response);
@@ -132,7 +132,7 @@ export class FirebaseService {
   }
 
   getLocalFlag(type: string) {
-    let savingType = type + this.specialty + "Data";
+    let savingType = this.specialty + type +  "Data";
     return this.storage.get(savingType + "Local");
   }
 

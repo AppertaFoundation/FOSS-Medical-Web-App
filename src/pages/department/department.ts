@@ -14,7 +14,7 @@ export class Department {
 
   public departmentListData;
   private auth:any;
-  private guest:Boolean;
+  // private guest:Boolean;
 
   constructor(private navCtrl: NavController, public fbServ: FirebaseService,
     private alertCtrl: AlertController, private modalCtrl: ModalController,
