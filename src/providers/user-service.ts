@@ -58,7 +58,7 @@ export class UserService {
   }
 
   getSpecialties(){
-      return this.af.database.list(`${this.details["baseUrl"]}/${this.details["hospital"]}/specialties`)
+      return firebase.database().ref(`${this.details["hospital"]}/specialties`).once('value');
   }
 
 

@@ -34,7 +34,7 @@ export class AccountPage {
   userList: any;
   isAuth: Boolean;
   isGuest: Boolean;
-  specialties;
+  specialties: Array<String>;
   newSpecName: String = "";
   checking: Boolean = false;
   baseSpeciality: String = "ENT";
@@ -55,9 +55,14 @@ export class AccountPage {
         // console.log(auth);
         this.isAuth = true;
         if (auth.auth.email == "shane_lester@hotmail.com") {// currently hardcoding
-                  }
+        }
         // else { this.isGuest = false; }
-        this.specialties = this.userServ.getSpecialties();
+        this.userServ.getSpecialties()
+          .then(snapshot => {
+            this.specialties = snapshot.val();
+          })
+          ;
+
         // this.specialties.subscribe((item)=>{console.log(item)});
       }
       else {
@@ -123,60 +128,75 @@ export class AccountPage {
 
   addSpecialty() {
     this.checking = true;
-    if (this.checkChosenName) {
-      let hospital = this.fbServ.getDBDetails().hospital;
-      // let url = details.baseUrl;
-      // let hospital = details.hospital;
-      firebase.database().ref().child(`${hospital}/specialties`).update({name:this.newSpecName});
-      let blankClin ={
-        "0": {
-          "admin": "",
-          "flags": "",
-          "picture": "",
-          "required": "",
-          "signs": "",
-          "summary": "",
-          "symptoms": "",
-          "title": ""
-        }
-      };
-
-      let blankDept ={
-        "0": {
-          "group": "",
-          "data": { "0": { "detail": "", "type": "" } }
-        }
+    let blankClin = {
+      "0": {
+        "admin": "",
+        "flags": "",
+        "picture": "",
+        "required": "",
+        "signs": "",
+        "summary": "",
+        "symptoms": "",
+        "title": ""
+      }
     };
-      firebase.database().ref().child(`${hospital}/${this.newSpecName}/published/clinical`).update(blankClin);
-      firebase.database().ref().child(`${hospital}/${this.newSpecName}/published/department`).update(blankDept);
-      this.newSpecName = "";
-    }
-    this.checking = false;
+
+    let blankDept = {
+      "0": {
+        "group": "",
+        "data": { "0": { "detail": "", "type": "" } }
+      }
+    };
+
+    this.checkChosenName()
+      .then(currentList => {
+        console.log("CurrentList", currentList);
+        if (currentList.length > 0) {
+          let lenList = currentList.length;
+          let hospital = this.fbServ.getDBDetails().hospital;
+          console.log(currentList);
+          currentList.push(this.newSpecName);
+          this.specialties.push(this.newSpecName);
+          let newObj ={};
+          newObj[lenList] = this.newSpecName;
+
+
+          firebase.database().ref().child(`${hospital}/specialties`).update(newObj);
+          firebase.database().ref().child(`${hospital}/${this.newSpecName}/published/clinical`).update(blankClin);
+          firebase.database().ref().child(`${hospital}/${this.newSpecName}/published/department`).update(blankDept);
+          this.newSpecName = "";
+        }
+        this.checking = false;
+      })
+
+
   }
 
 
-  checkChosenName() {
-    let newName = true;
+  checkChosenName(): Promise<any> {
+    let newName = [];
     let checkedName = this.newSpecName;
 
-    let query = this.userServ.getSpecRef().orderByKey();
-    query.once("value")
-      .then(function(snapshot) {
-        snapshot.forEach(function(childSnapshot) {
-
-          var childData = childSnapshot.val();
-          // console.log(childData);
-          // console.log(childData == checkedName);
-          if (childData == checkedName) {
-            newName = false;
-          }
-        });
-        console.log("NewName:", newName);
-        return newName;
-      })
-      .catch((error) => {
-        console.log("Error ", error);
-      })
+    return new Promise((resolve, reject) => {
+      this.userServ.getSpecialties()
+        .then(snapshot => {
+          newName = snapshot.val();
+          newName.forEach(function(childData) {
+            console.log(childData);
+            console.log(childData == checkedName);
+            if (childData == checkedName) {
+              newName = [];
+            }
+          });
+          console.log("NewName:", newName);
+          resolve (newName);
+        })
+        .catch((error) => {
+          console.log("Error ", error);
+          reject (null);
+        })
+    }
+    )
 
   }
 

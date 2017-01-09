@@ -61,8 +61,8 @@
   <ion-card>
     <h2>Choose your specialty</h2>
     <ion-list>
-      <button ion-item *ngFor="let specialty of specialtyList|async" (click)="chooseSpecialty(specialty.$value)">
-        {{specialty.$value}}</button>
+      <button ion-item *ngFor="let specialty of specialtyList" (click)="chooseSpecialty(specialty)">
+        {{specialty}}</button>
     </ion-list>
   </ion-card>
 

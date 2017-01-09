@@ -26,8 +26,8 @@ export class LoginPage {
   user: string;
   auth: Boolean;
   IsloggedIn: any = "blank";
-  specialtyList: any;
-  specialty: string;
+  specialtyList: any = [];
+  specialty: string = "ENT";
 
 
 
@@ -39,9 +39,14 @@ export class LoginPage {
   ) {
     this.user = "Browse as Guest";
     this.auth = false;
-    this.specialty = this.fbServ.getNewSpecialty();
+
+    this.userServ.getSpecialties()
+    .then(snapshot=>{
+      this.specialtyList = snapshot.val();
+      console.log(this.specialtyList);
+    });
     this.af.auth.subscribe(auth => {
-      this.specialtyList = this.userServ.getSpecialties();
+
       if (auth) {
         this.auth = true;
         this.user = auth.auth.email;
