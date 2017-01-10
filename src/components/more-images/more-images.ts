@@ -23,8 +23,12 @@ export class MoreImagesComponent {
   }
 
   fileChangeEvent(event){
-    this.file = event.srcElement.files[0];
-    // console.log(this.file);
+    if (event.target)
+    { this.file = event.target.files[0]; }
+    else {
+      console.log("Error no file");
+    }
+      // console.log(this.file);
   }
 
   ionViewDidEnter(){

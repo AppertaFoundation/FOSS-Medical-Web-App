@@ -28,6 +28,8 @@ export class LoginPage {
   IsloggedIn: any = "blank";
   specialtyList: any = [];
   specialty: string = "ENT";
+  currentUser:any;
+  userList;
 
 
 
@@ -43,13 +45,18 @@ export class LoginPage {
     this.userServ.getSpecialties()
     .then(snapshot=>{
       this.specialtyList = snapshot.val();
-      console.log(this.specialtyList);
+      // console.log(this.specialtyList);
     });
+    this.userList = this.userServ.getUserList();
     this.af.auth.subscribe(auth => {
 
       if (auth) {
         this.auth = true;
         this.user = auth.auth.email;
+        this.currentUser = this.userServ.getSingleUser(this.user);
+        console.log("this.CurrentUser:", this.currentUser);
+        console.log("getUSerDetails:", this.userServ.getUserDetails(this.user));
+
         if (this.user == "shanesapps@hotmail.com") {
           this.auth = false;
           this.user = "Guest";
@@ -75,6 +82,7 @@ export class LoginPage {
       .then(user => {
         if (user) {
           this.IsloggedIn = user;
+          this.currentUser =
           this.navCtrl.setRoot(Clinical);
         }
       })

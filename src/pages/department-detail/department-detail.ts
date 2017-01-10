@@ -117,8 +117,9 @@ export class DepartmentDetailPage {
         //item needs uploading to firebase then we need the upload URL
         this.fbServ.uploadFile(item, 'department', imagesObject.group, imageNumber)
           .then((uploadItem) => {
+            console.log("Uploaded file now have upload")
             loading.dismiss();
-            imagesObject.image.push(uploadItem);
+            imagesObject.image.push(uploadItem.downloadURL);
             this.fbServ.publishData("department");
           })
           .catch((error) => { console.log('file error') ;

@@ -91,6 +91,7 @@ export class Department {
   }
 
   createNew(info) {
+    let index = this.departmentListData.indexOf(info);
     let titleList = this.departmentListData.map((item)=>item.group);
     // console.log(titleList);
 
@@ -107,6 +108,9 @@ export class Department {
       else {
         //not an image file so set up a blank set of data
         if (item.image && item.image == "false") {
+          if(item && item.name == ("" || undefined)){
+            return;
+          }
           let index = this.departmentListData.indexOf(info);
           let newItem = { "group": item.name, "data": [{ "type": "text", "detail": "" }] };
           this.departmentListData.splice(index +1, 0, newItem);
@@ -117,8 +121,7 @@ export class Department {
           // console.log(name.file || "No file");
           //now call fbService to upload name.file as this is the file that has been selected
           //use name.content and department as part of the reference
-          //TODO will need to keep a list of the images to ensure no overlap - if checked for duplicates
-          //above won't need to do this!
+
           let loading = this.loadingCtrl.create({
             content: 'Uploading file then saving to web database. Please wait...'
           });
@@ -130,7 +133,7 @@ export class Department {
             loading.dismiss();
             // let index = this.departmentListData.indexOf(info);
             let newItem = { "group": item.name, "image": [uploadItem.downloadURL] };
-            this.departmentListData.splice(1, 0, newItem);
+            this.departmentListData.splice(index+1, 0, newItem);
             this.publishDeptData();
             this.showDetail(newItem);
           },

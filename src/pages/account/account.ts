@@ -38,6 +38,7 @@ export class AccountPage {
   newSpecName: String = "";
   checking: Boolean = false;
   baseSpeciality: String = "ENT";
+  userName:string;
 
 
 
@@ -54,8 +55,8 @@ export class AccountPage {
       if (auth) {
         // console.log(auth);
         this.isAuth = true;
-        if (auth.auth.email == "shane_lester@hotmail.com") {// currently hardcoding
-        }
+        this.userName = auth.auth.email;
+        console.log("UserName = ", this.userName);
         // else { this.isGuest = false; }
         this.userServ.getSpecialties()
           .then(snapshot => {
@@ -75,7 +76,12 @@ export class AccountPage {
   }
 
   ionViewDidEnter() {
-    this.newSpecName = "";
+    // console.log("Entered Accounts");
+    // this.newSpecName = "";
+    // this.userServ.getSingleUser(this.userName)
+    // .then(obj=>{
+    //   console.log(obj);
+    // })
   }
 
   elementChanged(input) {

@@ -6,6 +6,7 @@
 -->
 
 <ion-content padding>
+  <button ion-button (click)="dismiss()" color= "danger">Cancel</button>
   <h2>Enter email address for password reset</h2>
   <ion-input type = "email" [(ngModel)] = "email" placeholder = "Type email here"></ion-input>
   <button ion-button (click)="passwordReset()">Send password reset email</button>

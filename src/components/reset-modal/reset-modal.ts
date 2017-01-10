@@ -40,5 +40,8 @@ export class ResetModalComponent {
 
 
   }
+  dismiss(){
+    this.viewCtrl.dismiss();
+  }
 
 }

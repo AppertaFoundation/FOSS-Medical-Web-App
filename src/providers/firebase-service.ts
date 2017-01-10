@@ -83,7 +83,7 @@ export class FirebaseService {
 
   publishData(type: string) {
 
-    return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`, this[this.specialty + type + "Data"])
+    return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`, this[`${this.specialty}${type}Data`])
       .toPromise();
   }
   publishDetail(type: string, index: Number, data: Object) {

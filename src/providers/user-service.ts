@@ -15,8 +15,9 @@ export class UserService {
 
   userList: any;
   userListObs: any;
-  details:Object;
+  details: Object;
   DB;
+  currentUser;
 
   constructor(private fbServ: FirebaseService, private authServ: AuthServ, private af: AngularFire) {
     this.getUserList();
@@ -34,36 +35,58 @@ export class UserService {
     return this.userList;
   }
 
-  addUser(email: string, specialty: String, admin: boolean = false, ) {
-    this.userList.push({
-      email: email,
-      admin: admin,
-      specialty: specialty
-    })
-  }
+  getSingleUser(userName) {
 
-
-  getUserDetails(email: string): Object {
-    let details = { email: null, admin: null, specialty: null };
-    this.userList.forEach(user => {
-      if (user.email == email) {
-        details = {
-          email: user.email,
-          admin: user.admin,
-          specialty: user.specialty
-        }
+    let query = firebase.database().ref(`${this.details["hospital"]}/userList`).orderByValue();
+    query.on('value', data => {
+      // console.log("Data:",data.val());
+      if (data) {
+          console.log("Data:",data.val());
+        let dataList = data.val();
+        dataList.forEach(user => {
+          if (user.email == userName) {
+            console.log('User object', user);
+            return user;
+          }
+        })
       }
-    })
-    return details;
-  }
+  })
+}
 
-  getSpecialties(){
-      return firebase.database().ref(`${this.details["hospital"]}/specialties`).once('value');
-  }
+userInfo(){
+  return this.currentUser;
+}
+
+addUser(email: string, specialty: String, admin: boolean = false, ) {
+  this.userList.push({
+    email: email,
+    admin: admin,
+    specialty: specialty
+  })
+}
 
 
-  getSpecRef(){
-    return firebase.database().ref(`${this.details["hospital"]}/specialties`);
-  }
+getUserDetails(email: string): Object {
+  let details = { email: null, admin: null, specialty: null };
+  this.userList.forEach(user => {
+    if (user.email == email) {
+      details = {
+        email: user.email,
+        admin: user.admin,
+        specialty: user.specialty
+      }
+    }
+  })
+  return details;
+}
+
+getSpecialties(){
+  return firebase.database().ref(`${this.details["hospital"]}/specialties`).once('value');
+}
+
+
+getSpecRef(){
+  return firebase.database().ref(`${this.details["hospital"]}/specialties`);
+}
 
 }

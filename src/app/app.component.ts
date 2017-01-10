@@ -47,18 +47,6 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
-    this.af.auth.subscribe(user=>{
-      // if(user && user.anonymous){
-      //   console.log('anonymous login')
-      //   }
-      if (user ){
-        console.log('User log in');
-          }
-      // else{
-      //   console.log('no user in app.component');
-      //   page.component = LoginPage;
-      // }
-    })
     this.nav.setRoot(page.component);
   }
 }

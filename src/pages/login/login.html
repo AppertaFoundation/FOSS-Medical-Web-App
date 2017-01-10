@@ -20,7 +20,26 @@
 
   <h2>Current User: {{user}}</h2>
   <h2>Current Specialty: {{specialty}}</h2>
+  <ion-card>
+    <ion-item *ngIf="specialtyList">Choose specialty to browse:</ion-item>
+    <ion-list>
+      <button ion-item *ngFor="let specialty of specialtyList" (click)="chooseSpecialty(specialty)">
+        {{specialty}}</button>
+    </ion-list>
+    <ion-item>
+      <button ion-button (click)="anonymousLogin()">Guest Login</button>
+      <p>
+        You can browse the any specialty data but not edit.
+      </p>
+      <p>
+        No username needed- click 'Guest Login'
+      </p>
+    </ion-item>
+  </ion-card>
   <ion-card *ngIf="!this.auth">
+    <ion-item>
+      <h2>Login as editor:</h2>
+    </ion-item>
     <ion-item>
       <ion-input type="email" placeholder="Please enter your email" [(ngModel)]="email"></ion-input>
     </ion-item>
@@ -37,17 +56,12 @@
       </p>
     </ion-item>
 
-    <ion-item>
-      <button ion-button (click)="anonymousLogin()">Guest Login</button>
-      <p>
-        You can browse the data but not edit.
-      </p>
-      <p>
-        No username needed- click 'Guest Login'
-      </p>
-    </ion-item>
+
   </ion-card>
   <ion-card *ngIf="this.auth || this.user =='Guest'">
+    <ion-item>
+      <h2>Sign out as editor:</h2>
+    </ion-item>
     <ion-item>
       <button ion-button (click)="logoutUser()">Logout</button>
     </ion-item>
@@ -58,13 +72,7 @@
     <button ion-button (click)="resetPassword()">Forgotten Password?</button>
   </ion-card>
 
-  <ion-card>
-    <h2>Choose your specialty</h2>
-    <ion-list>
-      <button ion-item *ngFor="let specialty of specialtyList" (click)="chooseSpecialty(specialty)">
-        {{specialty}}</button>
-    </ion-list>
-  </ion-card>
+
 
 
 </ion-content>
