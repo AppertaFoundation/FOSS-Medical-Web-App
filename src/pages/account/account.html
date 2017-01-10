@@ -10,17 +10,21 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>UserPage</ion-title>
+    <ion-title>UserPage: {{currentUser.email}}</ion-title>
 
   </ion-navbar>
 
 </ion-header>
 <ion-content >
-  <h3 *ngIf="this.isGuest">This area is for Data Administrators only</h3>
+  <h3 *ngIf="!this.currentUser.admin" padding>This area is for Data Administrators only</h3>
 </ion-content>
 
-<ion-content padding *ngIf="this.isAuth && !this.isGuest">
-
+<ion-content padding *ngIf="this.currentUser.admin">
+<ion-card padding>
+  <h1>You are an administrator and are able to:</h1>
+  <h2>-sign up new user accounts</h2>
+  <h2>-add new specialty databases</h2>
+</ion-card>
   <ion-card padding>
     <ion-list>
       <h3>Specialties</h3>

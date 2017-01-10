@@ -39,6 +39,7 @@ export class AccountPage {
   checking: Boolean = false;
   baseSpeciality: String = "ENT";
   userName:string;
+  currentUser:Object={"email":"","admin":"","specialty":""};
 
 
 
@@ -56,8 +57,9 @@ export class AccountPage {
         // console.log(auth);
         this.isAuth = true;
         this.userName = auth.auth.email;
-        console.log("UserName = ", this.userName);
+        // console.log("UserName = ", this.userName);
         // else { this.isGuest = false; }
+        this.currentUser = this.userServ.userInfo() || this.currentUser;
         this.userServ.getSpecialties()
           .then(snapshot => {
             this.specialties = snapshot.val();
@@ -75,7 +77,9 @@ export class AccountPage {
 
   }
 
-  ionViewDidEnter() {
+  ionViewWilEnter() {
+    this.currentUser = this.userServ.userInfo() || this.currentUser;
+    // console.log(this.currentUser);
     // console.log("Entered Accounts");
     // this.newSpecName = "";
     // this.userServ.getSingleUser(this.userName)

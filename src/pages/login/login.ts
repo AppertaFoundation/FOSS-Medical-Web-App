@@ -55,7 +55,7 @@ export class LoginPage {
         this.user = auth.auth.email;
         this.currentUser = this.userServ.getSingleUser(this.user);
         console.log("this.CurrentUser:", this.currentUser);
-        console.log("getUSerDetails:", this.userServ.getUserDetails(this.user));
+        // console.log("getUSerDetails:", this.userServ.getUserDetails(this.user));
 
         if (this.user == "shanesapps@hotmail.com") {
           this.auth = false;

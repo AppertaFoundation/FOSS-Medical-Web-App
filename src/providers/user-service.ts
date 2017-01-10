@@ -41,14 +41,18 @@ export class UserService {
     query.on('value', data => {
       // console.log("Data:",data.val());
       if (data) {
-          console.log("Data:",data.val());
+          // console.log("Data:",data.val());
         let dataList = data.val();
-        dataList.forEach(user => {
-          if (user.email == userName) {
-            console.log('User object', user);
-            return user;
+        // console.log(dataList);
+        for (let obj in dataList){
+          // console.log(obj);
+          if(dataList[obj].hasOwnProperty("email")){
+            // console.log(dataList[obj]["email"]);
+            if (dataList[obj]["email"] == userName){
+              this.currentUser = dataList[obj];
+            }
           }
-        })
+        }
       }
   })
 }
