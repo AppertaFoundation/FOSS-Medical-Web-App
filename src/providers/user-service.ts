@@ -57,32 +57,32 @@ export class UserService {
 
 
   getSingleUser(userName) {
-    if (this.userList && this.userList.length > 0) {
-      // console.log("Already have userlist");
-      // console.log("Looking for userName:", userName);
-      this.userList.forEach(user => {
-        // console.log("Checking forEach");
-        if (user && user.email) {
-          // console.log("User is:", user)
-          if (user.email == userName) {
-            this.currentUser = user;
-            // console.log("Found a user match:",this.currentUser);
-            // console.log("Found a user specialty:", this.currentUser.specialty);
-            this.fbServ.setNewSpecialty(this.currentUser.specialty);
-            // console.log("GetSingleUser:", this.currentUser);
+    return new Promise((res, rej) => {
+      if (this.userList && this.userList.length > 0) {
+        // console.log("Already have userlist");
+        // console.log("Looking for userName:", userName);
+        this.userList.forEach(user => {
+          // console.log("Checking forEach");
+          if (user && user.email) {
+            // console.log("User is:", user)
+            if (user.email == userName) {
+              this.currentUser = user;
+              // console.log("Found a user match:",this.currentUser);
+              // console.log("Found a user specialty:", this.currentUser.specialty);
+              this.fbServ.setNewSpecialty(this.currentUser.specialty);
+              // console.log("GetSingleUser:", this.currentUser);
+            }
           }
-        }
-      })
-    }
-    else {
-      // this.getUserList();
-      // console.log("No user list at present");
-      return "";
-    }
-    if (this.currentUser) {
-      // console.log("returning this.currentUser:", this.currentUser);
-      return this.currentUser;
-    }
+        })
+        res(this.currentUser);
+      }
+
+      else {
+        // this.getUserList();
+        // console.log("No user list at present");
+        rej("");
+      }
+    });
   }
 
   getUserInfo() {

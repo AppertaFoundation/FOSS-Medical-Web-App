@@ -20,7 +20,7 @@
 
   <h2>Current User: {{user}}</h2>
   <h2>Current Specialty: {{specialty}}</h2>
-  <ion-card>
+  <ion-card *ngIf="!this.auth">
     <ion-item *ngIf="specialtyList">Choose specialty to browse:</ion-item>
     <ion-list >
       <button ion-item *ngFor="let specialty of specialtyList" (click)="chooseSpecialty(specialty)">

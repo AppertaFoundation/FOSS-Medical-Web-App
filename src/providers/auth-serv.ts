@@ -33,7 +33,8 @@ export class AuthServ {
   }
 
   logoutNoReload(){
-    return firebase.auth().signOut();
+    return firebase.auth().signOut()
+    .then(console.log)
   }
 
   anonymousLogin() {
