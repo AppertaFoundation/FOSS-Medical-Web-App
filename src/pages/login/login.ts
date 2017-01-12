@@ -28,23 +28,23 @@ export class LoginPage {
   IsloggedIn: any = "blank";
   specialtyList: any = [];
   specialty: string;
-  currentUser:any;
+  currentUser: any;
   userList;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private authServ: AuthServ, private viewCtrl: ViewController,
     private loadingCtrl: LoadingController, private af: AngularFire,
     private modalCtrl: ModalController, private alertCtrl: AlertController,
-    private userServ: UserService, private fbServ:FirebaseService
+    private userServ: UserService, private fbServ: FirebaseService
   ) {
     this.user = "Browse as Guest";
     this.auth = false;
 
     this.userServ.getSpecialties()
-    .then(snapshot=>{
-      this.specialtyList = snapshot.val();
-      // console.log(this.specialtyList);
-    });
+      .then(snapshot => {
+        this.specialtyList = snapshot.val();
+        // console.log(this.specialtyList);
+      });
     this.af.auth.subscribe(auth => {
       if (auth) {
         // console.log("Authenticated");
@@ -52,15 +52,15 @@ export class LoginPage {
         this.user = auth.auth.email;
         // console.log("user is;",this.user);
         this.userServ.getUsers()
-        .then(list =>{
-          // console.log("List:",list);
-          this.currentUser = this.userServ.getSingleUser(this.user);
-          // console.log(this.currentUser);
-          if(this.currentUser){
-            this.specialty = this.currentUser.specialty;
+          .then(list => {
+            // console.log("List:",list);
+            this.currentUser = this.userServ.getSingleUser(this.user);
+            // console.log(this.currentUser);
+            if (this.currentUser) {
+              this.specialty = this.currentUser.specialty;
             }
-        })
-        .catch(console.log)
+          })
+          .catch(console.log)
 
       }
       else {
@@ -72,24 +72,28 @@ export class LoginPage {
 
   ionViewDidEnter() {
     // console.log("This.user:", this.user);
-    if(this.user){
+    if (this.user) {
       this.currentUser = this.userServ.getSingleUser(this.user)
       this.specialty = this.currentUser.specialty;
-      }
-    if(this.currentUser && this.currentUser.email){
+    }
+    if (this.currentUser && this.currentUser.email) {
       this.user = this.currentUser.email;
     }
   }
 
-  enterLoggedIn(){
+  enterLoggedIn() {
     // console.log(this.currentUser);
     this.specialty = this.currentUser.specialty;
     this.navCtrl.setRoot(Clinical);
   }
 
-  chooseSpecialty(specialty:string){
-    this.fbServ.setNewSpecialty(specialty);
-    this.specialty= specialty;
+  chooseSpecialty(specialty: string) {
+    this.authServ.logoutNoReload()
+      .then(() => {
+        this.fbServ.setNewSpecialty(specialty);
+        this.specialty = specialty;
+        this.navCtrl.setRoot(Clinical);
+      })
   }
 
   loginUser() {
@@ -97,11 +101,11 @@ export class LoginPage {
       .then(user => {
         if (user) {
           this.IsloggedIn = user;
-          if(!this.currentUser || this.currentUser.email ==""){
+          if (!this.currentUser || this.currentUser.email == "") {
             this.userServ.getSingleUser(this.email);
             this.currentUser = this.userServ.getUserInfo();
           }
-          if(this.currentUser.specialty){
+          if (this.currentUser.specialty) {
             this.specialty = this.currentUser.specialty;
             this.fbServ.setNewSpecialty(this.currentUser.specialty);
           }

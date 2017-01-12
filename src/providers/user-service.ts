@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase-service';
 import { AuthServ } from './auth-serv';
 import { AngularFire } from 'angularfire2';
-import {Observable} from 'rxjs/Observable';
 
 /*
   Generated class for the UserService provider.

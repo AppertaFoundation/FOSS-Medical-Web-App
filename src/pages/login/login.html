@@ -22,17 +22,16 @@
   <h2>Current Specialty: {{specialty}}</h2>
   <ion-card>
     <ion-item *ngIf="specialtyList">Choose specialty to browse:</ion-item>
-    <ion-list *ngIf = "!this.auth">
+    <ion-list >
       <button ion-item *ngFor="let specialty of specialtyList" (click)="chooseSpecialty(specialty)">
         {{specialty}}</button>
     </ion-list>
     <ion-item>
-      <button ion-button (click)="anonymousLogin()">Guest Login</button>
       <p>
         You can browse the any specialty data but not edit.
       </p>
       <p>
-        No username needed- click 'Guest Login'
+        No username needed- click specialty to view
       </p>
     </ion-item>
   </ion-card>

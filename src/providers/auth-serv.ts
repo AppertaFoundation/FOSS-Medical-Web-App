@@ -32,6 +32,10 @@ export class AuthServ {
     .then(()=>{location.reload()})    ;
   }
 
+  logoutNoReload(){
+    return firebase.auth().signOut();
+  }
+
   anonymousLogin() {
     return this.af.auth.login({
       provider: AuthProviders.Anonymous,
