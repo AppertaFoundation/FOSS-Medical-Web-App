@@ -27,11 +27,9 @@ export class LoginPage {
   auth: Boolean;
   IsloggedIn: any = "blank";
   specialtyList: any = [];
-  specialty: string = "ENT";
+  specialty: string;
   currentUser:any;
   userList;
-
-
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private authServ: AuthServ, private viewCtrl: ViewController,
@@ -47,20 +45,23 @@ export class LoginPage {
       this.specialtyList = snapshot.val();
       // console.log(this.specialtyList);
     });
-    this.userList = this.userServ.getUserList();
     this.af.auth.subscribe(auth => {
-
       if (auth) {
+        // console.log("Authenticated");
         this.auth = true;
         this.user = auth.auth.email;
-        this.currentUser = this.userServ.getSingleUser(this.user);
-        console.log("this.CurrentUser:", this.currentUser);
-        // console.log("getUSerDetails:", this.userServ.getUserDetails(this.user));
+        // console.log("user is;",this.user);
+        this.userServ.getUsers()
+        .then(list =>{
+          // console.log("List:",list);
+          this.currentUser = this.userServ.getSingleUser(this.user);
+          // console.log(this.currentUser);
+          if(this.currentUser){
+            this.specialty = this.currentUser.specialty;
+            }
+        })
+        .catch(console.log)
 
-        if (this.user == "shanesapps@hotmail.com") {
-          this.auth = false;
-          this.user = "Guest";
-        }
       }
       else {
         this.user = "Not logged in";
@@ -70,6 +71,20 @@ export class LoginPage {
   }
 
   ionViewDidEnter() {
+    // console.log("This.user:", this.user);
+    if(this.user){
+      this.currentUser = this.userServ.getSingleUser(this.user)
+      this.specialty = this.currentUser.specialty;
+      }
+    if(this.currentUser && this.currentUser.email){
+      this.user = this.currentUser.email;
+    }
+  }
+
+  enterLoggedIn(){
+    // console.log(this.currentUser);
+    this.specialty = this.currentUser.specialty;
+    this.navCtrl.setRoot(Clinical);
   }
 
   chooseSpecialty(specialty:string){
@@ -82,12 +97,19 @@ export class LoginPage {
       .then(user => {
         if (user) {
           this.IsloggedIn = user;
-          this.currentUser =
+          if(!this.currentUser || this.currentUser.email ==""){
+            this.userServ.getSingleUser(this.email);
+            this.currentUser = this.userServ.getUserInfo();
+          }
+          if(this.currentUser.specialty){
+            this.specialty = this.currentUser.specialty;
+            this.fbServ.setNewSpecialty(this.currentUser.specialty);
+          }
           this.navCtrl.setRoot(Clinical);
         }
       })
       .catch(error => {
-        console.log("Login Error");
+        console.log("Login Error", error);
       });
   }
 
@@ -100,6 +122,8 @@ export class LoginPage {
       .then(
       (result) => {
         console.log("Logged out", result);
+        this.userServ.loggedOutUser();
+        this.currentUser = this.userServ.getUserInfo();
       })
   }
 

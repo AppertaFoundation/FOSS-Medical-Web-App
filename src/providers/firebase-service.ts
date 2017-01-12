@@ -24,7 +24,7 @@ interface Details {
 export class FirebaseService {
 
 
-  private specialty: string = "ENT";
+  private specialty: string;
   private hospital: string = "James_Cook";
   private baseUrl: string = 'https://blinding-heat-4325.firebaseio.com';
   private fbStorage: any;
@@ -35,7 +35,6 @@ export class FirebaseService {
 
     this.fbStorage = firebase.storage();
     this.fbStorageRef = this.fbStorage.ref();
-    // console.log('Hello FirebaseService Provider');
   }
 
   getList(type: string) {
@@ -63,7 +62,7 @@ export class FirebaseService {
 
   setNewSpecialty(newSpec:string){
     this.specialty = newSpec;
-    // console.log("Stored specialty", this.specialty);
+    console.log("Stored specialty", this.specialty);
   }
 
   getDBDetails(){

@@ -59,7 +59,7 @@ export class AccountPage {
         this.userName = auth.auth.email;
         // console.log("UserName = ", this.userName);
         // else { this.isGuest = false; }
-        this.currentUser = this.userServ.userInfo() || this.currentUser;
+        this.currentUser = this.userServ.getUserInfo() || this.currentUser;
         this.userServ.getSpecialties()
           .then(snapshot => {
             this.specialties = snapshot.val();
@@ -78,7 +78,7 @@ export class AccountPage {
   }
 
   ionViewWilEnter() {
-    this.currentUser = this.userServ.userInfo() || this.currentUser;
+    this.currentUser = this.userServ.getUserInfo() || this.currentUser;
     // console.log(this.currentUser);
     // console.log("Entered Accounts");
     // this.newSpecName = "";

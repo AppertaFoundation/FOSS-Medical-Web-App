@@ -22,7 +22,7 @@
   <h2>Current Specialty: {{specialty}}</h2>
   <ion-card>
     <ion-item *ngIf="specialtyList">Choose specialty to browse:</ion-item>
-    <ion-list>
+    <ion-list *ngIf = "!this.auth">
       <button ion-item *ngFor="let specialty of specialtyList" (click)="chooseSpecialty(specialty)">
         {{specialty}}</button>
     </ion-list>
@@ -59,6 +59,10 @@
 
   </ion-card>
   <ion-card *ngIf="this.auth || this.user =='Guest'">
+    <ion-item>
+      <h2>Already logged in:</h2>
+      <button ion-button (click)="enterLoggedIn()">Go to data</button>
+    </ion-item>
     <ion-item>
       <h2>Sign out as editor:</h2>
     </ion-item>
