@@ -147,13 +147,13 @@ export class AccountPage {
         "signs": "",
         "summary": "",
         "symptoms": "",
-        "title": ""
+        "title": "blank"
       }
     };
 
     let blankDept = {
       "0": {
-        "group": "",
+        "group": "blank",
         "data": { "0": { "detail": "", "type": "" } }
       }
     };

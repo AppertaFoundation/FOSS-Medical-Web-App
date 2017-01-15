@@ -8,6 +8,7 @@
 
   <ion-navbar>
     <ion-title>{{detailObject.title}}</ion-title>
+
   </ion-navbar>
   <button *ngIf ="!this.detailObject.image && this.auth" ion-button item-right (click)="localSave()" >Local Save</button>
   <button *ngIf="this.detailObject.image && this.auth" ion-button end
@@ -17,7 +18,10 @@
 </ion-header>
 
 <ion-content padding *ngIf="!detailObject.image">
-
+  <ion-item *ngIf ="!(this.detailObject.image || this.detailObject.picture)">
+    <ion-label>Edit title (before image)</ion-label>
+    <ion-input [(ngModel)]="this.detailObject.title"></ion-input>
+  </ion-item>
   <h3>Picture</h3>
   <button icon-right ion-button small (click)="editPicture()" *ngIf ="this.auth">
     Edit
