@@ -24,7 +24,14 @@ export class MoreImagesComponent {
 
   fileChangeEvent(event){
     if (event.target)
-    { this.file = event.target.files[0]; }
+    { console.log(event);
+      this.file = event.target.files[0];
+      if(this.file.size >500000){
+        this.file =null;
+        return;
+      }
+
+     }
     else {
       console.log("Error no file");
     }

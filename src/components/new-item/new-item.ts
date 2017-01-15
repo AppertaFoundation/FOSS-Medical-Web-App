@@ -29,7 +29,7 @@ export class NewItemComponent {
 
   ionViewDidEnter(){
     this.makeImage = false;
-    this.file ="";
+    this.file =null;
     this.titleList = this.navParams.get('list');
     }
 
@@ -46,7 +46,11 @@ export class NewItemComponent {
     //file API returns an array with element 0 is the file
     // console.log(event);
     if(event.target)
-    {this.file = event.target.files[0];}
+    {this.file = event.target.files[0];
+      if(this.file.size >500000){
+        this.file = null;
+      }
+    }
     else{
       console.log("Error no file");
     }

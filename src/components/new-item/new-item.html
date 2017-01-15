@@ -30,6 +30,8 @@
     <button ion-button end (click)="makeImage=true" [disabled]="makeImage">Create Image Page</button>
   </ion-card>
   <ion-card *ngIf="makeImage">
+    <h2>Choose image file:</h2>
+    <h2>Must be smaller than 500kB or upload will not enable</h2>
     <input type="file" accept="image/*" (change)="fileChangeEvent($event)" placeholder="Upload file..."/>
   </ion-card>
   <button ion-button [disabled]="!file" (click)="upload()" color="danger">Save</button>

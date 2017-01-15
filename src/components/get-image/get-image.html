@@ -8,7 +8,7 @@
 <ion-header>
   <ion-toolbar>
     <ion-title>
-      Get new image
+      Get New Image
     </ion-title>
     <ion-buttons start>
       <button ion-button (click)="dismiss()">
@@ -18,12 +18,10 @@
   </ion-toolbar>
 </ion-header>
 <ion-content>
-
-    <ion-card>
-      <input type="file" accept="image/*" (change)="fileChangeEvent($event)" placeholder="Upload file..."/>
+  <ion-card>
+    <h2>Image files will only upload if smaller than 500kB</h2>
+    <ion-item>Choose more images to upload:</ion-item>
+    <input type="file" accept="image/*" (change)="fileChangeEvent($event)" placeholder="Upload file..." />
     </ion-card>
-    <button ion-button (click)="upload()" color="danger">
-      Save
-    </button>
-
+  <button ion-button [disabled]="!file" (click)="upload()" color="danger">Upload image</button>
 </ion-content>

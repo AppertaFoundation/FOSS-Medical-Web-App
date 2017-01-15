@@ -25,6 +25,9 @@ export class ClinicalEditModalComponent {
 
   ionViewDidEnter(){
     this.backup = Object.assign([],this.dataArray);
+    if(this.dataArray.length = 0){
+      this.dataArray = Object.assign([],this.dataArray);
+    }
     // console.log(this.backup);
 
   }

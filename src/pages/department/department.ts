@@ -177,6 +177,10 @@ export class Department {
   }
 
   delete(info) {
+    if(this.departmentListData.length == 1){
+      this.showAlert("Warning","Deleting last item will erase database. Please create a new item first");
+      return
+        }
     let confirm = this.alertCtrl.create({
       title: 'Delete this item?',
       message: 'This will permanently remove data and images. Carry on ?',

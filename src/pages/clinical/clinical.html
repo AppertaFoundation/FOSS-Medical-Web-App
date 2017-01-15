@@ -20,6 +20,7 @@
     Click the name of the item to view more details
   </p>
   <ion-list>
+    <ion-spinner *ngIf ="!clinicalListData"></ion-spinner>
     <ion-item *ngFor="let info of clinicalListData">
       <button ion-button (click)="moveClinUp(info)" *ngIf ="this.auth">
         <ion-icon name="arrow-dropup" color="light"></ion-icon>
@@ -28,10 +29,10 @@
         <ion-icon name="arrow-dropdown" color="light"></ion-icon>
       </button>
       <span (click)="showDetail(info)">{{info.title}}</span>
-      <button (click)="edit(info)" ion-button item-right color="secondary" *ngIf ="this.auth">
+      <!-- <button (click)="edit(info)" ion-button item-right color="secondary" *ngIf ="this.auth">
         <ion-icon name="create">
           Edit Name</ion-icon>
-      </button>
+      </button> -->
       <button (click)="createNew(info)" ion-button item-right color="secondary" *ngIf ="this.auth">
         <ion-icon name="add-circle">
           New</ion-icon>

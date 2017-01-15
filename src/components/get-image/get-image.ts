@@ -23,9 +23,24 @@ export class GetImageComponent {
     this.detailObject = this.navParams.get("detailObject");
 
   }
+
+  fileChangeEvent(event){
+    if (event.target) {
+      this.file = event.target.files[0];
+      if(this.file.size >500000){
+        this.file =null;
+        return;
+      }
+     }
+    else {
+      console.log("Error no file");
+    }
+      // console.log(this.file);
+  }
+
   upload() {
     if (this.file) {
-      // console.log("sending file ", this.file);
+      console.log("sending file ", this.file);
       this.viewCtrl.dismiss({ "file": this.file, "name": this.detailObject["title"], "image": true });
     }
     else {
@@ -38,14 +53,9 @@ export class GetImageComponent {
     this.viewCtrl.dismiss();
   }
 
-  fileChangeEvent(event) {
-    //file API returns an array with element 0 is the file
-    // console.log(event);
-    if (event.target)
-    { this.file = event.target.files[0]; }
-    else {
-      console.log("Error no file");
-    }
+
+  ionViewDidEnter(){
+    this.file=null;
   }
 
 }

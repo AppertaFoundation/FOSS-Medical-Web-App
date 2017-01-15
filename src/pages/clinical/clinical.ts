@@ -72,7 +72,7 @@ export class Clinical {
           let index = this.clinicalListData.indexOf(info);
           let newItem = {
             "picture": [],
-            "title": [],
+            "title": item.name,
             "summary": [],
             "shortname": [],
             "symptoms": [],
@@ -82,8 +82,8 @@ export class Clinical {
             "flags": []
           };
           this.clinicalListData.splice(index+1, 0, newItem);
-          this.edit(this.clinicalListData[index]);
-          this.showDetail(this.clinicalListData[index]);
+          // this.edit(this.clinicalListData[index+1]);
+          this.showDetail(this.clinicalListData[index+1]);
           return;
         }
         else {
@@ -126,6 +126,10 @@ export class Clinical {
   //   }
 
   delete(info) {
+    if(this.clinicalListData.length == 1){
+      this.showAlert("Warning","Deleting last item will erase database. Please create a new item first");
+      return
+        }
     let confirm = this.alertCtrl.create({
       title: 'Delete this item?',
       message: 'This will permanently remove data and images. Carry on ?',
@@ -185,7 +189,12 @@ export class Clinical {
   }
 
   publishData() {
-    this.fbServ.publishData("clinical");
+    let loading = this.loadingCtrl.create({
+      content: 'Uploading file to web database. Please wait...'
+    });
+    loading.present();
+    this.fbServ.publishData("clinical")
+    .then(()=>loading.dismiss());
   }
 
   localSave() {
