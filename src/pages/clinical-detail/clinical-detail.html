@@ -18,8 +18,8 @@
 </ion-header>
 
 <ion-content padding *ngIf="!detailObject.image">
-  <ion-item *ngIf ="!(this.detailObject.image || this.detailObject.picture)">
-    <ion-label>Edit title (before image)</ion-label>
+  <ion-item *ngIf ="this.auth && !(this.detailObject.image || this.detailObject.picture)">
+    <ion-label>Edit title (no image yet)</ion-label>
     <ion-input [(ngModel)]="this.detailObject.title"></ion-input>
   </ion-item>
   <h3>Picture</h3>
