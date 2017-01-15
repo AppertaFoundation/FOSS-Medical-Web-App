@@ -22,7 +22,7 @@ export class UserService {
   userObservable;
 
   constructor(private fbServ: FirebaseService, private authServ: AuthServ, private af: AngularFire) {
-    this.userList = [];
+    this.userList = [];//an array holding users that have been downloaded from the observable
     this.details = this.fbServ.getDBDetails();
     this.userObs = this.af.database.list(`${this.details["baseUrl"]}/${this.details["hospital"]}/userList`);
     this.getUsers();
@@ -94,11 +94,15 @@ export class UserService {
   }
 
   addUser(email: string, specialty: String, admin: boolean = false, ) {
-    this.userList.push({
+    // console.log("Email ",email);
+    // console.log("specialty ",specialty);
+    // console.log("admin ",admin);
+    this.userObs.push({
       email: email,
       admin: admin,
       specialty: specialty
-    })
+    });
+    console.log("User added to userlist");
   }
 
 

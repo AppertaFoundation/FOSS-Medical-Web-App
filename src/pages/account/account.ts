@@ -101,8 +101,8 @@ export class AccountPage {
     else {
       this.authServ.createUser(this.signupForm.value.email, this.signupForm.value.password)
         .then((user) => {
-          console.log("New user is:", user);
-          this.userServ.addUser(this.signupForm.value.email, this.baseSpeciality, false, );
+          // console.log("New user is:", user);
+          this.userServ.addUser(this.signupForm.value.email, this.baseSpeciality, false);
 
           let alert = this.alertCtrl.create({
             message: "User created!",

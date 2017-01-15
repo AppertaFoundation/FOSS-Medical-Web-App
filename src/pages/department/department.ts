@@ -52,7 +52,17 @@ export class Department {
   }
 
   publishDeptData() {
-    this.fbServ.publishData("department");
+    let loading = this.loadingCtrl.create({
+      content: 'Uploading file web database. Please wait...'
+    });
+    loading.present();
+    this.fbServ.publishData("department")
+    .then(()=>loading.dismiss())
+    .catch((error)=>{
+      loading.dismiss();
+      this.showAlert("Error publishing!",error);
+    })
+    ;
   }
 
   localSave() {
@@ -112,7 +122,7 @@ export class Department {
             return;
           }
           let index = this.departmentListData.indexOf(info);
-          let newItem = { "group": item.name, "data": [{ "type": "text", "detail": "" }] };
+          let newItem = { "group": item.name, "data": [{ "type": "text", "detail": "blank" }] };
           this.departmentListData.splice(index +1, 0, newItem);
           this.showDetail(newItem);
           return;

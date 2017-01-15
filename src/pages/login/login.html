@@ -57,13 +57,16 @@
 
 
   </ion-card>
-  <ion-card *ngIf="this.auth || this.user =='Guest'">
+  <ion-card *ngIf="this.auth && this.specialty">
     <ion-item>
       <h2>Already logged in:</h2>
       <button ion-button (click)="enterLoggedIn()">Go to data</button>
     </ion-item>
     <ion-item>
       <h2>Sign out as editor:</h2>
+      <p>
+        You need to Logout if you wish to browse other specialty's data
+      </p>
     </ion-item>
     <ion-item>
       <button ion-button (click)="logoutUser()">Logout</button>

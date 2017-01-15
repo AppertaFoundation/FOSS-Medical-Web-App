@@ -88,7 +88,10 @@ export class LoginPage {
 
   enterLoggedIn() {
     // console.log(this.currentUser);
-    this.specialty = this.currentUser.specialty;
+    if(this.currentUser){
+      this.specialty = this.currentUser.specialty;
+    }
+    
     this.navCtrl.setRoot(Clinical);
   }
 
