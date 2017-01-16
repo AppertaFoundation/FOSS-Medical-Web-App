@@ -26,6 +26,7 @@ export class ClinicalDetailPage {
   ) {
 
     this.detailObject = this.navParams.get('info');
+    // console.log(this.detailObject);
     this.auth = this.navParams.get('auth');
 
     this.fbServ.manageDetail("clinical", this.detailObject);

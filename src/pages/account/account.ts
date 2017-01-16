@@ -63,8 +63,7 @@ export class AccountPage {
         this.userServ.getSpecialties()
           .then(snapshot => {
             this.specialties = snapshot.val();
-          })
-          ;
+          });
 
         // this.specialties.subscribe((item)=>{console.log(item)});
       }

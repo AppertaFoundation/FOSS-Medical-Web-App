@@ -21,7 +21,7 @@
 <ion-content>
   <ion-card *ngIf = "dataArray && dataArray.length>0">
     <div *ngFor="let item of dataArray; let i=index; trackBy:customTrackBy">
-      <ion-input [(ngModel)]="dataArray[i]" placeholder = "Type data here"></ion-input>
+      <ion-textarea [(ngModel)]="dataArray[i]" placeholder = "Type data here"></ion-textarea>
       <button ion-button (click)="deleteItem(dataArray[i])" start color="danger">
         <ion-icon name="trash" ></ion-icon>
       </button>

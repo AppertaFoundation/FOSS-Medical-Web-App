@@ -26,7 +26,7 @@
       <button (click)="moveDown(info)" ion-button item-left *ngIf ="this.auth">
         <ion-icon name="arrow-dropdown"></ion-icon>
       </button>
-      <span (click)="showDetail(info)">{{info.group}}</span>
+      <span (click)="showDetail(info)" class="group">{{info.group}}</span>
 
       <button (click)="edit(info)" ion-button item-right color="secondary" *ngIf ="this.auth">
         <ion-icon name="create"> Edit Name</ion-icon>

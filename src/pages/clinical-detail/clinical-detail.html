@@ -39,7 +39,12 @@
       <ion-icon item-right name="create"></ion-icon>
     </button>
   </h4>
-  <p>{{detailObject.summary}}</p>
+  <div *ngFor="let data of detailObject.summary">
+    <p>
+      {{data}}
+    </p>
+  </div>
+
   <h4>Symptoms
     <button icon-right ion-button small (click)="editItem('symptoms')" *ngIf ="this.auth">
       Edit
@@ -51,16 +56,16 @@
     <p>
       {{data}}
     </p>
-
   </div>
+
   <h4>Signs
     <button icon-right ion-button small (click)="editItem('signs')" *ngIf ="this.auth">
       Edit
       <ion-icon item-right name="create"></ion-icon>
     </button>
-
   </h4>
   <p *ngFor="let data of detailObject.signs">{{data}}</p>
+
   <h4>Action
     <button icon-right ion-button small (click)="editItem('required')" *ngIf ="this.auth">
       Edit
@@ -68,6 +73,7 @@
     </button>
   </h4>
   <p *ngFor="let data of detailObject.required">{{data}}</p>
+
   <h4>Admit
     <button icon-right ion-button small (click)="editItem('admit')" *ngIf ="this.auth">
       Edit
@@ -75,8 +81,9 @@
     </button>
   </h4>
   <p *ngFor="let data of detailObject.admit">{{data}}</p>
+
   <h4>Red Flags
-    <button icon-right ion-button small (click)="editItem('admit')" *ngIf ="this.auth">
+    <button icon-right ion-button small (click)="editItem('flags')" *ngIf ="this.auth">
       Edit
       <ion-icon item-right name="create"></ion-icon>
     </button>
