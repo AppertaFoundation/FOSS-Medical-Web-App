@@ -41,13 +41,12 @@ export class AccountPage {
   userName:string;
   currentUser:Object={"email":"","admin":"","specialty":""};
 
-
-
   constructor(public navCtrl: NavController, public authServ: AuthServ, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, private userServ: UserService,
     private fbServ: FirebaseService, private af: AngularFire, public http: Http
 
   ) {
+
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
@@ -76,9 +75,10 @@ export class AccountPage {
 
   }
 
-  ionViewWilEnter() {
-    this.currentUser = this.userServ.getUserInfo() || this.currentUser;
-    // console.log(this.currentUser);
+  ionViewDidEnter() {
+
+    this.currentUser = this.userServ.getUserInfo();
+    console.log(this.currentUser);
     // console.log("Entered Accounts");
     // this.newSpecName = "";
     // this.userServ.getSingleUser(this.userName)
@@ -98,7 +98,7 @@ export class AccountPage {
     this.submitAttempt = true;
     if (!this.signupForm.valid) { console.log("not valid", this.signupForm.value); }
     else {
-      this.authServ.createUser(this.signupForm.value.email, this.signupForm.value.password)
+        this.authServ.createUser(this.signupForm.value.email, this.signupForm.value.password)
         .then((user) => {
           // console.log("New user is:", user);
           this.userServ.addUser(this.signupForm.value.email, this.baseSpeciality, false);

@@ -40,11 +40,7 @@ export class LoginPage {
     this.user = "Browse as Guest";
     this.auth = false;
 
-    this.userServ.getSpecialties()
-      .then(snapshot => {
-        this.specialtyList = snapshot.val();
-        // console.log(this.specialtyList);
-      });
+    this.getSpecialties();
     this.af.auth.subscribe(auth => {
       if (auth) {
         // console.log("Authenticated");
@@ -86,12 +82,20 @@ export class LoginPage {
     }
   }
 
+  getSpecialties(){
+    this.userServ.getSpecialties()
+      .then(snapshot => {
+        this.specialtyList = snapshot.val();
+        console.log(this.specialtyList);
+      });
+  }
+
   enterLoggedIn() {
     // console.log(this.currentUser);
     if(this.currentUser){
       this.specialty = this.currentUser.specialty;
     }
-    
+
     this.navCtrl.setRoot(Clinical);
   }
 
@@ -126,20 +130,30 @@ export class LoginPage {
       })
       .catch(error => {
         console.log("Login Error", error);
+        this.showAlert("Error logging in", error);
       });
   }
 
   logoutUser() {
     let load = this.loadingCtrl.create({
-      dismissOnPageChange: true
+      // dismissOnPageChange: true
     });
     load.present();
-    this.authServ.logoutUser()
+    if(!this.specialtyList){
+      this.getSpecialties();
+    }
+    this.authServ.logoutNoReload()
+      // this.authServ.logoutUser()
       .then(
       (result) => {
         console.log("Logged out", result);
+        load.dismiss();
         this.userServ.loggedOutUser();
         this.currentUser = this.userServ.getUserInfo();
+      })
+      .catch(()=>{
+        load.dismiss();
+        location.reload();
       })
   }
 
@@ -161,7 +175,7 @@ export class LoginPage {
     resetModal.present();
   }
 
-  showAlert(title: string, message: string) {
+  showAlert(title: string, message: any) {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
