@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { Storage } from '@ionic/storage';
+import { AlertController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { AngularFire } from 'angularfire2';
@@ -31,7 +32,11 @@ export class FirebaseService {
   private fbStorageRef: any;
   private details:Details;
 
-  constructor(public http: Http, public storage: Storage, public af:AngularFire, private authServ: AuthServ) {
+  constructor(public http: Http, public storage: Storage, public af:AngularFire, private authServ: AuthServ,
+    private alertCtrl:AlertController
+
+
+  ) {
 
     this.fbStorage = firebase.storage();
     this.fbStorageRef = this.fbStorage.ref();
@@ -81,7 +86,7 @@ export class FirebaseService {
 
 
   publishData(type: string) {
-    
+
     return this.http.put(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`, this[`${this.specialty}${type}Data`])
       .toPromise();
   }
@@ -113,6 +118,7 @@ export class FirebaseService {
   }
 
   localSave(type: string) {//eg clinical or department
+    this.showAlert("Saving","A copy of this data is being saved on this PC");
     let savingType = this.specialty + type +  "Data";
     this[savingType + "Local"] = true;
     this.storage.set(savingType + "Local", "true");
@@ -121,13 +127,19 @@ export class FirebaseService {
   }
 
   localLoad(type: string) {
+    this.showAlert("Loading","Trying to load data, saved on this PC");
     let savingType =this.specialty + type +  "Data";
     return this.storage.get(savingType)
       .then((response) => {
         let convertedData = JSON.parse(response);
         this[savingType] = convertedData;
         return convertedData
-      });
+      })
+      .catch(err=>{
+        this.showAlert("Error loading data!",err);
+      })
+
+      ;
   }
 
   getLocalFlag(type: string) {
@@ -146,5 +158,14 @@ export class FirebaseService {
   deleteFile(type: string, name: string, fileNumber: number = 0) {
     let ref = firebase.storage().ref().child(`/${this.hospital}/${this.specialty}/${type}/${name}/${fileNumber}`);
     return ref.delete();
+  }
+
+  showAlert(title: string, message: any) {
+    let alert = this.alertCtrl.create({
+      title: title,
+      subTitle: message,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }
