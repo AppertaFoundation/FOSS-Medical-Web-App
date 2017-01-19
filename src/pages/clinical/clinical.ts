@@ -205,7 +205,7 @@ export class Clinical {
     this.fbServ.getLocalFlag("clinical")
       .then((data) => {
         if (!data) {
-          this.showAlert("Error", "No Clincal data saved locally");
+          this.showAlert("Error", "No Clincal data saved on this computer");
           return
         }
 

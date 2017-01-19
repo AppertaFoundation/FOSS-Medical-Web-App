@@ -73,7 +73,7 @@ export class Department {
     this.fbServ.getLocalFlag("department")
       .then((data) => {
         if (!data) {
-          this.showAlert("Error", "No Department data saved locally");
+          this.showAlert("Error", "No Department data saved on this computer");
           return
         }
 
