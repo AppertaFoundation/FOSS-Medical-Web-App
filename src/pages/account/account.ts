@@ -133,6 +133,7 @@ export class AccountPage {
 
   selectSpecialty(chosen) {
     this.baseSpeciality = chosen;
+    this.fbServ.setNewSpecialty(chosen);
   }
 
   addSpecialty() {
