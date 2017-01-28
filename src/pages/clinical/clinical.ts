@@ -38,6 +38,7 @@ export class Clinical {
   }
 
   ionViewDidEnter(){
+    this.auth = this.authServ.getUser();
     // console.log("Entered Clinical");
   }
 

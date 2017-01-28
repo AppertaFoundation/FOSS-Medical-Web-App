@@ -100,16 +100,12 @@ export class LoginPage {
   }
 
   chooseSpecialty(specialty: string) {
-    this.authServ.logoutNoReload()
-      .then(() => {
         console.log(this.authServ.getUser());
         this.fbServ.setNewSpecialty(specialty);
         this.specialty = specialty;
         this.auth = false;
         this.user = "Guest";
         this.navCtrl.setRoot(Clinical);
-      })
-      .catch(console.log);
   }
 
   loginUser() {
@@ -142,8 +138,8 @@ export class LoginPage {
     if(!this.specialtyList){
       this.getSpecialties();
     }
-    this.authServ.logoutNoReload()
-      // this.authServ.logoutUser()
+    // this.authServ.logoutNoReload()
+      this.authServ.logoutUser()
       .then(
       (result) => {
         console.log("Logged out", result);

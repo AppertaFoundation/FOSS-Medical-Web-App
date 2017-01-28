@@ -1,6 +1,7 @@
 {
-  "name": "Ionic",
-  "short_name": "Ionic",
+  "name": "JCUH induction
+   App",
+  "short_name": "JCUHapp",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{
