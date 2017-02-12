@@ -25,7 +25,7 @@ interface Details {
 export class FirebaseService {
 
 
-  private specialty: string;
+  private specialty: string = "ENT";
   private hospital: string = "James_Cook";
   private baseUrl: string = 'https://blinding-heat-4325.firebaseio.com';
   private fbStorage: any;
