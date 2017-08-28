@@ -42,17 +42,17 @@ export class AuthServ {
     this.auth = status;
   }
 
-  setUser(name){
-    console.log("Setting user:",name);
-    this.currentUser =name;
-  }
+  // setUser(name){
+  //   console.log("Setting user:",name);
+  //   this.currentUser =name;
+  // }
 
 
 
-  getUser(){
-    console.log("user:",this.currentUser);
-    return this.currentUser;
-  }
+  // getUser(){
+  //   console.log("user:",this.currentUser);
+  //   return this.currentUser;
+  // }
 
   getAuth(){
     console.log("auth:", this.auth);

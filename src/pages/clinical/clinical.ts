@@ -5,6 +5,7 @@ import { ClinicalDetailPage } from '../clinical-detail/clinical-detail';
 import { NewItemComponent } from '../../components/new-item/new-item';
 import { NameEditModalComponent } from '../../components/name-edit-modal/name-edit-modal';
 import { AuthServ } from '../../providers/auth-serv';
+import { UserService } from '../../providers/user-service';
 
 
 @Component({
@@ -19,13 +20,13 @@ export class Clinical {
   constructor(public navCtrl: NavController,
     public fbServ: FirebaseService, private alertCtrl: AlertController,
     private modalCtrl: ModalController, private authServ: AuthServ,
-    private loadingCtrl: LoadingController
+    private loadingCtrl: LoadingController, private userServ: UserService
   ) {
     fbServ.getList("clinical")
       .then((data) => {
         this.clinicalListData = data;
       });
-    let getAuth = authServ.getUser()
+    let getAuth = userServ.getUserInfo()
     // console.log("getAuth:",getAuth);
 
     if(getAuth){
@@ -38,7 +39,7 @@ export class Clinical {
   }
 
   ionViewDidEnter(){
-    this.auth = this.authServ.getUser();
+    this.auth = this.userServ.getUserInfo();
     // console.log("Entered Clinical");
   }
 

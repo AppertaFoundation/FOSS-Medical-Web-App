@@ -4,12 +4,18 @@ import firebase from 'firebase';
 import { AuthServ } from './auth-serv';
 
 
+
 /*
   Generated class for the UserService provider.
 
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular 2 DI.
 */
+interface CurrentUser{
+  email:string,
+  specialty:string
+}
+
 @Injectable()
 export class UserService {
 
@@ -18,7 +24,7 @@ export class UserService {
   userListObs: any;
   details: Object;
   DB;
-  currentUser:{email:string, specialty:string};
+  currentUser:CurrentUser = {email:"", specialty:""};
   userObs;//now a firebase reference to userlist
   userObservable;
 
@@ -32,9 +38,15 @@ export class UserService {
   // getUserList() {
   // }
 
-  setCurrentUser(user) {
-    this.currentUser = user;
+  setCurrentUser(user:CurrentUser) {
+    this.currentUser.email = user.email;
   }
+
+  setUsername(user:string){
+    this.currentUser.email = user;
+  }
+
+
 
 
   getUsers() {
@@ -71,7 +83,7 @@ export class UserService {
     {
       console.log("No Userlist- calling");
       this.getUsers();
-      return Promise.resolve({email:null, specialty:null});
+      return Promise.resolve({email:"", specialty:""});
     }
 
     return new Promise((res, rej) => {
@@ -81,7 +93,7 @@ export class UserService {
         console.log("userName",userName);
         if (lookedAtUser && lookedAtUser.email == userName) {
           console.log("lookedAtUser:",lookedAtUser);
-          this.currentUser = lookedAtUser;
+          this.currentUser.email = lookedAtUser;
           // this.authServ.setUser(userName);
           console.log("Found a user specialty: ", this.currentUser.specialty);
           this.fbServ.setNewSpecialty(this.currentUser.specialty);
@@ -116,7 +128,7 @@ export class UserService {
   }
 
   loggedOutUser() {
-    this.currentUser = { "email": null , "specialty":null}
+    this.currentUser = { "email": "" , "specialty":""}
   }
 
   addUser(email: string, specialty: String, admin: boolean = false, ) {
@@ -133,7 +145,7 @@ export class UserService {
 
 
   getUserDetails(email: string): Object {
-    let details = { email: null, admin: null, specialty: null };
+    let details = { email: "", admin: false, specialty: "" };
     this.userList.forEach(user => {
       if (user.email == email) {
         details = {

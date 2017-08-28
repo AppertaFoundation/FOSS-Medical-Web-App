@@ -5,6 +5,8 @@ import { DepartmentDetailPage } from '../department-detail/department-detail';
 import { NewItemComponent } from '../../components/new-item/new-item';
 import { NameEditModalComponent } from '../../components/name-edit-modal/name-edit-modal';
 import { AuthServ } from '../../providers/auth-serv';
+import { UserService } from '../../providers/user-service';
+
 
 @Component({
   selector: 'page-department',
@@ -18,13 +20,13 @@ export class Department {
 
   constructor(private navCtrl: NavController, public fbServ: FirebaseService,
     private alertCtrl: AlertController, private modalCtrl: ModalController,
-    private loadingCtrl: LoadingController, private authServ: AuthServ,) {
+    private loadingCtrl: LoadingController, private authServ: AuthServ, private userServ: UserService ) {
     // this.departmentListData = fbServ.getDepartmentList();
     fbServ.getList("department")
       .then((data) => {
         this.departmentListData = data;
       });
-      let getAuth = authServ.getUser();
+      let getAuth = userServ.getUserInfo();
       // console.log("getAuth:",getAuth);
 
       if(getAuth){
