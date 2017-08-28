@@ -28,7 +28,7 @@ export class Clinical {
     let getAuth = authServ.getUser()
     // console.log("getAuth:",getAuth);
 
-    if(getAuth && getAuth.email){
+    if(getAuth){
       this.auth = true;
       // if(getAuth.email == "shanesapps@hotmail.com"){
       //   this.auth = false;

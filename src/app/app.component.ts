@@ -1,14 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-import { StatusBar, Splashscreen } from 'ionic-native';
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
 import { LoginPage } from '../pages/login/login';
 import { AccountPage } from '../pages/account/account';
 
+import firebase from 'firebase';
 
-import { AngularFire } from 'angularfire2';
 
 
 @Component({
@@ -21,8 +22,18 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform, private af:AngularFire) {
-    this.initializeApp();
+  constructor( platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+    firebase.initializeApp({
+      apiKey: "AIzaSyB8Tw10IW7kRd-icjiOCDnt7IorF0XWKr8",
+      authDomain: "blinding-heat-4325.firebaseapp.com",
+      databaseURL: "https://blinding-heat-4325.firebaseio.com",
+      storageBucket: "blinding-heat-4325.appspot.com",
+      messagingSenderId: "875113725983" });
+
+    platform.ready().then(() => {
+      statusBar.styleDefault();
+      splashScreen.hide();
+    });
 
     // used for an example of ngFor and navigation
     this.pages = [
@@ -34,15 +45,6 @@ export class MyApp {
 
   }
 
-  initializeApp() {
-    this.platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-
-      StatusBar.styleDefault();
-      Splashscreen.hide();
-    });
-  }
 
   openPage(page) {
     // Reset the content nav to have just this page

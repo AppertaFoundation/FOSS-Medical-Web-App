@@ -5,7 +5,6 @@ import { AuthServ } from '../../providers/auth-serv';
 import { EmailValidator } from '../../validators/email'
 import { UserService } from '../../providers/user-service';
 import { FirebaseService } from '../../providers/firebase-service';
-import { AngularFire } from 'angularfire2';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
@@ -43,7 +42,7 @@ export class AccountPage {
 
   constructor(public navCtrl: NavController, public authServ: AuthServ, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, private userServ: UserService,
-    private fbServ: FirebaseService, private af: AngularFire, public http: Http
+    private fbServ: FirebaseService,  public http: Http
 
   ) {
 
@@ -51,26 +50,31 @@ export class AccountPage {
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });
-    this.af.auth.subscribe(auth => {
-      if (auth) {
-        // console.log(auth);
-        this.isAuth = true;
-        this.userName = auth.auth.email;
-        // console.log("UserName = ", this.userName);
-        // else { this.isGuest = false; }
-        this.currentUser = this.userServ.getUserInfo() || this.currentUser;
-        this.userServ.getSpecialties()
-          .then(snapshot => {
-            this.specialties = snapshot.val();
-          });
 
-        // this.specialties.subscribe((item)=>{console.log(item)});
-      }
-      else {
-        this.isGuest = true;
-        this.isAuth = false;
-      }
-    })
+    const unsubscribe = firebase.auth().onAuthStateChanged((auth) => {
+       if (!auth) { if (auth) {
+           // console.log(auth);
+           this.isAuth = true;
+           this.userName = auth.email;
+           // console.log("UserName = ", this.userName);
+           // else { this.isGuest = false; }
+           this.currentUser = this.userServ.getUserInfo() || this.currentUser;
+           this.userServ.getSpecialties()
+             .then(snapshot => {
+               this.specialties = snapshot.val();
+             });
+
+           // this.specialties.subscribe((item)=>{console.log(item)});
+         }
+         else {
+           this.isGuest = true;
+           this.isAuth = false;
+         }
+       }
+  })
+    // this.af.auth.subscribe(auth => {
+    //
+    // })
 
 
   }

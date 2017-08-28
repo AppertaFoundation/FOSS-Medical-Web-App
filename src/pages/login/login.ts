@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, ViewController, LoadingController, ModalController, AlertController } from 'ionic-angular';
-import { AngularFire } from 'angularfire2';
-
 
 import { AuthServ } from '../../providers/auth-serv';
 import { UserService } from '../../providers/user-service';
@@ -9,6 +7,9 @@ import { FirebaseService } from '../../providers/firebase-service';
 
 import { Clinical } from '../clinical/clinical';
 import { ResetModalComponent } from '../../components/reset-modal/reset-modal';
+
+import firebase from 'firebase';
+
 
 /*
   Generated class for the Login page.
@@ -23,66 +24,88 @@ import { ResetModalComponent } from '../../components/reset-modal/reset-modal';
 export class LoginPage {
   email: string = "shane_lester@hotmail.com";
   password: string;
-  user: string;
-  auth: Boolean;
+  user: string = null;//email of user
+  auth: Boolean= false;
   IsloggedIn: any = "blank";
   specialtyList: any = [];
   specialty: string;
-  currentUser: any;
+  currentUser: any;//all of user
   userList;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private authServ: AuthServ, private viewCtrl: ViewController,
-    private loadingCtrl: LoadingController, private af: AngularFire,
+    private authServ: AuthServ,
+    private loadingCtrl: LoadingController,
     private modalCtrl: ModalController, private alertCtrl: AlertController,
     private userServ: UserService, private fbServ: FirebaseService
   ) {
-    this.user = "Browse as Guest";
-    this.auth = false;
+    const unsubscribe = firebase.auth().onAuthStateChanged((haveAuth) => {
+      if (!haveAuth) {
+        console.log("Not logged in ");
+        this.currentUser = null;
+        this.user = this.currentUser
+        this.auth = false;
 
-    this.getSpecialties();
-    this.af.auth.subscribe(auth => {
-      if (auth) {
-        // console.log("Authenticated");
-        this.auth = true;
-        this.user = auth.auth.email;
-        // console.log("user is;",this.user);
-        this.userServ.getUsers()
-          .then(list => {
-            this.userList = list;
-            // console.log("List:",list);
-            this.userServ.getSingleUser(this.user)
-              .then(user => {
-                this.currentUser = user;
-                this.specialty = this.currentUser.specialty;
-
-              })
-          })
-          .catch(console.log)
-
+        unsubscribe();
       }
       else {
-        this.user = "Not logged in";
-        this.auth = false;
+        console.log("Authenticated");
+        this.auth = true;
+        this.currentUser = haveAuth;
+        this.user = this.currentUser.email;
+        this.specialty = this.currentUser.specialty||null;
+        console.log("currentUser:", this.currentUser);
       }
+      this.userServ.setCurrentUser(this.currentUser);
+      this.authServ.setAuth(this.auth);
+      this.authServ.setUser(this.user);
     })
+
+
+    this.getSpecialties();
+    this.userServ.getUsers()
+    .then(users=>{
+      this.userList=users;
+    });
+    this.user = authServ.getUser();
+
+    this.auth = authServ.getAuth();
   }
 
   ionViewDidEnter() {
-    // console.log("This.user:", this.user);
-    if (this.user) {
+    // if (this.user) {
+      // console.log("did enter this.user -going for getSingleUser",this.user);
+      // this.userServ.getSingleUser(this.user)
+      //   .then(user => {
+      //     console.log("Returned from getSingleUser with:",user);
+      //     if (user) {
+      //       this.currentUser = user;
+      //       console.log("ionViewDidEnter user:", this.currentUser);
+      //       this.specialty = this.currentUser.specialty;
+      //     }
+      //     else{
+      //       this.user = "Not logged in";
+      //       this.auth = false;
+      //     }
+      //   })
+      //   .catch(console.log);
+
+    // }
+    console.log("Did enter");
+    if(this.user){
+      //get specialty
+      let loadingShow = this.loadingCtrl.create({
+        content:"Getting specialty"
+      })
+      loadingShow.present()
       this.userServ.getSingleUser(this.user)
-        .then(user => {
-          if(user){
-            this.currentUser = user;
-          this.specialty = this.currentUser.specialty;
-        }
-        })
-        .catch(console.log);
+      .then(currentUser=>{
+        this.specialty = currentUser.specialty ||null;
+        loadingShow.dismiss();
+      })
     }
   }
 
-  getSpecialties(){
+  getSpecialties() {
     this.userServ.getSpecialties()
       .then(snapshot => {
         this.specialtyList = snapshot.val();
@@ -92,7 +115,7 @@ export class LoginPage {
 
   enterLoggedIn() {
     // console.log(this.currentUser);
-    if(this.currentUser){
+    if (this.currentUser) {
       this.specialty = this.currentUser.specialty;
     }
 
@@ -100,23 +123,26 @@ export class LoginPage {
   }
 
   chooseSpecialty(specialty: string) {
-        console.log(this.authServ.getUser());
-        this.fbServ.setNewSpecialty(specialty);
-        this.specialty = specialty;
-        this.auth = false;
-        this.user = "Guest";
-        this.navCtrl.setRoot(Clinical);
+    console.log(this.authServ.getUser());
+    this.fbServ.setNewSpecialty(specialty);
+    this.specialty = specialty;
+    this.auth = false;
+    this.user = "Guest";
+    this.navCtrl.setRoot(Clinical);
   }
 
   loginUser() {
     this.authServ.loginUser(this.email, this.password)
       .then(user => {
+        console.log("Logged in as:", user);
+        this.authServ.setUser = user.email;
         if (user) {
           this.IsloggedIn = user;
           if (!this.currentUser || this.currentUser.email == "") {
             this.userServ.getSingleUser(this.email)
               .then(user => {
                 this.currentUser = user;
+
                 this.specialty = this.currentUser.specialty;
                 this.fbServ.setNewSpecialty(this.currentUser.specialty);
               })
@@ -135,11 +161,11 @@ export class LoginPage {
       // dismissOnPageChange: true
     });
     load.present();
-    if(!this.specialtyList){
+    if (!this.specialtyList) {
       this.getSpecialties();
     }
     // this.authServ.logoutNoReload()
-      this.authServ.logoutUser()
+    this.authServ.logoutUser()
       .then(
       (result) => {
         console.log("Logged out", result);
@@ -147,9 +173,9 @@ export class LoginPage {
         this.userServ.loggedOutUser();
         this.currentUser = this.userServ.getUserInfo();
       })
-      .catch(()=>{
+      .catch(() => {
         load.dismiss();
-        location.reload();
+        // location.reload();
       })
   }
 

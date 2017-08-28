@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
+import firebase from 'firebase';
 /*
   Generated class for the AuthServ provider.
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
@@ -8,28 +8,25 @@ import { AngularFire, AuthProviders, AuthMethods } from 'angularfire2';
 @Injectable()
 export class AuthServ {
 
-  fireAuth: any;
+  fireAuth: firebase.auth.Auth;
+  auth:boolean = false;
+  currentUser:any;
 
 
-  constructor(private af: AngularFire) {
-    this.af.auth.subscribe(user => {
-      if (user) {
-        console.log(user);
-        this.fireAuth = user.auth;
-        }
-    })
+  constructor() {
+    this.fireAuth = firebase.auth();
   }
 
-  loginUser(email: string, password: string) {
-    return this.af.auth.login({
-      email: email,
-      password: password
-    });
-  }
+  loginUser(email: string, password: string): firebase.Promise<any> {
+     return this.fireAuth.signInWithEmailAndPassword(email, password);
+   }
 
   logoutUser() {
     return firebase.auth().signOut()
-    .then(()=>{location.reload()})    ;
+    .then(()=>{
+      return;
+      // location.reload()
+    })    ;
   }
 
   logoutNoReload(){
@@ -38,23 +35,33 @@ export class AuthServ {
   }
 
   anonymousLogin() {
-    return this.af.auth.login({
-      provider: AuthProviders.Anonymous,
-      method: AuthMethods.Anonymous
-    });
+    return
+    };
 
+  setAuth(status){
+    this.auth = status;
   }
+
+  setUser(name){
+    console.log("Setting user:",name);
+    this.currentUser =name;
+  }
+
+
 
   getUser(){
-    return this.fireAuth;
+    console.log("user:",this.currentUser);
+    return this.currentUser;
   }
 
-  createUser(email, password){
-    return this.af.auth.createUser({
-      email:email,
-      password:password
-    })
+  getAuth(){
+    console.log("auth:", this.auth);
+    return this.auth;
   }
+
+  createUser(email: string, password: string): firebase.Promise<any> {
+    return this.fireAuth.createUserWithEmailAndPassword(email, password)
+    }
 
   updateUserList(email, password){
 

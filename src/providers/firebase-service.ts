@@ -4,9 +4,8 @@ import { Storage } from '@ionic/storage';
 import { AlertController } from 'ionic-angular';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
-import { AngularFire } from 'angularfire2';
 import { AuthServ } from './auth-serv';
-
+import firebase from 'firebase';
 
 
 /*
@@ -32,7 +31,7 @@ export class FirebaseService {
   private fbStorageRef: any;
   private details:Details;
 
-  constructor(public http: Http, public storage: Storage, public af:AngularFire, private authServ: AuthServ,
+  constructor(public http: Http, public storage: Storage,  private authServ: AuthServ,
     private alertCtrl:AlertController
 
 

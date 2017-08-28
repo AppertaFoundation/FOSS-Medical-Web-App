@@ -1,6 +1,11 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
-import { Storage } from '@ionic/storage';
+import { IonicStorageModule } from '@ionic/storage';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpModule } from '@angular/http';
+
+import { StatusBar } from '@ionic-native/status-bar';
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { MyApp } from './app.component';
 import { Clinical } from '../pages/clinical/clinical';
@@ -22,22 +27,7 @@ import { ClinicalEditModalComponent } from '../components/clinical-edit-modal/cl
 import { GetImageComponent } from '../components/get-image/get-image';
 import { ResetModalComponent } from '../components/reset-modal/reset-modal';
 
-import { AngularFireModule, AuthProviders, AuthMethods } from 'angularfire2';
 
-
-// AF2 Settings
-export const firebaseConfig = {
-  apiKey: "AIzaSyB8Tw10IW7kRd-icjiOCDnt7IorF0XWKr8",
-  authDomain: "blinding-heat-4325.firebaseapp.com",
-  databaseURL: "https://blinding-heat-4325.firebaseio.com",
-  storageBucket: "blinding-heat-4325.appspot.com",
-  messagingSenderId: "875113725983"
-};
-
-const myFirebaseAuthConfig = {
-  provider: AuthProviders.Password,
-  method: AuthMethods.Password
-}
 
 @NgModule({
   declarations: [
@@ -58,8 +48,10 @@ const myFirebaseAuthConfig = {
 
   ],
   imports: [
+    BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig, myFirebaseAuthConfig)
+    IonicStorageModule.forRoot()
 
   ],
   bootstrap: [IonicApp],
@@ -84,7 +76,9 @@ const myFirebaseAuthConfig = {
     FirebaseService,
     Storage,
     AuthServ,
-    UserService
+    UserService,
+    StatusBar,
+    SplashScreen,
 
   ]
 })

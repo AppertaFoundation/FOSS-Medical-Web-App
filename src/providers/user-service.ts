@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase-service';
+import firebase from 'firebase';
 import { AuthServ } from './auth-serv';
-import { AngularFire } from 'angularfire2';
+
 
 /*
   Generated class for the UserService provider.
@@ -17,14 +18,14 @@ export class UserService {
   userListObs: any;
   details: Object;
   DB;
-  currentUser;
-  userObs;
+  currentUser:{email:string, specialty:string};
+  userObs;//now a firebase reference to userlist
   userObservable;
 
-  constructor(private fbServ: FirebaseService, private authServ: AuthServ, private af: AngularFire) {
+  constructor(private fbServ: FirebaseService, private authServ: AuthServ) {
     this.userList = [];//an array holding users that have been downloaded from the observable
     this.details = this.fbServ.getDBDetails();
-    this.userObs = this.af.database.list(`${this.details["baseUrl"]}/${this.details["hospital"]}/userList`);
+    this.userObs = firebase.database().ref(`${this.details["hospital"]}/userList`);
     this.getUsers();
   }
   //
@@ -42,47 +43,72 @@ export class UserService {
       return Promise.resolve(this.userList);
     }
     else {
-      // console.log("returning the Promise");
-      return new Promise((res, rej) => {
-        this.userObs.subscribe(list => {
-          // console.log("promise list", list)
-          this.userList = list;
-          res(list);
-        },
-          err => { rej(err); }
-        )
+      return Promise.resolve(this.userObs.once('value', snapshot => {
+        // console.log("USEROBS snapshot:",snapshot);
+        this.userList = snapshot.val();
+        return this.userList
       })
+      );
+
+
+
+      // // console.log("returning the Promise");
+      // return new Promise((res, rej) => {
+      //   this.userObs.subscribe(list => {
+      //     // console.log("promise list", list)
+      //     this.userList = list;
+      //     res(list);
+      //   },
+      //     err => { rej(err); }
+      //   )
+      // })
     }
   }
 
 
-  getSingleUser(userName) {
-    return new Promise((res, rej) => {
-      if (this.userList && this.userList.length > 0) {
-        // console.log("Already have userlist");
-        // console.log("Looking for userName:", userName);
-        this.userList.forEach(user => {
-          // console.log("Checking forEach");
-          if (user && user.email) {
-            // console.log("User is:", user)
-            if (user.email == userName) {
-              this.currentUser = user;
-              // console.log("Found a user match:",this.currentUser);
-              // console.log("Found a user specialty:", this.currentUser.specialty);
-              this.fbServ.setNewSpecialty(this.currentUser.specialty);
-              // console.log("GetSingleUser:", this.currentUser);
-            }
-          }
-        })
-        res(this.currentUser);
-      }
+  getSingleUser(userName):Promise<{email:string, specialty:string}>{
+    if(!this.userList || this.userList.length == 0)
+    {
+      console.log("No Userlist- calling");
+      this.getUsers();
+      return Promise.resolve({email:null, specialty:null});
+    }
 
-      else {
-        // this.getUserList();
-        // console.log("No user list at present");
-        rej("");
+    return new Promise((res, rej) => {
+      console.log("Entered promise in getSingleUser with list:", this.userList);
+      for (let user in this.userList) {
+        let lookedAtUser = this.userList[user];
+        console.log("userName",userName);
+        if (lookedAtUser && lookedAtUser.email == userName) {
+          console.log("lookedAtUser:",lookedAtUser);
+          this.currentUser = lookedAtUser;
+          // this.authServ.setUser(userName);
+          console.log("Found a user specialty: ", this.currentUser.specialty);
+          this.fbServ.setNewSpecialty(this.currentUser.specialty);
+          console.log("GetSingleUser:", this.currentUser);
+
+        }
+
       }
-    });
+      res(this.currentUser);
+
+
+      // this.userList.forEach(user => {
+      //       console.log("Checking forEach");
+      //       if (user && user.email) {
+      //         console.log("User in list is:", user)
+      //         if (user.email == userName) {
+      //           this.currentUser = user;
+      //           console.log("Found a user match:", this.currentUser);
+
+      //         }
+      //       }
+      //       else {
+      //         // this.getUserList();
+
+      //       }
+      //     });
+    })
   }
 
   getUserInfo() {
@@ -90,7 +116,7 @@ export class UserService {
   }
 
   loggedOutUser() {
-    this.currentUser = { "email": "" }
+    this.currentUser = { "email": null , "specialty":null}
   }
 
   addUser(email: string, specialty: String, admin: boolean = false, ) {
