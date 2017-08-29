@@ -93,7 +93,8 @@ export class UserService {
         console.log("userName",userName);
         if (lookedAtUser && lookedAtUser.email == userName) {
           console.log("lookedAtUser:",lookedAtUser);
-          this.currentUser.email = lookedAtUser;
+          this.currentUser.email = lookedAtUser.email;
+          this.currentUser.specialty = lookedAtUser.specialty;
           // this.authServ.setUser(userName);
           console.log("Found a user specialty: ", this.currentUser.specialty);
           this.fbServ.setNewSpecialty(this.currentUser.specialty);

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ViewController, LoadingController, ModalController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, ModalController, AlertController } from 'ionic-angular';
 
 import { AuthServ } from '../../providers/auth-serv';
 import { UserService } from '../../providers/user-service';
@@ -35,7 +35,7 @@ export class LoginPage {
   IsloggedIn: any = "blank";
   specialtyList: any = [];
   specialty: string;
-  currentUser: CurrentUser;//all of user object(email and specialty)
+  currentUser: CurrentUser ={email:"", specialty:""};//all of user object(email and specialty)
   userList;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -44,29 +44,6 @@ export class LoginPage {
     private modalCtrl: ModalController, private alertCtrl: AlertController,
     private userServ: UserService, private fbServ: FirebaseService
   ) {
-    const unsubscribe = firebase.auth().onAuthStateChanged((haveAuth) => {
-      if (!haveAuth) {
-        console.log("Not logged in ");
-        this.currentUser = {email:"",specialty:""};
-        this.user = this.currentUser.email;
-        this.auth = false;
-        unsubscribe();
-      }
-      else {
-        console.log("Authenticated");
-        this.auth = true;
-        this.currentUser.email = haveAuth.email;
-        this.user = this.currentUser.email;
-        this.specialty = this.currentUser.specialty||"";
-        console.log("currentUser:", this.currentUser);
-        unsubscribe();
-      }
-      this.userServ.setUsername(this.user);
-      this.authServ.setAuth(this.auth);
-      this.userServ.setUsername(this.user);
-    })
-
-
 
     this.userServ.getUsers()
     .then(users=>{
@@ -76,7 +53,32 @@ export class LoginPage {
   }
 
   ionViewDidEnter() {
+    this.currentUser = this.userServ.getUserInfo();
+    this.user = this.currentUser.email;
+    this.auth = this.authServ.getAuth();
+    const unsubscribe = firebase.auth().onAuthStateChanged((haveAuth) => {
+      if (!haveAuth) {
+        console.log("Not logged in ");
+        this.currentUser = {email:"",specialty:""};
+        this.user = this.currentUser.email;
+        this.auth = false;
+        unsubscribe();
+      }
+      else {
+        console.log("Authenticated:",haveAuth);
+        this.auth = true;
+        this.currentUser.email = haveAuth.email;
+        this.user = this.currentUser.email;
+        this.specialty = this.currentUser.specialty||"";
+        console.log("currentUser:", this.currentUser);
+        unsubscribe();
+      }
+      })
+
     console.log("Did enter");
+    if(this.specialtyList.length > 0){
+      return
+    }
     this.getSpecialties()
     .then(()=>{
       if(this.user){
@@ -106,9 +108,15 @@ export class LoginPage {
         this.auth = false;
         this.specialty = "";
       }
-
+      this.userServ.setCurrentUser({email:this.user, specialty: this.specialty});
+      this.authServ.setAuth(this.auth);
     })
 
+  }
+
+  updateDetails(){
+    this.userServ.setCurrentUser({email:this.user, specialty: this.specialty});
+    this.authServ.setAuth(this.auth);
   }
 
   getSpecialties() {
@@ -145,6 +153,7 @@ export class LoginPage {
         console.log("Logged in as:", user);
         this.userServ.setUsername = user.email;
         if (user) {
+          this.authServ.setAuth(true);
           this.IsloggedIn = user;
           if (!this.currentUser || this.currentUser.email == "") {
             this.userServ.getSingleUser(this.email)
@@ -171,7 +180,7 @@ export class LoginPage {
 
   logoutUser() {
     let load = this.loadingCtrl.create({
-      // dismissOnPageChange: true
+      dismissOnPageChange: true
     });
     load.present();
     if (!this.specialtyList) {

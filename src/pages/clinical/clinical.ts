@@ -26,20 +26,12 @@ export class Clinical {
       .then((data) => {
         this.clinicalListData = data;
       });
-    let getAuth = userServ.getUserInfo()
+    this.auth = authServ.getAuth();
     // console.log("getAuth:",getAuth);
-
-    if(getAuth){
-      this.auth = true;
-      // if(getAuth.email == "shanesapps@hotmail.com"){
-      //   this.auth = false;
-      // }
-    }
-    else{ this.auth = false;}
-  }
+}
 
   ionViewDidEnter(){
-    this.auth = this.userServ.getUserInfo();
+    this.auth = this.authServ.getAuth();
     // console.log("Entered Clinical");
   }
 

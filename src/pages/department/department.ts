@@ -26,16 +26,8 @@ export class Department {
       .then((data) => {
         this.departmentListData = data;
       });
-      let getAuth = userServ.getUserInfo();
+      this.auth = this.authServ.getAuth();
       // console.log("getAuth:",getAuth);
-
-      if(getAuth){
-        this.auth = true;
-        // if(getAuth.email == "shanesapps@hotmail.com"){
-        //   this.auth = false;
-        // }
-      }
-      else{ this.auth = false;}
     }
 
   showDetail(info) {
