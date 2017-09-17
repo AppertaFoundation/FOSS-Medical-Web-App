@@ -76,6 +76,9 @@
   </ion-card>
   <ion-card *ngIf="this.auth && !this.specialty">
     <h1>Loading specialties, please wait...</h1>
+    <ion-item>
+      <button ion-button (click)="logoutUser()">Logout</button>
+    </ion-item>
   </ion-card>
 
 

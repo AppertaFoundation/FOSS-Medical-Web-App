@@ -1,12 +1,13 @@
 import { NavController, LoadingController, AlertController } from 'ionic-angular';
 import { Component } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormGroup } from '@angular/forms';
 import { AuthServ } from '../../providers/auth-serv';
 import { EmailValidator } from '../../validators/email'
 import { UserService } from '../../providers/user-service';
 import { FirebaseService } from '../../providers/firebase-service';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
+import firebase from 'firebase';
 
 interface Details {
   hospital: string,
@@ -39,6 +40,7 @@ export class AccountPage {
   baseSpeciality: String = "ENT";
   userName:string;
   currentUser:Object={"email":"","admin":"","specialty":""};
+  user:any;
 
   constructor(public navCtrl: NavController, public authServ: AuthServ, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, private userServ: UserService,
@@ -51,37 +53,47 @@ export class AccountPage {
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });
 
-    const unsubscribe = firebase.auth().onAuthStateChanged((auth) => {
-       if (!auth) { if (auth) {
-           // console.log(auth);
-           this.isAuth = true;
-           this.userName = auth.email;
-           // console.log("UserName = ", this.userName);
-           // else { this.isGuest = false; }
-           this.currentUser = this.userServ.getUserInfo() || this.currentUser;
-           this.userServ.getSpecialties()
-             .then(snapshot => {
-               this.specialties = snapshot.val();
-             });
+  //   const unsubscribe = firebase.auth().onAuthStateChanged((auth) => {
+  //      if (!auth) { if (auth) {
+  //          // console.log(auth);
+  //          this.isAuth = true;
+  //          this.userName = auth.email;
+  //          // console.log("UserName = ", this.userName);
+  //          // else { this.isGuest = false; }
+  //          this.currentUser = this.userServ.getUserInfo() || this.currentUser;
+  //          this.userServ.getSpecialties()
+  //            .then(snapshot => {
+  //              this.specialties = snapshot.val();
+  //            });
 
-           // this.specialties.subscribe((item)=>{console.log(item)});
-         }
-         else {
-           this.isGuest = true;
-           this.isAuth = false;
-         }
-       }
-  })
-    // this.af.auth.subscribe(auth => {
-    //
-    // })
+  //          // this.specialties.subscribe((item)=>{console.log(item)});
+  //        }
+  //        else {
+  //          this.isGuest = true;
+  //          this.isAuth = false;
+  //        }
+  //      }
+  // })
+  //   // this.af.auth.subscribe(auth => {
+  //   //
+  //   // })
 
 
   }
 
   ionViewDidEnter() {
+    this.isAuth = this.authServ.getAuth()
+    this.user = this.userServ.getUserInfo()
+    this.userServ.getSpecialties().then(
+      res=>{
+        this.specialties= res.val();
+        console.log("Specialties:",this.specialties);
+      }
+    ); 
+    
 
-    this.currentUser = this.userServ.getUserInfo();
+
+    this.currentUser = this.userServ.getUserDetails(this.user);
     console.log(this.currentUser);
     // console.log("Entered Accounts");
     // this.newSpecName = "";

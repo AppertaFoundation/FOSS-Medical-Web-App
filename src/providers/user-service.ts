@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase-service';
 import firebase from 'firebase';
-import { AuthServ } from './auth-serv';
 
 
 
@@ -28,7 +27,7 @@ export class UserService {
   userObs;//now a firebase reference to userlist
   userObservable;
 
-  constructor(private fbServ: FirebaseService, private authServ: AuthServ) {
+  constructor(private fbServ: FirebaseService) {
     this.userList = [];//an array holding users that have been downloaded from the observable
     this.details = this.fbServ.getDBDetails();
     this.userObs = firebase.database().ref(`${this.details["hospital"]}/userList`);
@@ -95,7 +94,6 @@ export class UserService {
           console.log("lookedAtUser:",lookedAtUser);
           this.currentUser.email = lookedAtUser.email;
           this.currentUser.specialty = lookedAtUser.specialty;
-          // this.authServ.setUser(userName);
           console.log("Found a user specialty: ", this.currentUser.specialty);
           this.fbServ.setNewSpecialty(this.currentUser.specialty);
           console.log("GetSingleUser:", this.currentUser);
@@ -145,24 +143,29 @@ export class UserService {
   }
 
 
-  getUserDetails(email: string): Object {
+  getUserDetails(user:{email:string, specialty:string}){
+    console.log("looking for:",user.email);
     let details = { email: "", admin: false, specialty: "" };
-    this.userList.forEach(user => {
-      if (user.email == email) {
+    if (!this.userList || this.userList.length == 0){
+      this.getUsers();
+    }
+    console.log("userList:",this.userList);
+    for (let item in this.userList){
+      let info = this.userList[item];
+      if (info.email == user.email){
         details = {
-          email: user.email,
-          admin: user.admin,
-          specialty: user.specialty
+          email: info.email,
+          admin: info.admin,
+          specialty: info.specialty
         }
       }
-    })
-    return details;
+    }
+   return details;
   }
 
   getSpecialties() {
     return firebase.database().ref(`${this.details["hospital"]}/specialties`).once('value');
   }
-
   //
   // getSpecRef() {
   //   return firebase.database().ref(`${this.details["hospital"]}/specialties`);

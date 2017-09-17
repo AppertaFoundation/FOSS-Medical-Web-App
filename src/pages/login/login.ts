@@ -32,7 +32,6 @@ export class LoginPage {
   password: string;
   user: string = "";//email of user
   auth: Boolean= false;
-  IsloggedIn: any = "blank";
   specialtyList: any = [];
   specialty: string;
   currentUser: CurrentUser ={email:"", specialty:""};//all of user object(email and specialty)
@@ -154,7 +153,6 @@ export class LoginPage {
         this.userServ.setUsername = user.email;
         if (user) {
           this.authServ.setAuth(true);
-          this.IsloggedIn = user;
           if (!this.currentUser || this.currentUser.email == "") {
             this.userServ.getSingleUser(this.email)
               .then(user => {

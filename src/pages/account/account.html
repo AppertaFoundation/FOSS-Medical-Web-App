@@ -17,9 +17,8 @@
 </ion-header>
 <ion-content >
   <h3 *ngIf="!this.currentUser.admin" padding>This area is for Data Administrators only</h3>
-</ion-content>
 
-<ion-content padding *ngIf="this.currentUser.admin">
+<div  *ngIf="this.currentUser.admin">
 <ion-card padding>
   <h1>You are an administrator and are able to:</h1>
   <h2>-sign up new user accounts</h2>
@@ -38,6 +37,7 @@
     </div>
 
   </ion-card>
+  <ion-card padding>
 
   <h2>
     Sign up new user
@@ -45,14 +45,14 @@
   <form [formGroup]="signupForm" (submit)="signupUser()" novalidate>
     <ion-item>
       <ion-label stacked>Email</ion-label>
-      <ion-input #email formControlName="email" type="email" (change)="elementChanged(email)" placeholder="New user email address" [class.invalid]="!signupForm.controls.email.valid && (emailChanged || submitAttempt)"></ion-input>
+      <ion-input #email formControlName="email" type="email" placeholder="New user email address" [class.invalid]="!signupForm.controls.email.valid && (emailChanged || submitAttempt)"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!signupForm.controls.email.valid && (emailChanged || submitAttempt)">
       <p>Please enter a valid email.</p>
     </ion-item>
     <ion-item>
       <ion-label stacked>Password</ion-label>
-      <ion-input #password formControlName="password" type="password" (change)="elementChanged(password)" placeholder="New user password" [class.invalid]="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)"></ion-input>
+      <ion-input #password formControlName="password" type="password" placeholder="New user password" [class.invalid]="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)"></ion-input>
     </ion-item>
     <ion-item class="error-message" *ngIf="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)">
       <p>A new password needs more than 6 characters.</p>
@@ -65,5 +65,9 @@
       Create an Account
     </button>
   </form>
+
+  </ion-card>
+
+</div>
 
 </ion-content>
