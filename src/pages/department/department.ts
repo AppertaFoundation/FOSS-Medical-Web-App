@@ -85,7 +85,7 @@ export class Department {
 
   }
 
-  showAlert(title: string, message: string) {
+  showAlert(title: string, message: any) {
     let alert = this.alertCtrl.create({
       title: title,
       subTitle: message,
