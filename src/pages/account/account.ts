@@ -5,15 +5,8 @@ import { AuthServ } from '../../providers/auth-serv';
 import { EmailValidator } from '../../validators/email'
 import { UserService } from '../../providers/user-service';
 import { FirebaseService } from '../../providers/firebase-service';
-import { Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import firebase from 'firebase';
-
-interface Details {
-  hospital: string,
-  baseUrl: string,
-  specialty: string
-}
 
 /*
   Generated class for the User component.
@@ -27,7 +20,7 @@ interface Details {
 })
 export class AccountPage {
 
-  public signupForm;
+  public signupForm:FormGroup;
   emailChanged: boolean = false;
   passwordChanged: boolean = false;
   submitAttempt: boolean = false;
@@ -44,7 +37,7 @@ export class AccountPage {
 
   constructor(public navCtrl: NavController, public authServ: AuthServ, public formBuilder: FormBuilder,
     public loadingCtrl: LoadingController, public alertCtrl: AlertController, private userServ: UserService,
-    private fbServ: FirebaseService,  public http: Http
+    private fbServ: FirebaseService
 
   ) {
 
