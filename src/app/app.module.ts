@@ -1,11 +1,10 @@
-import { NgModule, ErrorHandler } from '@angular/core';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { NgModule } from '@angular/core';
+import { IonicApp, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
+
 
 import { MyApp } from './app.component';
 import { Clinical } from '../pages/clinical/clinical';
@@ -15,9 +14,9 @@ import { DepartmentDetailPage } from '../pages/department-detail/department-deta
 import { LoginPage } from '../pages/login/login';
 import { AccountPage} from '../pages/account/account';
 
-import { FirebaseService } from '../providers/firebase-service';
-import { AuthServ } from '../providers/auth-serv';
-import { UserService } from '../providers/user-service';
+import { AppProviders } from './app.providers';
+
+
 
 import { EditModalComponent } from '../components/edit-modal/edit-modal';
 import { NewItemComponent } from '../components/new-item/new-item';
@@ -72,14 +71,7 @@ import { ResetModalComponent } from '../components/reset-modal/reset-modal';
   ResetModalComponent
 
   ],
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
-    FirebaseService,
-    Storage,
-    AuthServ,
-    UserService,
-    StatusBar,
-    SplashScreen,
-
-  ]
+  providers: AppProviders()
+  
 })
 export class AppModule {}
