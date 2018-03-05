@@ -3,6 +3,7 @@ import { Nav, Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
+import { config } from 'debdetails';
 import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
 import { LoginPage } from '../pages/login/login';
@@ -23,12 +24,7 @@ export class MyApp {
   pages: Array<{title: string, component: any}>;
 
   constructor( platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
-    firebase.initializeApp({
-      apiKey: "ADD YOUR OWN FIREBASE KEYS HERE",
-      authDomain: "ADD YOUR OWN FIREBASE KEYS HERE",
-      databaseURL: "ADD YOUR OWN FIREBASE KEYS HERE",
-      storageBucket: "ADD YOUR OWN FIREBASE KEYS HERE",
-      messagingSenderId: "ADD YOUR OWN FIREBASE KEYS HERE" });
+    firebase.initializeApp(config);
 
     platform.ready().then(() => {
       statusBar.styleDefault();
