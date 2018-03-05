@@ -87,10 +87,15 @@ In the Database tab select the Rules tab
 For now delete the rules and paste in the following
 `
   {
+
     "rules": {
+
       ".read": true,
+
       ".write": true
+
     }
+    
   }
 `
 and click PUBLISH
