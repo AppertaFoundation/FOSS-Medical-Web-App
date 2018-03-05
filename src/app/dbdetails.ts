@@ -1,13 +1,13 @@
 export var config = {
-    apiKey: "",
-    authDomain: "",
-    databaseURL: "",
-    projectId: "",
-    storageBucket: "",
-    messagingSenderId: ""
-  };
-
+    apiKey: "AIzaSyBvNwWjUqWueh1Wz9Swa-q54nqUG428sVA",
+     authDomain: "enthandbookfreeman.firebaseapp.com",
+     databaseURL: "https://enthandbookfreeman.firebaseio.com",
+     projectId: "enthandbookfreeman",
+     storageBucket: "enthandbookfreeman.appspot.com",
+     messagingSenderId: "1043230267806"
+   };
+ 
 export const dbDetails ={
-    hospital:"",
-    specialty:""
-}
+     hospital:"Freeman",
+     specialty:"ENT"
+ }
