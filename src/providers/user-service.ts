@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase-service';
 import firebase from 'firebase';
 
-
-
 /*
   Generated class for the UserService provider.
 
@@ -33,9 +31,7 @@ export class UserService {
     this.userObs = firebase.database().ref(`${this.details["hospital"]}/userList`);
     this.getUsers();
   }
-  //
-  // getUserList() {
-  // }
+
 
   setCurrentUser(user:CurrentUser) {
     this.currentUser.email = user.email;
@@ -50,29 +46,16 @@ export class UserService {
 
   getUsers() {
     if (this.userList && this.userList.length > 0) {
-      // console.log("Resolving with :", this.userList);
+      console.log("Resolving with :", this.userList);
       return Promise.resolve(this.userList);
     }
     else {
       return Promise.resolve(this.userObs.once('value', snapshot => {
-        // console.log("USEROBS snapshot:",snapshot);
         this.userList = snapshot.val();
         return this.userList
       })
       );
 
-
-
-      // // console.log("returning the Promise");
-      // return new Promise((res, rej) => {
-      //   this.userObs.subscribe(list => {
-      //     // console.log("promise list", list)
-      //     this.userList = list;
-      //     res(list);
-      //   },
-      //     err => { rej(err); }
-      //   )
-      // })
     }
   }
 
@@ -102,23 +85,6 @@ export class UserService {
 
       }
       res(this.currentUser);
-
-
-      // this.userList.forEach(user => {
-      //       console.log("Checking forEach");
-      //       if (user && user.email) {
-      //         console.log("User in list is:", user)
-      //         if (user.email == userName) {
-      //           this.currentUser = user;
-      //           console.log("Found a user match:", this.currentUser);
-
-      //         }
-      //       }
-      //       else {
-      //         // this.getUserList();
-
-      //       }
-      //     });
     })
   }
 
@@ -131,9 +97,7 @@ export class UserService {
   }
 
   addUser(email: string, specialty: String, admin: boolean = false, ) {
-    // console.log("Email ",email);
-    // console.log("specialty ",specialty);
-    // console.log("admin ",admin);
+
     this.userObs.push({
       email: email,
       admin: admin,
@@ -164,6 +128,7 @@ export class UserService {
   }
 
   getSpecialties() {
+    console.log("Getting the specs",`${this.details["hospital"]}/specialties`);
     return firebase.database().ref(`${this.details["hospital"]}/specialties`).once('value');
   }
   //

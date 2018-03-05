@@ -46,32 +46,6 @@ export class AccountPage {
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
     });
 
-  //   const unsubscribe = firebase.auth().onAuthStateChanged((auth) => {
-  //      if (!auth) { if (auth) {
-  //          // console.log(auth);
-  //          this.isAuth = true;
-  //          this.userName = auth.email;
-  //          // console.log("UserName = ", this.userName);
-  //          // else { this.isGuest = false; }
-  //          this.currentUser = this.userServ.getUserInfo() || this.currentUser;
-  //          this.userServ.getSpecialties()
-  //            .then(snapshot => {
-  //              this.specialties = snapshot.val();
-  //            });
-
-  //          // this.specialties.subscribe((item)=>{console.log(item)});
-  //        }
-  //        else {
-  //          this.isGuest = true;
-  //          this.isAuth = false;
-  //        }
-  //      }
-  // })
-  //   // this.af.auth.subscribe(auth => {
-  //   //
-  //   // })
-
-
   }
 
   ionViewDidEnter() {
@@ -88,12 +62,7 @@ export class AccountPage {
 
     this.currentUser = this.userServ.getUserDetails(this.user);
     console.log(this.currentUser);
-    // console.log("Entered Accounts");
-    // this.newSpecName = "";
-    // this.userServ.getSingleUser(this.userName)
-    // .then(obj=>{
-    //   console.log(obj);
-    // })
+
   }
 
   elementChanged(input) {

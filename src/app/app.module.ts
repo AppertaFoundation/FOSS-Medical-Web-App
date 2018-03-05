@@ -13,6 +13,7 @@ import { ClinicalDetailPage } from '../pages/clinical-detail/clinical-detail';
 import { DepartmentDetailPage } from '../pages/department-detail/department-detail';
 import { LoginPage } from '../pages/login/login';
 import { AccountPage} from '../pages/account/account';
+import { SetupDbPage } from '../pages/setup-db/setup-db';
 
 import { AppProviders } from './app.providers';
 
@@ -43,7 +44,8 @@ import { ResetModalComponent } from '../components/reset-modal/reset-modal';
     GetImageComponent,
     AccountPage,
     LoginPage,
-    ResetModalComponent
+    ResetModalComponent,
+    SetupDbPage
 
   ],
   imports: [
@@ -68,7 +70,8 @@ import { ResetModalComponent } from '../components/reset-modal/reset-modal';
   GetImageComponent,
   AccountPage,
   LoginPage,
-  ResetModalComponent
+  ResetModalComponent,
+  SetupDbPage
 
   ],
   providers: AppProviders()

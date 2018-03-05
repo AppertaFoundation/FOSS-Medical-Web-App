@@ -24,6 +24,9 @@ export class Department {
     // this.departmentListData = fbServ.getDepartmentList();
     fbServ.getList("department")
       .then((data) => {
+        if(data == null){
+          console.log ("Need to create data can go to a new set up DB page");
+        }
         this.departmentListData = data;
       });
       this.auth = this.authServ.getAuth();

@@ -17,7 +17,7 @@ export class AuthServ {
     this.fireAuth = firebase.auth();
   }
 
-  loginUser(email: string, password: string): firebase.Promise<any> {
+  loginUser(email: string, password: string) {
      return this.fireAuth.signInWithEmailAndPassword(email, password);
    }
 
@@ -59,7 +59,7 @@ export class AuthServ {
     return this.auth;
   }
 
-  createUser(email: string, password: string): firebase.Promise<any> {
+  createUser(email: string, password: string) {
     return this.fireAuth.createUserWithEmailAndPassword(email, password)
     }
 

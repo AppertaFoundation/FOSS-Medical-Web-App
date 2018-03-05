@@ -24,8 +24,12 @@ export class Clinical {
   ) {
     fbServ.getList("clinical")
       .then((data) => {
+        if(data == null){
+          console.log ("Need to create data can go to a new set up DB page");
+        }
         this.clinicalListData = data;
-      });
+      })
+      .catch(err=>{console.log("No Clinical Data")})
     this.auth = authServ.getAuth();
     // console.log("getAuth:",getAuth);
 }

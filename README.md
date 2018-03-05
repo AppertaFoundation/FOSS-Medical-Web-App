@@ -34,6 +34,8 @@ It should take a bit of time and install lots of stuff
 `cd` into the src folder
 
 UPDATE the details
+Open the file dbdetails.ts and delete everything between the word `export` and the words `export const dbDetails`
+
 Change the address of the firebase DB:
 Go to this page
 `https://firebase.google.com/docs/web/setup`
@@ -50,9 +52,31 @@ Where it says (in your own snippet)
 
   copy everything starting with  the `var` sign until after the next `};`(this is a javascript object with your project settings)
   - you don't copy these lines `firebase.initializeApp(config); </script>`)-
-   and copy the into the dbdetails.ts file (delete everything except the word `export` and paste your `var config = {...etc...};` after `export`)
+   and paste the object into the dbdetails.ts file after the word `export `  (remember to leave a space between)
 
-   Save the 
+Go back to your firebase project and select the project you created.
+Go to the Database menu (at the bottom) and click "Get Started"
+On the left menu under the DEVELOP menu select Database
+In the Database tab select the Rules tab
+For now delete the rules and paste in the following
+
+`{
+  "rules": {
+    ".read": true,
+    ".write": true
+  }
+}`
+and click PUBLISH
+You will get the following warning
+`Your security rules are defined as public, anyone can read or write to your database`
+DON'T PANIC!
+
+Go to the AUTHENTICATION option on the left menu
+Choose Authentication / Sign-in Method
+In Sign-In Provider click Email/Password and Enable it and Save this setting
+
+Go to the USERS tab and create an account for yourself
+
    
    `cd` back up to the root directory (should just have to `cd ..` to get there)
    and see if everything works with 

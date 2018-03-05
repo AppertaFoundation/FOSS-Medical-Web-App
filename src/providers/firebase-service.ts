@@ -6,6 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { AuthServ } from './auth-serv';
 import firebase from 'firebase';
+import {config, dbDetails } from '../app/dbdetails';
 
 
 /*
@@ -24,12 +25,14 @@ interface Details {
 export class FirebaseService {
 
 
-  private specialty: string = "ENT";
-  private hospital: string = "James_Cook";
-  private baseUrl: string = 'https://blinding-heat-4325.firebaseio.com';
+  private specialty: string = dbDetails.specialty;
+  private hospital: string = dbDetails.hospital;
+  private baseUrl: string = config.databaseURL;
   private fbStorage: any;
   private fbStorageRef: any;
   private details:Details;
+  private date:any;
+
 
   constructor(public http: Http, public storage: Storage,  private authServ: AuthServ,
     private alertCtrl:AlertController
@@ -39,6 +42,8 @@ export class FirebaseService {
 
     this.fbStorage = firebase.storage();
     this.fbStorageRef = this.fbStorage.ref();
+    this.date = Date.now();
+    
   }
 
   getList(type: string) {
@@ -47,15 +52,70 @@ export class FirebaseService {
       return this.http.get(`${this.baseUrl}/${this.hospital}/${this.specialty}/published/${type}.json`)
         .toPromise()
         .then(response => {
+          console.log(`got data of type ${type}`,response);
           response.json();
           this[dataType] = response.json();
           this[dataType + "Fetched"] = true;
           return this[dataType];
-        });
+        })
+        .catch(err=>{console.log("No Clin data in FBServ")})
     }
     else {
       return Promise.resolve(this[dataType]);
     }
+  }
+
+  setupFirstDB(){
+
+    let blank = { 
+        "published":{
+            "date":`${this.date}`,
+            "clinical":{0:{
+              "admit":{
+                0:"blank"
+              },
+               "flags":{
+                 0:" "
+               },
+               "picture":" ",
+               "required":{
+                 0:" "
+               },
+               "shortname":"blank",
+               "signs":{
+                 0:" "
+               },
+               "summary":{
+                0:" "
+              },
+               "symptoms":{
+                0:" "
+              },
+               "title":"blank"}
+
+                },
+           "department":{
+             0:{"data":{
+               0:{
+                 "detail":"blank",
+                 "type":"title"
+               }
+             },
+             "group":"blank"}
+               }
+        }
+  
+    };
+    let specialties = {
+      0:`${this.specialty}`
+    }
+    let specString = "specialties";
+    let userStr = "userList"
+    let fbdb = firebase.database();
+    return fbdb.ref(`${this.hospital}/${this.specialty}`).set(blank)
+    .then(()=>{fbdb.ref(`${this.hospital}/${specString}`).set(specialties)})
+    .then(()=>{fbdb.ref(`${this.hospital}/${userStr}`).set("")})
+  
   }
 
 

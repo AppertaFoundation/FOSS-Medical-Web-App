@@ -7,6 +7,7 @@ import { FirebaseService } from '../../providers/firebase-service';
 
 import { Clinical } from '../clinical/clinical';
 import { ResetModalComponent } from '../../components/reset-modal/reset-modal';
+import { SetupDbPage } from '../setup-db/setup-db';
 
 import firebase from 'firebase';
 
@@ -75,7 +76,8 @@ export class LoginPage {
       })
 
     console.log("Did enter");
-    if(this.specialtyList.length > 0){
+    if(this.specialtyList && this.specialtyList.length > 0){
+      console.log("specialtyList",this.specialtyList);
       return
     }
     this.getSpecialties()
@@ -90,6 +92,7 @@ export class LoginPage {
         this.userServ.getUsers()
         .then(users=>{
           this.userList = users;
+          console.log("calling getSingleUSer");
           this.userServ.getSingleUser(this.user)
           .then(userObject=>{
             console.log("userObject in didEnter:",userObject);
@@ -110,6 +113,7 @@ export class LoginPage {
       this.userServ.setCurrentUser({email:this.user, specialty: this.specialty});
       this.authServ.setAuth(this.auth);
     })
+    .catch((err)=>console.log(err));
 
   }
 
@@ -122,8 +126,12 @@ export class LoginPage {
     return this.userServ.getSpecialties()
       .then(snapshot => {
         this.specialtyList = snapshot.val();
-        console.log(this.specialtyList);
-      });
+        console.log("got specialties and they are:",this.specialtyList);
+        if(this.specialtyList == null){
+          this.navCtrl.push(SetupDbPage);
+        }
+      })
+      .catch(err=>console.log("getSpecialties", err));
   }
 
   enterLoggedIn() {
