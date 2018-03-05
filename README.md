@@ -85,14 +85,14 @@ Go to the Database menu (at the bottom) and click "Get Started"
 On the left menu under the DEVELOP menu select Database
 In the Database tab select the Rules tab
 For now delete the rules and paste in the following
-
+`
   {
     "rules": {
       ".read": true,
       ".write": true
     }
   }
-
+`
 and click PUBLISH
 You will get the following warning
 `Your security rules are defined as public, anyone can read or write to your database`
