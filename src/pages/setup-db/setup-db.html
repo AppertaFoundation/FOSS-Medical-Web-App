@@ -1,0 +1,59 @@
+<!--
+  Generated template for the SetupDbPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>First time DB setup</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-item>Going to setup your first database for the hospital</ion-item>
+    <ion-item>
+        {{this.hospital}}
+        
+    </ion-item>
+   <ion-item>With the base specialty of</ion-item>
+<ion-item>
+    {{this.specialty}}
+</ion-item>
+<h1>You will need to fill in a valid email and password to proceed</h1>
+<ion-item>If these are correct click the GO button</ion-item>
+<ion-item>If not then update the dbdetails.ts file</ion-item>
+  </ion-card>
+
+  <h2>
+      Please sign up yourself as the administrator
+    </h2>
+    <form [formGroup]="signupForm" (submit)="Setup()" novalidate>
+      <ion-item>
+        <ion-label stacked>Email</ion-label>
+        <ion-input #email formControlName="email" type="email" placeholder="New user email address" [class.invalid]="!signupForm.controls.email.valid && (emailChanged || submitAttempt)"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="!signupForm.controls.email.valid && (emailChanged || submitAttempt)">
+        <p>Please enter a valid email.</p>
+      </ion-item>
+      <ion-item>
+        <ion-label stacked>Password</ion-label>
+        <ion-input #password formControlName="password" type="password" placeholder="New user password" [class.invalid]="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)"></ion-input>
+      </ion-item>
+      <ion-item class="error-message" *ngIf="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)">
+        <p>A new password needs more than 6 characters.</p>
+      </ion-item>
+      <ion-item>
+        <h3>Current Specialty:</h3>
+        <h2>{{specialty}}</h2>
+      </ion-item>
+      <button ion-button medium type="submit" [disabled]="!this.signupForm.valid">
+        GO
+      </button>
+    </form>
+
+</ion-content>
