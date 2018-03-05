@@ -5,6 +5,18 @@ What is this repository for?
 Set up a Web App for a Trust v 1.0
 
 How do I get set up?
+You will need to set a few things up.
+First go and create a new Firebase account at this page
+[Firebase home page](https://firebase.google.com/)
+Click "GET STARTED"
+
+Either use an existing Google Account or set a new one up.
+When you choose a project name it will create a random project ID- play around with this to try and make this
+as useable as possible (it affects the address of the project).
+If you can get a good name it will be easier for your users.
+
+Set up a new project (click on the + sign and )
+
 Ensure you have node installed with npm (got to https://nodejs.org/en/ and follow the instructions for your system)
 When node is installed open a terminal (or CMD or PowerShell) 
 Run 
@@ -38,7 +50,7 @@ Open the file dbdetails.ts and delete everything between the word `export` and t
 
 Change the address of the firebase DB:
 Go to this page
-`https://firebase.google.com/docs/web/setup`
+[Firebase web set up](https://firebase.google.com/docs/web/setup)
 and follow the instructions on how to Add Firebase To your App
 In stage 3 you will get the details of how to get the initialization snippet.
 Where it says (in your own snippet)
@@ -83,6 +95,24 @@ Go to the USERS tab and create an account for yourself
    `ionic serve`
    which should spin up a local server for testing  
 
+***When you are ready to upload:
+in the root directory (may still be foss-web-app if cloned)
+`firebase init`
+
+Using the arrow keys and space bar, select 
+`hosting`
+so it has an asterisk next to it then press enter
+
+Select your project that you set up earlier.
+When it asks for the public directory type 
+`www`
+
+It will ask if you
+`? Configure as a single-page app (rewrite all urls to /index.html)?` -select YES
+It will ask you 
+`? File www/index.html already exists. Overwrite?` - select NO
+
+And it will upload your file and you should be able to access it via the web address.
    
 
 Contribution guidelines
