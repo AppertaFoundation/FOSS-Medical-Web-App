@@ -24,11 +24,11 @@ export class MyApp {
 
   constructor( platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     firebase.initializeApp({
-      apiKey: "AIzaSyB8Tw10IW7kRd-icjiOCDnt7IorF0XWKr8",
-      authDomain: "blinding-heat-4325.firebaseapp.com",
-      databaseURL: "https://blinding-heat-4325.firebaseio.com",
-      storageBucket: "blinding-heat-4325.appspot.com",
-      messagingSenderId: "875113725983" });
+      apiKey: "ADD YOUR OWN FIREBASE KEYS HERE",
+      authDomain: "ADD YOUR OWN FIREBASE KEYS HERE",
+      databaseURL: "ADD YOUR OWN FIREBASE KEYS HERE",
+      storageBucket: "ADD YOUR OWN FIREBASE KEYS HERE",
+      messagingSenderId: "ADD YOUR OWN FIREBASE KEYS HERE" });
 
     platform.ready().then(() => {
       statusBar.styleDefault();
