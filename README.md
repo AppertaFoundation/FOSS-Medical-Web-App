@@ -140,7 +140,7 @@ It will ask you
 And it will upload your file and you should be able to access it via the web address.
    
 
-Contribution guidelines
+###Contribution guidelines
 *contact me (see below) if you wish to contribute
 
 Who do I talk to?
