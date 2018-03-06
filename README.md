@@ -67,6 +67,7 @@ Go to this page
 and follow the instructions on how to Add Firebase To your App
 In stage 3 you will get the details of how to get the initialization snippet.
 Where it says (in your own snippet)
+~~~
   var config = {
       apiKey: "<API_KEY>",
       authDomain: "<PROJECT_ID>.firebaseapp.com",
@@ -74,7 +75,7 @@ Where it says (in your own snippet)
       storageBucket: "<BUCKET>.appspot.com",
       messagingSenderId: "<SENDER_ID>",
     };
-
+~~~
   copy everything starting with  the `var` sign until after the next `};`(this is a javascript object with your project settings)
   - you don't copy these lines `firebase.initializeApp(config); </script>`)-
    and paste the object into the dbdetails.ts file after the word `export `  (remember to leave a space between)
@@ -85,7 +86,7 @@ Go to the Database menu (at the bottom) and click "Get Started"
 On the left menu under the DEVELOP menu select Database
 In the Database tab select the Rules tab
 For now delete the rules and paste in the following
-`
+~~~
   {
 
     "rules": {
@@ -95,9 +96,9 @@ For now delete the rules and paste in the following
       ".write": true
 
     }
-    
+
   }
-`
+~~~
 and click PUBLISH
 You will get the following warning
 `Your security rules are defined as public, anyone can read or write to your database`
