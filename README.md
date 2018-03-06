@@ -6,6 +6,7 @@ Set up a Web App for a Trust v 1.0
 
 #License
 You have been invited to use this repo
+
 It is licensed under an AGPL 3.0 license
 
 ##How do I get set up?
