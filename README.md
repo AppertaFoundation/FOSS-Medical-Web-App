@@ -51,11 +51,15 @@ Clone this repo using this command in a new directory (where you wish to store t
 
 You will also need to install Ionic for this process (may not have to in the future)
 Run
-`npm install ionic`
+~~~
+npm install ionic
+~~~
 
 
 In the terminal cd into the project folder and run
-`npm install`
+~~~
+npm install
+~~~
 It should take a bit of time and install lots of stuff
 
 
