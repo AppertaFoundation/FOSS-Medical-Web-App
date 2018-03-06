@@ -130,8 +130,11 @@ When it asks for the public directory type
 `www`
 
 It will ask if you
+
 `? Configure as a single-page app (rewrite all urls to /index.html)?` -select YES
+
 It will ask you 
+
 `? File www/index.html already exists. Overwrite?` - select NO
 
 And it will upload your file and you should be able to access it via the web address.
