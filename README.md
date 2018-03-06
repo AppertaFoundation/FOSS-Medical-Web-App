@@ -32,11 +32,15 @@ Ensure you have node installed with npm (got to https://nodejs.org/en/ and follo
 
 When node is installed open a terminal (or CMD or PowerShell) 
 Run 
-`npm install -g firebase-tools`
+~~~
+npm install -g firebase-tools
+~~~
 to install the firebase CLI
 
 then type 
-`firebase login`
+~~~
+firebase login
+~~~
 and login with your credentials (your firebase account username and password)
 
 
@@ -83,7 +87,7 @@ Where it says (in your own snippet)
    (this is a javascript object with your project settings)
   **you don't copy these lines `firebase.initializeApp(config); </script>`)**
 
-  
+
    and paste the object into the dbdetails.ts file after the word `export `  (remember to leave a space between)
 
 
