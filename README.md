@@ -4,6 +4,10 @@ This README documents the basis of this repo and how to use it to set up a Trust
 What is this repository for?
 Set up a Web App for a Trust v 1.0
 
+#License
+You have been invited to use this repo
+It is licensed under an AGPL 3.0 license
+
 ##How do I get set up?
 **You will need to set a few things up.**
 
