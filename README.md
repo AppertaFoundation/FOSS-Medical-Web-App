@@ -88,30 +88,33 @@ In the Database tab select the Rules tab
 For now delete the rules and paste in the following
 ~~~
   {
-
     "rules": {
-
       ".read": true,
-
       ".write": true
-
     }
-
   }
 ~~~
 and click PUBLISH
 You will get the following warning
+
 `Your security rules are defined as public, anyone can read or write to your database`
+
 DON'T PANIC!
 
 
 Go to the AUTHENTICATION option on the left menu
+
 Choose Authentication / Sign-in Method
+
 In Sign-In Provider click Email/Password and Enable it and Save this setting
+
    
    `cd` back up to the root directory (should just have to `cd ..` to get there)
    and see if everything works with 
-   `ionic serve`
+~~~
+   ionic serve
+~~~
+
    which should spin up a local server for testing  
 
 ##When you are ready to upload:
