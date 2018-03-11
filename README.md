@@ -110,7 +110,6 @@ Where it says (in your own snippet)
 
    and paste the object into the dbdetails.ts file after the word `export `  (remember to leave a space between)
 
-
 ~~~
    ionic serve
 ~~~
