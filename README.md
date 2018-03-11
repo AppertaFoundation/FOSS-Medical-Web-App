@@ -1,6 +1,16 @@
 README
 This README documents the basis of this repo and how to use it to set up a Trust's Web App to store the data
 
+##Requirements
+##Local set up
+- Git (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- NodeJS (v8) with npm (https://nodejs.org/en/)
+- Ionic ($ npm install -g ionic)
+- Firebase tools ($ npm install -g firebase-tools)
+##Online
+- Firebase account (https://firebase.google.com/)
+
+
 What is this repository for?
 Set up a Web App for a Trust v 1.0
 
@@ -32,7 +42,7 @@ Follow these instructions
 https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
 ###Set up Node
-Ensure you have node installed with npm (got to https://nodejs.org/en/ and follow the instructions for your system)
+Ensure you have node installed with npm (got to https://nodejs.org/en/ and follow the instructions for your system). npm is packaged with node.
 
 
 When node is installed open a terminal (or CMD or PowerShell) 
