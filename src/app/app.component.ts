@@ -1,6 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-// import { config } from './dbdetails';
 import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
 import { LoginPage } from '../pages/login/login';

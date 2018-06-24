@@ -182,7 +182,7 @@ It will ask you
 `? File www/index.html already exists. Overwrite?` - select NO
 
 You then need to deploy your app. Run the following command
-`npm run deploy`
+`firebase deploy`
 And it will build and upload your file and you should be able to access it via the web address (it will show you this when completed).
 
 And it will upload your file and you should be able to access it via the web address (it will show you this when completed).

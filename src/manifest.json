@@ -1,7 +1,6 @@
 {
-  "name": "JCUH induction
-   App",
-  "short_name": "JCUHapp",
+  "name": "uma-web-app",
+  "short_name": "UMA WebApp",
   "start_url": "index.html",
   "display": "standalone",
   "icons": [{

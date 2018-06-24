@@ -6,8 +6,6 @@ import { FirebaseService } from '../providers/firebase-service';
 import { AuthServ } from '../providers/auth-serv';
 import { UserService } from '../providers/user-service';
 
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
  
 // class CameraMock {
 //   getPicture(options) {
@@ -26,9 +24,7 @@ export function AppProviders (){
             FirebaseService,
             Storage,
             AuthServ,
-            UserService,
-            StatusBar,
-            SplashScreen
+            UserService
           ]
  
  
@@ -38,9 +34,7 @@ export function AppProviders (){
             FirebaseService,
             Storage,
             AuthServ,
-            UserService,
-            StatusBar,
-            SplashScreen
+            UserService
           ]
  
         }
