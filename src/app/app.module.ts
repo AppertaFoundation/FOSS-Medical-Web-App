@@ -78,7 +78,6 @@ import { ResetModalComponent } from '../components/reset-modal/reset-modal';
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
     FirebaseService,
-    Storage,
     AuthServ,
     UserService
   ]
