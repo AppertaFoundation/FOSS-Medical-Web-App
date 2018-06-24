@@ -28,20 +28,17 @@ export class FirebaseService {
   private specialty: string = dbDetails.specialty;
   private hospital: string = dbDetails.hospital;
   private baseUrl: string = config.databaseURL;
-  private fbStorage: any;
-  private fbStorageRef: any;
+  // private fbStorage: any;
+  // private fbStorageRef: any;
   private details:Details;
   private date:any;
 
 
   constructor(public http: Http, public storage: Storage,  private authServ: AuthServ,
-    private alertCtrl:AlertController
+    private alertCtrl:AlertController ) {
 
-
-  ) {
-
-    this.fbStorage = firebase.storage();
-    this.fbStorageRef = this.fbStorage.ref();
+    // this.fbStorage = firebase.storage();
+    // this.fbStorageRef = this.fbStorage.ref();
     this.date = Date.now();
     
   }

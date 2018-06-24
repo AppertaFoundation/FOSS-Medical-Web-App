@@ -1,9 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
-
-import { config } from './dbdetails';
+// import { config } from './dbdetails';
 import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
 import { LoginPage } from '../pages/login/login';
@@ -11,6 +8,14 @@ import { AccountPage } from '../pages/account/account';
 
 import firebase from 'firebase';
 
+const  config = {
+  apiKey: "AIzaSyCxNFJseM6G-cjjKgz_29J6pi4FLi-irTw",
+  authDomain: "universal-medical-webapp.firebaseapp.com",
+  databaseURL: "https://universal-medical-webapp.firebaseio.com",
+  projectId: "universal-medical-webapp",
+  storageBucket: "universal-medical-webapp.appspot.com",
+  messagingSenderId: "117870049439"
+};
 
 
 @Component({
@@ -23,12 +28,11 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor( platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
+  constructor( platform: Platform) {
     firebase.initializeApp(config);
 
     platform.ready().then(() => {
-      statusBar.styleDefault();
-      splashScreen.hide();
+  
     });
 
     // used for an example of ngFor and navigation

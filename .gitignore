@@ -28,7 +28,7 @@ plugins/android.json
 plugins/ios.json
 www/
 $RECYCLE.BIN/
-./src/app/dbdetails.ts
+src/app/dbdetails.ts
 
 .DS_Store
 Thumbs.db

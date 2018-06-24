@@ -6,6 +6,7 @@ import { NewItemComponent } from '../../components/new-item/new-item';
 import { NameEditModalComponent } from '../../components/name-edit-modal/name-edit-modal';
 import { AuthServ } from '../../providers/auth-serv';
 import { UserService } from '../../providers/user-service';
+import { SetupDbPage } from '../../pages/setup-db/setup-db';
 
 
 @Component({
@@ -26,6 +27,7 @@ export class Clinical {
       .then((data) => {
         if(data == null){
           console.log ("Need to create data can go to a new set up DB page");
+          this.navCtrl.push(SetupDbPage);
         }
         this.clinicalListData = data;
       })
