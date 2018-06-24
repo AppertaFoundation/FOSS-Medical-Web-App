@@ -22,6 +22,7 @@ export class SetupDbPage {
   public signupForm:FormGroup;
   emailChanged: boolean = false;
   passwordChanged: boolean = false;
+  specialtyChanged:boolean = false;
   submitAttempt: boolean = false;
   userList: any;
   isAuth: Boolean;
@@ -32,6 +33,7 @@ export class SetupDbPage {
   userName:string;
   currentUser:Object={"email":"","admin":"","specialty":""};
   user:any;
+  private auth:boolean = false;
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
@@ -40,19 +42,25 @@ export class SetupDbPage {
        public authServ: AuthServ,
        private userServ: UserService,
        public formBuilder: FormBuilder,
+       
       ) {
     this.details = this.fbServ.getDBDetails();
     this.hospital = this.details["hospital"];
     this.specialty = this.details["specialty"];
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
-      password: ['', Validators.compose([Validators.minLength(6), Validators.required])]
+      password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
+      specialty:['',Validators.compose([Validators.minLength(1),Validators.pattern('[a-zA-Z ]*'),Validators.required])]
+    
     });
 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad SetupDbPage');
+    this.auth = this.authServ.getAuth();
+    if(this.auth){console.log("SetUpDB auth is positive");}
+    else{console.log("SETUPDB-not auth'd");}
   }
 
   Setup(){

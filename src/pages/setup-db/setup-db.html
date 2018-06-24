@@ -29,8 +29,10 @@
 <ion-item>If not then update the dbdetails.ts file</ion-item>
   </ion-card>
 
+<ion-card *ngIf = "!this.auth">
+
   <h2>
-      Please sign up yourself as the administrator
+      Please login and this will set you up as the administrator
     </h2>
     <form [formGroup]="signupForm" (submit)="Setup()" novalidate>
       <ion-item>
@@ -44,16 +46,21 @@
         <ion-label stacked>Password</ion-label>
         <ion-input #password formControlName="password" type="password" placeholder="New user password" [class.invalid]="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)"></ion-input>
       </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Specialty</ion-label>
+        <ion-input #email formControlName="specialty" type="text" placeholder="Specialty" [class.invalid]="!signupForm.controls.email.valid && (emailChanged || submitAttempt)"></ion-input>
+      </ion-item>
+
       <ion-item class="error-message" *ngIf="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)">
         <p>A new password needs more than 6 characters.</p>
       </ion-item>
-      <ion-item>
-        <h3>Current Specialty:</h3>
-        <h2>{{specialty}}</h2>
-      </ion-item>
+
       <button ion-button medium type="submit" [disabled]="!this.signupForm.valid">
         GO
       </button>
     </form>
+  </ion-card>
+
 
 </ion-content>

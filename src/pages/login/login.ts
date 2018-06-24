@@ -49,7 +49,11 @@ export class LoginPage {
     .then(users=>{
       this.userList=users;
       this.user = userServ.getUserInfo().email;
-    });
+    })
+    .catch(err=>{
+      console.log("No users");
+      this.navCtrl.push(SetupDbPage);
+    })
   }
 
   ionViewDidEnter() {
