@@ -1,5 +1,4 @@
-README
-This README documents the basis of this repo and how to use it to set up a Trust's Web App to store the data
+This README documents the basis of this repo and how to use it to set up a free Universal Web App to store the data that users will access using the Universal Medical App UMA
 
 ## Requirements
 ## Local set up
@@ -21,6 +20,10 @@ It is licensed under an AGPL 3.0 license
 
 ## How do I get set up?
 ** You will need to set a few things up.**
+You need to be able to run some commands from the "Terminal" or "Command promt"
+
+If you are not comfortable with this, have a look at this short free course:
+[CodeAcademy free course](https://www.codecademy.com/learn/learn-the-command-line)
 
 ### Set up Firebase
 First go and create a new Firebase account at this page
@@ -48,33 +51,35 @@ Ensure you have node installed with npm (got to https://nodejs.org/en/ and follo
 When node is installed open a terminal (or CMD or PowerShell) 
 Run 
 ~~~
-npm install -g firebase-tools
+`npm install -g firebase-tools`
 ~~~
 to install the firebase CLI
 
 then type 
 ~~~
-firebase login
+`firebase login`
 ~~~
 and login with your credentials (your firebase account username and password)
 
 
 ### Clone the repo
+ 
+
 Clone this repo using this command in a new directory (where you wish to store the project)
-`git clone https://shanester@bitbucket.org/shanester/foss-web-app.git`
+`git clone https://github.com/AppertaFoundation/FOSS-Medical-Web-App`
 
 
-You will also need to install Ionic for this process (may not have to in the future)
+You will also need to install Ionic for this process
 
 Run
 ~~~
-npm install ionic
+`npm install ionic`
 ~~~
 
 
 In the terminal cd into the project folder and run
 ~~~
-npm install
+`npm install`
 ~~~
 It should take a bit of time and install lots of stuff
 
@@ -82,8 +87,9 @@ It should take a bit of time and install lots of stuff
 
 `cd` into the src folder
 
-UPDATE THE DETAILS
+## UPDATE THE DETAILS
 
+# The only folder you should have to alter is the Assets folder
 Open the file `dbdetails.ts` and delete everything between the word `export` and the words `export const dbDetails`
 
 Change the address of the firebase DB:
@@ -111,7 +117,7 @@ Where it says (in your own snippet)
    and paste the object into the dbdetails.ts file after the word `export `  (remember to leave a space between)
 
 ~~~
-   ionic serve
+   `ionic serve`
 ~~~
 
    which should spin up a local server for testing  
