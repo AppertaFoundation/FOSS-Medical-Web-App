@@ -1,17 +1,17 @@
 This README documents the basis of this repo and how to use it to set up a free Universal Web App to store the data that users will access using the Universal Medical App UMA
 
 ## Requirements
-## Local set up
-- Git (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
-- NodeJS (v8) with npm (https://nodejs.org/en/)
-- Ionic ($ npm install -g ionic)
-- Firebase tools ($ npm install -g firebase-tools)
+## Local set up - summary (more details later)
+- Git [Git website](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- NodeJS (v8) with npm [Node website](https://nodejs.org/en/)
+- Ionic ($ `npm install -g ionic`)
+- Firebase tools ($ `npm install -g firebase-tools`)
 ## Online
-- Firebase account (https://firebase.google.com/)
+- Firebase account [Firebase home page](https://firebase.google.com/)
 
 
 What is this repository for?
-Set up a Web App for a Trust v 1.0
+Set up a Web App to manage the database for a Universal Medical App UMA
 
 # License
 You have been invited to use this repo
@@ -96,7 +96,35 @@ Change the address of the firebase DB:
 Go to this page
 [Firebase web set up](https://firebase.google.com/docs/web/setup)
 and follow the instructions on how to Add Firebase To your App
-In stage 3 you will get the details of how to get the initialization snippet.
+- Choose a name
+- Edit the project ID (choose one that represents your organisation and is easy to remember)
+- Select the country ID
+- You may wish to uncheck the box stating
+~~~
+Use the default settings for sharing Google Analytics for Firebase data
+~~~
+- Click Continue
+- Click Create Project
+- When ready click Continue
+
+# Set up Authentication
+On the left menu select (if not already selected)
+`Authentication`
+- Click the button `Set up sign-in method`
+- Choose 'Email/Password'
+- Toggle the first switch to `Enable` then `Save`
+
+# Enable the Database rules
+On the left menu select `Database`
+Choose `Get Started` in the Realtime Database (on the right)
+Choose `Start in test mode` then `Enable`
+
+# Get your database "Snippet"
+- On the left menu go back to `Authentication`.
+- In the top right there is a button stating
+   `Web Setup` - click it
+- A box will open up stating `Add firebase to your web app`
+
 Where it says (in your own snippet)
 ~~~
   var config = {
@@ -111,16 +139,26 @@ Where it says (in your own snippet)
    
    (this is a javascript object with your project settings)
 
-  ** you don't copy these lines `firebase.initializeApp(config); </script>` **
+  ** you don't copy these lines   **
+  ~~~
+  <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
+  <script>
+  // Initialize Firebase
+  ~~~
+  `firebase.initializeApp(config); </script>` 
+
 
 
    and paste the object into the dbdetails.ts file after the word `export `  (remember to leave a space between)
-
+   
 ~~~
-   `ionic serve`
+   ionic serve
 ~~~
 
    which should spin up a local server for testing  
+
+# First time using the app
+The database should take you to the setup page and you will enter you email as the username and choose a password and a specialty. The program will set up these details in the account with you as the data administrator.
 
 ## When you are ready to upload:
 in the root directory (may still be foss-web-app if cloned)
@@ -142,7 +180,7 @@ It will ask you
 
 `? File www/index.html already exists. Overwrite?` - select NO
 
-And it will upload your file and you should be able to access it via the web address.
+And it will upload your file and you should be able to access it via the web address (it will show you this when completed).
    
 
 ### Contribution guidelines
