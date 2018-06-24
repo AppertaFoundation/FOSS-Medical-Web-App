@@ -49,7 +49,7 @@
 
       <ion-item>
         <ion-label stacked>Specialty</ion-label>
-        <ion-input #email formControlName="specialty" type="text" placeholder="Specialty" [class.invalid]="!signupForm.controls.email.valid && (emailChanged || submitAttempt)"></ion-input>
+        {{this.specialty}}
       </ion-item>
 
       <ion-item class="error-message" *ngIf="!signupForm.controls.password.valid && (passwordChanged || submitAttempt)">

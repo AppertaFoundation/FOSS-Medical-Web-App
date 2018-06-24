@@ -50,7 +50,6 @@ export class SetupDbPage {
     this.signupForm = formBuilder.group({
       email: ['', Validators.compose([Validators.required, EmailValidator.isValid])],
       password: ['', Validators.compose([Validators.minLength(6), Validators.required])],
-      specialty:['',Validators.compose([Validators.minLength(1),Validators.pattern('[a-zA-Z ]*'),Validators.required])]
     
     });
 
