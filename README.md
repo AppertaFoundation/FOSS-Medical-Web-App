@@ -139,7 +139,7 @@ Where it says (in your own snippet)
    
    (this is a javascript object with your project settings)
 
-  ** you don't copy these lines   **
+  **you don't copy these lines**
   ~~~
   <script src="https://www.gstatic.com/firebasejs/5.1.0/firebase.js"></script>
   <script>
