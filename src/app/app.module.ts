@@ -3,6 +3,11 @@ import { IonicApp, IonicModule } from 'ionic-angular';
 import { IonicStorageModule } from '@ionic/storage';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpModule } from '@angular/http';
+import { ErrorHandler } from '@angular/core';
+import { IonicErrorHandler } from 'ionic-angular';
+import { FirebaseService } from '../providers/firebase-service';
+import { AuthServ } from '../providers/auth-serv';
+import { UserService } from '../providers/user-service';
 
 
 
@@ -14,9 +19,6 @@ import { DepartmentDetailPage } from '../pages/department-detail/department-deta
 import { LoginPage } from '../pages/login/login';
 import { AccountPage} from '../pages/account/account';
 import { SetupDbPage } from '../pages/setup-db/setup-db';
-
-import { AppProviders } from './app.providers';
-
 
 
 import { EditModalComponent } from '../components/edit-modal/edit-modal';
@@ -74,7 +76,11 @@ import { ResetModalComponent } from '../components/reset-modal/reset-modal';
   SetupDbPage
 
   ],
-  providers: AppProviders()
-  
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},
+    FirebaseService,
+    Storage,
+    AuthServ,
+    UserService
+  ]
 })
 export class AppModule {}
