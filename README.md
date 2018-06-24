@@ -143,10 +143,15 @@ Where it says (in your own snippet)
   ~~~
   `firebase.initializeApp(config); </script>` 
 
+  ...and paste the object into the dbdetails.ts file after the word `export ` in the app project (remember to leave a space between)
+   **This is the file that you deleted a section from a minute ago**
 
+   **Save the file**
 
-   and paste the object into the dbdetails.ts file after the word `export `  (remember to leave a space between)
-   
+   ## Try it out
+   In you command line/ terminal
+   - Make sure you're in the project folder
+   -run the following command   
 ~~~
    ionic serve
 ~~~
@@ -175,6 +180,10 @@ It will ask if you
 It will ask you 
 
 `? File www/index.html already exists. Overwrite?` - select NO
+
+You then need to deploy your app. Run the following command
+`npm run deploy`
+And it will build and upload your file and you should be able to access it via the web address (it will show you this when completed).
 
 And it will upload your file and you should be able to access it via the web address (it will show you this when completed).
    
