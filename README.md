@@ -77,15 +77,11 @@ Run
 ~~~
 
 
-In the terminal cd into the project folder and run
+In the terminal `cd` into the project folder and run
 ~~~
 `npm install`
 ~~~
 It should take a bit of time and install lots of stuff
-
-
-
-`cd` into the src folder
 
 ## UPDATE THE DETAILS
 
