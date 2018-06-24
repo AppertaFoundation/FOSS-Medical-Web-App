@@ -5,17 +5,9 @@ import { Clinical } from '../pages/clinical/clinical';
 import { Department } from '../pages/department/department';
 import { LoginPage } from '../pages/login/login';
 import { AccountPage } from '../pages/account/account';
+import { config } from '../assets/dbdetails';
 
 import firebase from 'firebase';
-
-const  config = {
-  apiKey: "AIzaSyCxNFJseM6G-cjjKgz_29J6pi4FLi-irTw",
-  authDomain: "universal-medical-webapp.firebaseapp.com",
-  databaseURL: "https://universal-medical-webapp.firebaseio.com",
-  projectId: "universal-medical-webapp",
-  storageBucket: "universal-medical-webapp.appspot.com",
-  messagingSenderId: "117870049439"
-};
 
 
 @Component({

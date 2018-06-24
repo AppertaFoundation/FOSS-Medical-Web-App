@@ -6,7 +6,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/toPromise';
 import { AuthServ } from './auth-serv';
 import firebase from 'firebase';
-import {config, dbDetails } from '../app/dbdetails';
+import {config, dbDetails } from '../assets/dbdetails';
 
 
 /*

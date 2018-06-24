@@ -1,28 +1,28 @@
 README
 This README documents the basis of this repo and how to use it to set up a Trust's Web App to store the data
 
-##Requirements
-##Local set up
+## Requirements
+## Local set up
 - Git (https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
 - NodeJS (v8) with npm (https://nodejs.org/en/)
 - Ionic ($ npm install -g ionic)
 - Firebase tools ($ npm install -g firebase-tools)
-##Online
+## Online
 - Firebase account (https://firebase.google.com/)
 
 
 What is this repository for?
 Set up a Web App for a Trust v 1.0
 
-#License
+# License
 You have been invited to use this repo
 
 It is licensed under an AGPL 3.0 license
 
-##How do I get set up?
-**You will need to set a few things up.**
+## How do I get set up?
+** You will need to set a few things up.**
 
-###Set up Firebase
+### Set up Firebase
 First go and create a new Firebase account at this page
 [Firebase home page](https://firebase.google.com/)
 Click "GET STARTED"
@@ -36,12 +36,12 @@ If you can get a good name it will be easier for your users.
 
 Set up a new project (click on the + sign and chosse your name and location )
 
-##Set up GIT
+## Set up GIT
 Ensure you have installed Git for your system
 Follow these instructions 
 https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
-###Set up Node
+### Set up Node
 Ensure you have node installed with npm (got to https://nodejs.org/en/ and follow the instructions for your system). npm is packaged with node.
 
 
@@ -59,7 +59,7 @@ firebase login
 and login with your credentials (your firebase account username and password)
 
 
-###Clone the repo
+### Clone the repo
 Clone this repo using this command in a new directory (where you wish to store the project)
 `git clone https://shanester@bitbucket.org/shanester/foss-web-app.git`
 
@@ -105,7 +105,7 @@ Where it says (in your own snippet)
    
    (this is a javascript object with your project settings)
 
-  **you don't copy these lines `firebase.initializeApp(config); </script>`**
+  ** you don't copy these lines `firebase.initializeApp(config); </script>` **
 
 
    and paste the object into the dbdetails.ts file after the word `export `  (remember to leave a space between)
@@ -116,7 +116,7 @@ Where it says (in your own snippet)
 
    which should spin up a local server for testing  
 
-##When you are ready to upload:
+## When you are ready to upload:
 in the root directory (may still be foss-web-app if cloned)
 `firebase init`
 
@@ -139,7 +139,7 @@ It will ask you
 And it will upload your file and you should be able to access it via the web address.
    
 
-###Contribution guidelines
+### Contribution guidelines
 *contact me (see below) if you wish to contribute
 
 Who do I talk to?
