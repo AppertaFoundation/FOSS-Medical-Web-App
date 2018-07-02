@@ -110,10 +110,6 @@ On the left menu select (if not already selected)
 - Choose 'Email/Password'
 - Toggle the first switch to `Enable` then `Save`
 
-# Enable the Database rules
-On the left menu select `Database`
-Choose `Get Started` in the Realtime Database (on the right)
-Choose `Start in test mode` then `Enable`
 
 # Get your database "Snippet"
 - On the left menu go back to `Authentication`.
@@ -147,6 +143,13 @@ Where it says (in your own snippet)
    **This is the file that you deleted a section from a minute ago**
 
    **Save the file**
+
+   # Enable the Database rules
+   On the left menu select `Database`
+   Choose `Get Started` in the Realtime Database (on the right)
+   Choose `Start in test mode` then `Enable`
+   **You may need to keep this webpage open until you've set up your Database (see Try it out below) or the empty database may be deleted by the system**
+
 
    ## Try it out
    In you command line/ terminal
