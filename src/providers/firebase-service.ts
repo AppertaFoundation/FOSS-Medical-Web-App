@@ -109,9 +109,14 @@ export class FirebaseService {
     let specString = "specialties";
     let userStr = "userList"
     let fbdb = firebase.database();
+    console.log("Setting up firebase -");
     return fbdb.ref(`${this.hospital}/${this.specialty}`).set(blank)
-    .then(()=>{fbdb.ref(`${this.hospital}/${specString}`).set(specialties)})
-    .then(()=>{fbdb.ref(`${this.hospital}/${userStr}`).set("")})
+    .then(()=>{
+      console.log("Blank is set");
+      fbdb.ref(`${this.hospital}/${specString}`).set(specialties)})
+    .catch((err)=>console.log("Blank error ",err))
+
+    // .then(()=>{fbdb.ref(`${this.hospital}/${userStr}`).set("")})
   
   }
 

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import firebase from 'firebase';
+import { BehaviorSubject } from 'rxjs';
 /*
   Generated class for the AuthServ provider.
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
@@ -11,10 +12,20 @@ export class AuthServ {
   fireAuth: firebase.auth.Auth;
   auth:boolean = false;
   currentUser:any;
+  // public myAuth: BehaviorSubject<any> 
 
 
   constructor() {
     this.fireAuth = firebase.auth();
+    // this.myAuth= new BehaviorSubject("");
+    firebase.auth().onAuthStateChanged(function(user){
+      if(user){
+        this.currentUser=user;
+      }
+      else{
+        this.currentUser=null;
+      }
+    })
   }
 
   loginUser(email: string, password: string) {

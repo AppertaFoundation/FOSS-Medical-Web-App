@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FirebaseService } from './firebase-service';
 import firebase from 'firebase';
+import { AuthServ } from './auth-serv';
 
 /*
   Generated class for the UserService provider.
@@ -25,16 +26,17 @@ export class UserService {
   userObs;//now a firebase reference to userlist
   userObservable;
 
-  constructor(private fbServ: FirebaseService) {
+  constructor(private fbServ: FirebaseService, private authServ: AuthServ) {
     this.userList = [];//an array holding users that have been downloaded from the observable
     this.details = this.fbServ.getDBDetails();
     this.userObs = firebase.database().ref(`${this.details["hospital"]}/userList`);
     this.getUsers();
-  }
+    }
 
 
   setCurrentUser(user:CurrentUser) {
     this.currentUser.email = user.email;
+    
   }
 
   setUsername(user:string){

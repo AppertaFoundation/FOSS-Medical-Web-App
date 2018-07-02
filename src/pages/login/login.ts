@@ -52,11 +52,15 @@ export class LoginPage {
     })
     .catch(err=>{
       console.log("No users");
-      this.navCtrl.push(SetupDbPage);
+      this.userList =[];
+      // this.navCtrl.push(SetupDbPage);
     })
   }
 
   ionViewDidEnter() {
+    if(this.userList == []){
+      alert("No database setup. Please make sure you have created a user with email and password login");
+    }
     this.currentUser = this.userServ.getUserInfo();
     this.user = this.currentUser.email;
     this.auth = this.authServ.getAuth();
