@@ -189,6 +189,37 @@ You then need to deploy your app. Run the following command
 And it will build and upload your file and you should be able to access it via the web address (it will show you this when completed).
 
 And it will upload your file and you should be able to access it via the web address (it will show you this when completed).
+
+### Set up your database rules
+You don't want just anyone writing to your database- only people that you have given accounts to.
+Once it's all working you want to change your rules to create these permissions.
+Do the following:
+Go back to the console (firebase webpage), choose Database from the left menu and click on the rules tab.
+Ensure the rules are set to (copy and paste)
+~~~
+{
+  "rules": {
+    ".read": "true",
+    ".write": "auth != null"
+  }
+}
+~~~
+
+### FAQ
+
+-I've deployed and I'm stuck in a loop
+Go back to the console (firebase webpage), choose Database from the left menu and click on the rules tab.
+Ensure the rules are set to 
+~~~
+{
+  "rules": {
+    ".read": "true",
+    ".write": "true"
+  }
+}
+~~~
+and try again. Once everything is working the go to "Set up your database rules" above and try again
+
    
 
 ### Contribution guidelines
