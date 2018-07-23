@@ -2,7 +2,7 @@ This README documents the basis of this repo and how to use it to set up a free 
 
 ## Requirements
 ## Local set up - summary (more details later)
-- Git [Git website](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git)
+- Git [Git website](https://git-scm.com/book/en/v2/Getting-Started-Installing-Git) --OPTIONAL - you could simply download the project
 - NodeJS (v8) with npm [Node website](https://nodejs.org/en/)
 - Ionic ($ `npm install -g ionic`)
 - Firebase tools ($ `npm install -g firebase-tools`)
@@ -39,10 +39,12 @@ If you can get a good name it will be easier for your users.
 
 Set up a new project (click on the + sign and chosse your name and location )
 
-## Set up GIT
+## Set up GIT --OPTIONAL - if you don't want to use GIT then just download the zip (see later)
 Ensure you have installed Git for your system
 Follow these instructions 
 https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
+
+
 
 ### Set up Node
 Ensure you have node installed with npm (got to https://nodejs.org/en/ and follow the instructions for your system). npm is packaged with node.
@@ -61,12 +63,22 @@ then type
 ~~~
 and login with your credentials (your firebase account username and password)
 
-
-### Clone the repo
- 
+### OPTIONS
+either -
+### 1) Clone the repo (makes updating easier, later on)
 
 Clone this repo using this command in a new directory (where you wish to store the project)
 `git clone https://github.com/AppertaFoundation/FOSS-Medical-Web-App`
+
+or 
+### 2) Download the files (if you don't want to use GIT)
+Go to the website
+`https://github.com/AppertaFoundation/FOSS-Medical-Web-App`
+Click the Green button stating
+`Clone or download`
+Click
+`Download ZIP`
+then extract this to a known folder
 
 
 You will also need to install Ionic for this process
